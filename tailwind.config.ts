@@ -78,7 +78,7 @@ export default {
     }
   },
   plugins: [
-  function ({ addUtilities }) {
+  function ({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string | Record<string, string>>>) => void }) {
     const newUtilities = {
       ".text-glow-green": {
         textShadow: "0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00"
