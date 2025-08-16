@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=VT323&family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
 
 :root {
     --background: #0A0A0A;
-    --foreground: #F0F0F0;
+    --foreground: #FFFFFF;
+    --secondary-text: #D1D1D1;
+    --highlight: #00F0FF;
 }
 
 * {
@@ -24,7 +26,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    color: var(--foreground);
+ color: var(--foreground);
     background: var(--background);
     font-family: 'Inter', system-ui, sans-serif;
     line-height: 1.6;
@@ -36,12 +38,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #1A1A1A;
+ background: #1A1A1A;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #00FF00;
-    border-radius: 4px;
+ background: var(--highlight);
+ border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
