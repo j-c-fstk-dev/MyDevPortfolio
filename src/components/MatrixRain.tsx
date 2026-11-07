@@ -53,13 +53,17 @@ export default function MatrixRain() {
       }
     };
 
+    // next/font exposes the generated font-family name through a CSS variable.
+    const fontFamily = getComputedStyle(document.body).getPropertyValue("--font-vt323").trim();
+    const font = `${fontSize}px ${fontFamily ? `${fontFamily}, ` : ""}monospace`;
+
     const animate = () => {
       // Create trailing effect
       ctx.fillStyle = "rgba(10, 10, 10, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw drops
-      ctx.font = `${fontSize}px 'VT323', monospace`;
+      ctx.font = font;
 
       drops.forEach((drop) => {
         // Random character change
@@ -89,6 +93,10 @@ export default function MatrixRain() {
     };
 
     resizeCanvas();
+    // Skip the endless animation for people who prefer reduced motion.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
     animate();
 
     const handleResize = () => {

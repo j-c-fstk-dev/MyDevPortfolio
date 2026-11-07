@@ -26,10 +26,8 @@ export default {
         foreground: "var(--foreground)"
       },
       fontFamily: {
-        "mono-matrix": ["VT323", "Fira Code", "monospace"],
-        pixel: ["Press Start 2P", "monospace"],
-        clean: ["Inter", "system-ui", "sans-serif"],
-        sans: ["Inter", "system-ui", "sans-serif"]
+        "mono-matrix": ["var(--font-vt323)", "monospace"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"]
       },
       animation: {
         "glow-pulse": "glow-pulse 2s ease-in-out infinite alternate",

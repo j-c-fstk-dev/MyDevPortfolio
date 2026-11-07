@@ -2,6 +2,22 @@
 
 import { useEffect, useState } from "react";
 
+const lines = [
+  "$ whoami",
+  "jorge_cristo // full-stack developer",
+  "",
+  "$ cat services.txt",
+  "> bug fixing & app rescue (React, Next.js, Node)",
+  "> web3: dApps, Solidity review, Farcaster mini apps",
+  "> features & automation: Stripe, LLMs, n8n",
+  "",
+  "$ ls projects/ --live",
+  "decleanup-dapp  bass-forest  monthly-earth-day  beregen",
+  "",
+  "$ status",
+  "AVAILABLE FOR FREELANCE WORK...",
+  "_"];
+
 export default function TerminalTyping() {
   const [currentLine, setCurrentLine] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
@@ -13,27 +29,7 @@ export default function TerminalTyping() {
     setIsClient(true);
   }, []);
 
-  const lines = [
-  "$ whoami",
-  "matrix_developer",
-  "",
-  "$ cat skills.txt",
-  "React.js ████████████████████ 95%",
-  "TypeScript ██████████████████ 90%",
-  "Node.js ████████████████████ 92%",
-  "Python ██████████████████ 88%",
-  "AWS ████████████████ 85%",
-  "",
-  "$ ls projects/",
-  "ai-chatbot.js    e-commerce-app.tsx",
-  "blockchain-dapp.sol    mobile-app.dart",
-  "",
-  "$ echo 'Welcome to my digital realm'",
-  "Welcome to my digital realm",
-  "",
-  "$ status",
-  "READY FOR NEW CHALLENGES...",
-  "_"];
+  
 
 
   useEffect(() => {

@@ -15,7 +15,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
 
   const sections = [
   { id: 0, name: "INIT", label: "Home" },
-  { id: 1, name: "STATS", label: "Statistics" },
+  { id: 1, name: "STATS", label: "Stats" },
   { id: 2, name: "SKILLS", label: "Skills" },
   { id: 3, name: "PROJECTS", label: "Projects" },
   { id: 4, name: "EXPERIENCE", label: "Experience" },
@@ -85,7 +85,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
             className="font-mono-matrix text-lg sm:text-xl text-glow-green"
            >
 
-            &gt; MATRIX_DEV.EXE
+            &gt; JORGE_CRISTO.EXE
           </div>
 
           {/* Desktop Navigation */}

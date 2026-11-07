@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=VT323&family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
-@tailwind utilities;
 @tailwind components;
+@tailwind utilities;
 
 :root {
     --background: #0A0A0A;
@@ -28,7 +27,7 @@ body {
     overflow-x: hidden;
  color: var(--foreground);
     background: var(--background);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-inter), system-ui, sans-serif;
     line-height: 1.6;
 }
 
@@ -127,7 +126,7 @@ body {
 
 /* Matrix code styling */
 .matrix-code {
-    font-family: 'VT323', monospace;
+    font-family: var(--font-vt323), monospace;
     color: #00FF00;
     text-shadow: 0 0 5px #00FF00;
     white-space: nowrap;
@@ -242,9 +241,10 @@ body {
 }
 
 /* Focus styles */
-input:focus,
-textarea:focus,
-button:focus {
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
     outline: 2px solid #00FF00;
     outline-offset: 2px;
 }
@@ -286,5 +286,20 @@ button:focus {
     .glitch-text::before,
     .glitch-text::after {
         display: none;
+    }
+}
+
+/* Respect users who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

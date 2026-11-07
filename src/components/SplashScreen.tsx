@@ -6,17 +6,19 @@ interface SplashScreenProps {
   onChoose: (choice: "red" | "blue") => void;
 }
 
+const messages = [
+  "Wake up, Neo...",
+  "The Matrix has you...",
+  "Follow the white rabbit.",
+  "This is your last chance."];
+
 export default function SplashScreen({ onChoose }: SplashScreenProps) {
   const [step, setStep] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [showPills, setShowPills] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  const messages = [
-  "Wake up, Neo...",
-  "The Matrix has you...",
-  "Follow the white rabbit.",
-  "This is your last chance."];
+  
 
 
   useEffect(() => {
@@ -172,10 +174,10 @@ export default function SplashScreen({ onChoose }: SplashScreenProps) {
                 className="text-base sm:text-lg text-matrix-light-gray leading-relaxed max-w-xl mx-auto"
                >
 
-                  "After this, there is no going back. You take the blue
+                  &ldquo;After this, there is no going back. You take the blue
                   pill—the story ends, you wake up in your bed and believe
                   whatever you want to believe. You take the red pill—you stay
-                  in Wonderland, and I show you how deep the rabbit hole goes."
+                  in Wonderland, and I show you how deep the rabbit hole goes.&rdquo;
                 </div>
                 <div
                 className="text-sm text-matrix-primary-green/70 font-mono-matrix"
@@ -233,7 +235,7 @@ export default function SplashScreen({ onChoose }: SplashScreenProps) {
                     className="text-xs sm:text-sm text-blue-400/70 max-w-32 mx-auto"
                    >
 
-                      Traditional Portfolio
+                      Back to the standard portfolio
                     </div>
                   </div>
                 </div>
@@ -306,6 +308,15 @@ export default function SplashScreen({ onChoose }: SplashScreenProps) {
           }
         </div>
       </div>
+
+      {!showPills && (
+        <button
+          onClick={() => setShowPills(true)}
+          className="absolute bottom-6 right-6 z-20 px-4 py-2 font-mono-matrix text-matrix-primary-green/70 border border-matrix-primary-green/30 rounded hover:text-matrix-primary-green hover:border-matrix-primary-green transition-all"
+        >
+          SKIP &gt;&gt;
+        </button>
+      )}
 
       {/* Corner Effects */}
       <div

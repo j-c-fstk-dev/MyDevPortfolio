@@ -63,16 +63,16 @@ export default function HeroSection() {
 
           <h1
             className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-mono-matrix text-glow-green mb-3 sm:mb-4 glitch-text leading-tight"
-            data-text="MATRIX_DEV"
+            data-text="JORGE_CRISTO"
            >
 
-            MATRIX_DEV
+            JORGE_CRISTO
           </h1>
           <div
             className="text-lg sm:text-xl md:text-2xl font-mono-matrix text-matrix-electric-blue mb-6 sm:mb-8"
            >
 
-            &gt; INITIALIZING_PORTFOLIO.EXE
+            &gt; FULL_STACK_DEVELOPER // WEB3 // AI
           </div>
         </div>
 
@@ -115,19 +115,6 @@ export default function HeroSection() {
             className="px-6 sm:px-8 py-3 bg-matrix-primary-green/20 border-2 border-matrix-primary-green rounded font-mono-matrix text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green transition-all duration-300 group text-sm sm:text-base"
             onClick={() =>
             document.
-            getElementById("section-2")?.
-            scrollIntoView({ behavior: "smooth" })
-            }
-           >
-
-            <span className="group-hover:animate-pulse">
-              &gt; VIEW_SKILLS
-            </span>
-          </button>
-          <button
-            className="px-6 sm:px-8 py-3 bg-matrix-electric-blue/20 border-2 border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 hover:shadow-neon-blue transition-all duration-300 group text-sm sm:text-base"
-            onClick={() =>
-            document.
             getElementById("section-3")?.
             scrollIntoView({ behavior: "smooth" })
             }
@@ -137,11 +124,24 @@ export default function HeroSection() {
               &gt; VIEW_PROJECTS
             </span>
           </button>
+          <button
+            className="px-6 sm:px-8 py-3 bg-matrix-electric-blue/20 border-2 border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 hover:shadow-neon-blue transition-all duration-300 group text-sm sm:text-base"
+            onClick={() =>
+            document.
+            getElementById("section-5")?.
+            scrollIntoView({ behavior: "smooth" })
+            }
+           >
+
+            <span className="group-hover:animate-pulse">
+              &gt; CONTACT_ME
+            </span>
+          </button>
         </div>
 
         {/* Scroll Indicator */}
         <div
-          className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+          className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
          >
 
           <div

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { profile, stats as portfolioStats } from "@/data/portfolio";
 
 interface StatItem {
   label: string;
@@ -9,37 +10,20 @@ interface StatItem {
   color: string;
 }
 
+const stats: StatItem[] = portfolioStats.map((stat, i) => ({
+    label: stat.label.toUpperCase().replace(/[ &]+/g, "_"),
+    value: stat.value,
+    suffix: stat.suffix,
+    color: i % 2 === 0 ? "text-matrix-primary-green" : "text-matrix-electric-blue"
+  }));
+
 export default function StatsSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [animatedValues, setAnimatedValues] = useState<number[]>([0, 0, 0, 0]);
   const [isClient, setIsClient] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const stats: StatItem[] = [
-  {
-    label: "PROJECTS_COMPLETED",
-    value: 47,
-    suffix: "+",
-    color: "text-matrix-primary-green"
-  },
-  {
-    label: "YEARS_EXPERIENCE",
-    value: 5,
-    suffix: "+",
-    color: "text-matrix-electric-blue"
-  },
-  {
-    label: "TECHNOLOGIES_MASTERED",
-    value: 23,
-    suffix: "",
-    color: "text-matrix-primary-green"
-  },
-  {
-    label: "COFFEE_CONSUMED",
-    value: 1337,
-    suffix: " CUPS",
-    color: "text-matrix-electric-blue"
-  }];
+
 
 
   useEffect(() => {
@@ -246,8 +230,7 @@ export default function StatsSection() {
               className="text-matrix-light-gray text-sm sm:text-base"
              >
 
-              All systems running at optimal performance. Ready for new
-              challenges and collaborations.
+              {profile.availability}. {profile.location}.
             </div>
           </div>
         </div>
