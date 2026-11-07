@@ -1,9 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, VT323 } from "next/font/google";
+import { Bricolage_Grotesque, VT323 } from "next/font/google";
 import "./globals.css";
 import { SITE_URL, contact, profile } from "@/data/portfolio";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage",
+  axes: ["opsz", "wdth"],
+  display: "swap",
+});
 const vt323 = VT323({ subsets: ["latin"], weight: "400", variable: "--font-vt323", display: "swap" });
 
 const title = `${profile.name} — ${profile.role}`;
@@ -39,7 +44,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0A",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EDF1EE" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E1A18" },
+  ],
 };
 
 const personJsonLd = {
@@ -57,7 +65,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${vt323.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${vt323.variable}`}>
       <body className="antialiased">
         {children}
         <script

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import ContactForm from "@/components/ContactForm";
+import ContactForm from "@/components/site/ContactForm";
 import { contact, profile } from "@/data/portfolio";
 
 const contactMethods = [

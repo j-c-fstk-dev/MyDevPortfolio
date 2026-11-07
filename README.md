@@ -6,8 +6,10 @@ Personal portfolio of **Jorge Cristo**, freelance full-stack developer (bug fixi
 
 The site has two faces:
 
-- **Standard portfolio**: the default view, rendered on the server so visitors and search engines see the content right away.
-- **Matrix mode**: an opt-in terminal-style version. Click **💊 Enter the Matrix** and take the red pill.
+- **Standard portfolio**: the default view. A single page rendered on the server, with a light
+  and a dark theme that follow the visitor's system setting.
+- **Matrix mode**: an opt-in terminal-style version, loaded only when someone asks for it. Use the
+  💊 button in the footer, or open the site with `#matrix` at the end of the URL.
 
 ## Stack
 
@@ -40,6 +42,8 @@ Then open http://localhost:3000.
 ```
 src/
   app/          layout (metadata, SEO, fonts), page, robots.txt, sitemap.xml
-  components/   NormalPortfolio, ContactForm and the Matrix sections
+  components/
+    site/       the standard single-page portfolio (header, hero, work, experience, about, contact)
+    matrix/     the Matrix version, loaded on demand
   data/         portfolio.ts: the site's content
 ```

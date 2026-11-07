@@ -22,6 +22,10 @@ export const profile = {
   story:
     "Before tech I worked in production engineering, commerce and tourism — including eight years operating trains on a mountain railway. That shaped how I work: diagnose first, agree on a clear scope, deliver on a separate branch with clean documentation.",
   availability: "Available for freelance work",
+  /** Hero headline, one entry per line. */
+  headline: ["Your app almost works.", "I'll get it shipped."],
+  intro:
+    "I'm Jorge Cristo, a freelance full-stack developer in Brazil. I take broken React, Next.js and Node apps — including ones built with Lovable, Bolt or Cursor — and get them building, deploying and working again. I also build Web3 apps and review Solidity contracts.",
   freelanceSince: 2023,
 };
 
@@ -285,6 +289,22 @@ export const projects: Project[] = [
     context: "Own product",
     live: "https://finecoding.netlify.app",
     repo: gh("finecoding"),
+  },
+];
+
+/** How a job runs, in order. */
+export const process = [
+  {
+    title: "Diagnose first",
+    description: "I reproduce the problem and find the cause before changing any code.",
+  },
+  {
+    title: "Agree on a fixed scope",
+    description: "We settle exactly what gets done before the work starts.",
+  },
+  {
+    title: "Deliver on a branch",
+    description: "Changes arrive on a separate branch with clear documentation, so you review before merging.",
   },
 ];
 
