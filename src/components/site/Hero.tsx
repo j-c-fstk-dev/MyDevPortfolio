@@ -1,17 +1,17 @@
-import { contact, process, profile } from "@/data/portfolio";
+import { getContent, type Locale } from "@/data/portfolio";
+import { getDictionary } from "@/data/ui";
 import { buttonPrimary, buttonSecondary, container } from "./ui";
 
-export default function Hero() {
+export default function Hero({ lang }: { lang: Locale }) {
+  const { profile, contact, process } = getContent(lang);
+  const d = getDictionary(lang).hero;
+
   return (
     <section id="top" className="pb-20 pt-14 sm:pb-28 sm:pt-24">
       <div className={container}>
         <h1 className="text-[clamp(3rem,9.5vw,8rem)] font-extrabold leading-[0.95] tracking-[-0.015em] [font-stretch:78%]">
           {profile.headline.map((line, i) => (
-            <span
-              key={line}
-              className="rise-in block"
-              style={{ animationDelay: `${i * 140}ms` }}
-            >
+            <span key={line} className="rise-in block" style={{ animationDelay: `${i * 140}ms` }}>
               {line}
             </span>
           ))}
@@ -22,10 +22,10 @@ export default function Hero() {
             <p className="text-xl leading-relaxed text-ink/90">{profile.intro}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href={`mailto:${contact.email}`} className={buttonPrimary}>
-                Email me
+                {d.emailMe}
               </a>
               <a href="#work" className={buttonSecondary}>
-                See the work
+                {d.seeWork}
               </a>
             </div>
             <p className="mt-8 flex items-center gap-3 text-lichen">
@@ -33,12 +33,12 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-signal" />
               </span>
-              {profile.availability}, {profile.location.replace(/ · /g, ", ")}
+              {profile.availability}, {profile.location}
             </p>
           </div>
 
           <div className="rounded-2xl bg-surface p-6 ring-1 ring-line sm:p-8">
-            <h2 className="text-lg font-bold">How a job runs</h2>
+            <h2 className="text-lg font-bold">{d.howJobRuns}</h2>
             <ol className="mt-6 space-y-6">
               {process.map((step, i) => (
                 <li key={step.title} className="grid grid-cols-[2rem_1fr] gap-x-3">

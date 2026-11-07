@@ -1,82 +1,136 @@
 "use client";
 
 import { useState } from "react";
-import { contact } from "@/data/portfolio";
+import type { Dictionary } from "@/data/ui";
 
 /**
- * Contact form with no backend: it opens the visitor's email app with the
- * message already filled in. Swap the submit handler for Formspree/Resend
- * later if you want messages delivered without leaving the page.
+ * Contact form backed by Netlify Forms. Netlify detects the form from the
+ * static copy in public/__forms.html at deploy time; submissions show up in
+ * the Netlify dashboard (Forms) and can be forwarded to email from there.
+ * If posting fails (e.g. running locally), the visitor gets the email address.
  */
-export default function ContactForm({ variant = "standard" }: { variant?: "standard" | "matrix" }) {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [opened, setOpened] = useState(false);
+const FORM_NAME = "contact";
+const FORM_ENDPOINT = "/__forms.html";
 
-  const handleSubmit = (e: React.FormEvent) => {
+type Status = "idle" | "sending" | "sent" | "failed";
+
+export default function ContactForm({
+  variant = "standard",
+  labels,
+  email,
+}: {
+  variant?: "standard" | "matrix";
+  labels: Dictionary["contact"]["form"];
+  email: string;
+}) {
+  const [status, setStatus] = useState<Status>("idle");
+  const matrix = variant === "matrix";
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const subject = `Portfolio contact from ${name}`;
-    const body = `${message}\n\n— ${name}`;
-    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setOpened(true);
+    const form = e.currentTarget;
+    setStatus("sending");
+    try {
+      const body = new URLSearchParams();
+      new FormData(form).forEach((value, key) => body.append(key, String(value)));
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      if (!res.ok) throw new Error(`Form endpoint responded ${res.status}`);
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("failed");
+    }
   };
 
-  const matrix = variant === "matrix";
-  const label = matrix
-    ? "block font-mono-matrix text-matrix-electric-blue text-sm mb-2"
-    : "block font-semibold mb-2";
+  const label = matrix ? "block font-mono-matrix text-matrix-electric-blue text-sm mb-2" : "block font-semibold mb-2";
   const input = matrix
     ? "w-full bg-matrix-black/50 border-2 border-matrix-primary-green/30 rounded px-4 py-3 font-mono-matrix text-matrix-light-gray focus:border-matrix-primary-green outline-none transition-all"
     : "w-full rounded-xl bg-surface px-4 py-3 text-ink ring-1 ring-line placeholder:text-lichen/70 transition-shadow hover:ring-pine/50";
   const button = matrix
-    ? "w-full py-4 font-mono-matrix border-2 rounded transition-all duration-300 bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green"
-    : "inline-flex items-center justify-center rounded-full bg-pine px-6 py-3 font-semibold text-on-pine transition-colors hover:bg-ink";
+    ? "w-full py-4 font-mono-matrix border-2 rounded transition-all duration-300 bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green disabled:opacity-60"
+    : "inline-flex items-center justify-center rounded-full bg-pine px-6 py-3 font-semibold text-on-pine transition-colors hover:bg-ink disabled:opacity-60";
+  const note = matrix ? "font-mono-matrix text-sm" : "text-[15px]";
+  const id = (field: string) => `${variant}-${field}`;
 
   return (
-    <form onSubmit={handleSubmit} className={matrix ? "space-y-6" : "space-y-5"}>
+    <form
+      name={FORM_NAME}
+      method="POST"
+      onSubmit={handleSubmit}
+      className={matrix ? "space-y-6" : "space-y-5"}
+    >
+      <input type="hidden" name="form-name" value={FORM_NAME} />
+      {/* Honeypot: hidden from people, bots tend to fill it in. */}
+      <p className="hidden">
+        <label>
+          Leave this empty <input name="bot-field" tabIndex={-1} autoComplete="off" />
+        </label>
+      </p>
+
       <div>
-        <label htmlFor={`${variant}-name`} className={label}>
-          {matrix ? "NAME_INPUT:" : "Your name"}
+        <label htmlFor={id("name")} className={label}>
+          {matrix ? "NAME_INPUT:" : labels.name}
         </label>
         <input
-          id={`${variant}-name`}
+          id={id("name")}
+          name="name"
           type="text"
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          autoComplete="name"
           className={input}
-          placeholder={matrix ? "Your name" : "Ana Souza"}
+          placeholder={labels.namePlaceholder}
         />
       </div>
       <div>
-        <label htmlFor={`${variant}-message`} className={label}>
-          {matrix ? "MESSAGE_CONTENT:" : "What's going on?"}
+        <label htmlFor={id("email")} className={label}>
+          {matrix ? "EMAIL_ADDRESS:" : labels.email}
         </label>
-        <textarea
-          id={`${variant}-message`}
+        <input
+          id={id("email")}
+          name="email"
+          type="email"
           required
-          rows={matrix ? 6 : 5}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className={`${input} resize-none`}
-          placeholder={matrix ? "What do you need help with?" : "The app deploys but login fails on production…"}
+          autoComplete="email"
+          className={input}
+          placeholder={labels.emailPlaceholder}
         />
       </div>
-      <button type="submit" className={button}>
-        {matrix ? "> SEND_MESSAGE" : "Write the email"}
+      <div>
+        <label htmlFor={id("message")} className={label}>
+          {matrix ? "MESSAGE_CONTENT:" : labels.message}
+        </label>
+        <textarea
+          id={id("message")}
+          name="message"
+          required
+          rows={matrix ? 6 : 5}
+          className={`${input} resize-none`}
+          placeholder={labels.messagePlaceholder}
+        />
+      </div>
+
+      <button type="submit" className={button} disabled={status === "sending"}>
+        {status === "sending" ? labels.sending : matrix ? "> SEND_MESSAGE" : labels.submit}
       </button>
-      {!matrix && (
-        <p className="text-[15px] text-lichen">This opens your email app with the message filled in.</p>
-      )}
-      {opened && (
-        <p className={matrix ? "font-mono-matrix text-sm text-matrix-primary-green" : "text-[15px] text-lichen"} role="status">
-          Your email app should open now. If it doesn&apos;t, write to{" "}
-          <a href={`mailto:${contact.email}`} className="underline">
-            {contact.email}
-          </a>
-          .
-        </p>
-      )}
+
+      <div aria-live="polite">
+        {status === "sent" && (
+          <p className={`${note} ${matrix ? "text-matrix-primary-green" : "text-pine font-medium"}`}>{labels.sent}</p>
+        )}
+        {status === "failed" && (
+          <p className={`${note} ${matrix ? "text-red-400" : "text-ink"}`}>
+            {labels.failed}{" "}
+            <a href={`mailto:${email}`} className="font-semibold underline underline-offset-4">
+              {email}
+            </a>
+            .
+          </p>
+        )}
+      </div>
     </form>
   );
 }

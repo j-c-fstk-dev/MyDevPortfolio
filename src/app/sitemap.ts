@@ -1,6 +1,15 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/data/portfolio";
+import { SITE_URL, localePath, locales } from "@/data/portfolio";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: SITE_URL, lastModified: new Date(), changeFrequency: "monthly", priority: 1 }];
+  const url = (path: string) => new URL(path, SITE_URL).toString();
+  const languages = { en: url(localePath("en")), "pt-BR": url(localePath("pt")) };
+
+  return locales.map((locale) => ({
+    url: url(localePath(locale)),
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: locale === "en" ? 1 : 0.9,
+    alternates: { languages },
+  }));
 }

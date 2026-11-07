@@ -1,9 +1,13 @@
-import { experience, previousCareer } from "@/data/portfolio";
+import { getContent, type Locale } from "@/data/portfolio";
+import { getDictionary } from "@/data/ui";
 import { Section, TextLink } from "./ui";
 
-export default function Experience() {
+export default function Experience({ lang }: { lang: Locale }) {
+  const { experience, previousCareer } = getContent(lang);
+  const d = getDictionary(lang).experience;
+
   return (
-    <Section id="experience" title="Experience">
+    <Section id="experience" title={d.title}>
       <ol>
         {experience.map((job) => (
           <li
@@ -32,11 +36,8 @@ export default function Experience() {
       </ol>
 
       <div className="mt-8 rounded-2xl bg-surface p-6 ring-1 ring-line sm:p-10">
-        <h3 className="text-2xl font-bold [font-stretch:85%]">Before tech</h3>
-        <p className="mt-2 max-w-prose leading-relaxed text-lichen">
-          Production engineering, a mountain railway and my own shop. That&apos;s where I learned to troubleshoot
-          under pressure and to document what I change.
-        </p>
+        <h3 className="text-2xl font-bold [font-stretch:85%]">{d.beforeTech}</h3>
+        <p className="mt-2 max-w-prose leading-relaxed text-lichen">{d.beforeTechIntro}</p>
         <ol className="mt-8 grid gap-8 md:grid-cols-3">
           {previousCareer.map((job) => (
             <li key={job.title}>

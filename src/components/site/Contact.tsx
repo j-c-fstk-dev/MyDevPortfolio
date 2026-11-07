@@ -1,21 +1,21 @@
-import { contact } from "@/data/portfolio";
+import { getContent, type Locale } from "@/data/portfolio";
+import { getDictionary } from "@/data/ui";
 import ContactForm from "./ContactForm";
 import { Section, TextLink } from "./ui";
 
-const channels = [
-  { label: "WhatsApp", href: contact.whatsapp, text: "Send a message" },
-  { label: "GitHub", href: contact.github, text: `github.com/${contact.githubHandle}` },
-  { label: "CV", href: contact.cv, text: "Read my CV" },
-  { label: "Support", href: contact.kofi, text: "Buy me a coffee on Ko-fi" },
-];
+export default function Contact({ lang }: { lang: Locale }) {
+  const { contact } = getContent(lang);
+  const d = getDictionary(lang).contact;
 
-export default function Contact() {
+  const channels = [
+    { label: d.channels.whatsapp[0], text: d.channels.whatsapp[1], href: contact.whatsapp },
+    { label: d.channels.github[0], text: `github.com/${contact.githubHandle}`, href: contact.github },
+    { label: d.channels.cv[0], text: d.channels.cv[1], href: contact.cv },
+    { label: d.channels.support[0], text: d.channels.support[1], href: contact.kofi },
+  ];
+
   return (
-    <Section
-      id="contact"
-      title="Tell me what's broken"
-      intro="Or what you want to build. Describe the problem and send a link to the repo if you can; I usually reply within a day."
-    >
+    <Section id="contact" title={d.title} intro={d.intro}>
       <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <a
@@ -35,7 +35,7 @@ export default function Contact() {
             ))}
           </dl>
         </div>
-        <ContactForm />
+        <ContactForm labels={d.form} email={contact.email} />
       </div>
     </Section>
   );

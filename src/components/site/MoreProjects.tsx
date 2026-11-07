@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { categoryLabels, statusLabels, type Project, type ProjectCategory } from "@/data/portfolio";
+import type { Project, ProjectCategory, ProjectStatus } from "@/data/portfolio";
 
 type Filter = "all" | ProjectCategory;
 
-export default function MoreProjects({ projects }: { projects: Project[] }) {
+export default function MoreProjects({
+  projects,
+  categoryLabels,
+  statusLabels,
+  labels,
+}: {
+  projects: Project[];
+  categoryLabels: Record<ProjectCategory, string>;
+  statusLabels: Record<ProjectStatus, string>;
+  labels: { all: string; filter: string; sourceCode: string };
+}) {
   const [filter, setFilter] = useState<Filter>("all");
 
   // Only offer filters that have at least one project.
@@ -30,8 +40,8 @@ export default function MoreProjects({ projects }: { projects: Project[] }) {
 
   return (
     <div className="mt-6">
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
-        {chip("all", "All")}
+      <div className="flex flex-wrap gap-2" role="group" aria-label={labels.filter}>
+        {chip("all", labels.all)}
         {categories.map((c) => chip(c, categoryLabels[c]))}
       </div>
 
@@ -39,7 +49,7 @@ export default function MoreProjects({ projects }: { projects: Project[] }) {
         {visible.map((project) => {
           const href = project.live ?? project.repo;
           return (
-            <li key={project.title} className="border-t border-line py-5">
+            <li key={project.slug} className="border-t border-line py-5">
               <div className="flex items-baseline justify-between gap-4">
                 <h4 className="text-lg font-semibold">
                   {href ? (
@@ -65,7 +75,7 @@ export default function MoreProjects({ projects }: { projects: Project[] }) {
                   rel="noopener noreferrer"
                   className="mt-1 inline-block text-sm text-pine underline decoration-pine/30 underline-offset-4 hover:decoration-signal"
                 >
-                  Source code
+                  {labels.sourceCode}
                 </a>
               )}
             </li>

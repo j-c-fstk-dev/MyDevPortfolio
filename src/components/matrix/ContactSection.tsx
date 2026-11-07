@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import ContactForm from "@/components/site/ContactForm";
 import { contact, profile } from "@/data/portfolio";
+import { getDictionary } from "@/data/ui";
 
 const contactMethods = [
   { label: "EMAIL_PROTOCOL", value: contact.email, icon: "✉️", href: `mailto:${contact.email}` },
@@ -87,7 +88,7 @@ export default function ContactSection() {
             <h3 className="font-mono-matrix text-2xl text-matrix-primary-green mb-6 text-glow-green">
               DIRECT_MESSAGE_SYSTEM
             </h3>
-            <ContactForm variant="matrix" />
+            <ContactForm variant="matrix" labels={getDictionary("en").contact.form} email={contact.email} />
           </div>
         </div>
 
