@@ -14,7 +14,7 @@ const dictionaries = {
     services: { title: "What I can help with" },
     work: {
       title: "Selected work",
-      intro: "Production apps for clients and my own products, mostly for Web3, climate and community projects.",
+      intro: "Client work and my own products: Web3 platforms, AI apps, web sites and desktop tools.",
       visitSite: "Visit site",
       sourceCode: "Source code",
       screenshotAlt: (title: string) => `Screenshot of ${title}`,
@@ -81,8 +81,7 @@ const dictionaries = {
     services: { title: "Como posso ajudar" },
     work: {
       title: "Projetos em destaque",
-      intro:
-        "Apps em produção para clientes e produtos próprios, a maioria para projetos de Web3, meio ambiente e comunidades.",
+      intro: "Trabalhos para clientes e produtos próprios: plataformas Web3, apps de IA, sites e ferramentas para desktop.",
       visitSite: "Ver site",
       sourceCode: "Código-fonte",
       screenshotAlt: (title: string) => `Captura de tela do ${title}`,
