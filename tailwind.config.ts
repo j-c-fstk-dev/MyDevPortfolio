@@ -22,14 +22,19 @@ export default {
           "electric-blue": "#00FFFF",
           "neon-cyan": "#00FFFF"
         },
-        background: "var(--background)",
-        foreground: "var(--foreground)"
+        // Standard site palette (values live in globals.css, with a dark variant)
+        mist: "rgb(var(--mist) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        ink: "rgb(var(--ink) / <alpha-value>)",
+        pine: "rgb(var(--pine) / <alpha-value>)",
+        lichen: "rgb(var(--lichen) / <alpha-value>)",
+        line: "rgb(var(--line) / <alpha-value>)",
+        signal: "rgb(var(--signal) / <alpha-value>)",
+        "on-pine": "rgb(var(--on-pine) / <alpha-value>)"
       },
       fontFamily: {
-        "mono-matrix": ["VT323", "Fira Code", "monospace"],
-        pixel: ["Press Start 2P", "monospace"],
-        clean: ["Inter", "system-ui", "sans-serif"],
-        sans: ["Inter", "system-ui", "sans-serif"]
+        "mono-matrix": ["var(--font-vt323)", "monospace"],
+        sans: ["var(--font-bricolage)", "system-ui", "sans-serif"]
       },
       animation: {
         "glow-pulse": "glow-pulse 2s ease-in-out infinite alternate",
@@ -71,6 +76,9 @@ export default {
       perspective: {
         "1000": "1000px",
         "1500": "1500px"
+      },
+      maxWidth: {
+        prose: "62ch"
       },
       screens: {
         xs: "475px"

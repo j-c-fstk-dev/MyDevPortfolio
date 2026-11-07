@@ -1,27 +1,27 @@
 {
-    "name": "starter-15",
+    "name": "jorge-cristo-portfolio",
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev --turbopack",
+        "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "format": "prettier --write ."
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "screenshots": "node --experimental-strip-types scripts/capture-screenshots.mts"
     },
     "dependencies": {
-        "framer-motion": "^12.23.7",
-        "next": "15.3.5",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0"
+        "next": "16.4.5",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
     },
     "devDependencies": {
         "@types/node": "^20",
-        "@types/react": "^18",
-        "@types/react-dom": "^18",
-        "@types/tailwindcss": "^3.0.11",
-        "eslint": "^8",
-        "eslint-config-next": "15.0.3",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "16.4.5",
+        "playwright": "^1.63.0",
         "postcss": "^8",
         "prettier": "^3.3.3",
         "tailwindcss": "^3.4.1",

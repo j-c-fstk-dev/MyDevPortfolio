@@ -1,0 +1,22 @@
+<!doctype html>
+<!--
+  Static copy of the contact form so Netlify can detect it at deploy time.
+  The real form lives in src/components/site/ContactForm.tsx and posts here.
+  Keep the field names in sync with that component.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Contact form</title>
+  </head>
+  <body>
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input name="name" type="text" />
+      <input name="email" type="email" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
