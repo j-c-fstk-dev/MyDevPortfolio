@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { profile, stats as portfolioStats } from "@/data/portfolio";
+import { useScatter } from "./scatter";
 
 interface StatItem {
   label: string;
@@ -18,20 +19,16 @@ const stats: StatItem[] = portfolioStats.map((stat, i) => ({
   }));
 
 export default function StatsSection() {
+  const binary = useScatter(48);
   const [isVisible, setIsVisible] = useState(false);
   const [animatedValues, setAnimatedValues] = useState<number[]>([0, 0, 0, 0]);
-  const [isClient, setIsClient] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
 
 
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   useEffect(() => {
-    if (!isClient) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -47,10 +44,10 @@ export default function StatsSection() {
     }
 
     return () => observer.disconnect();
-  }, [isClient]);
+  }, []);
 
   useEffect(() => {
-    if (isVisible && isClient) {
+    if (isVisible) {
       stats.forEach((stat, index) => {
         let current = 0;
         const increment = stat.value / 50; // 50 steps for smooth animation
@@ -68,23 +65,8 @@ export default function StatsSection() {
         }, 30);
       });
     }
-  }, [isVisible, isClient]);
+  }, [isVisible]);
 
-  if (!isClient) {
-    return (
-      <section
-        className="min-h-screen flex items-center justify-center py-20"
-       >
-
-        <div
-          className="text-matrix-primary-green font-mono-matrix"
-         >
-
-          Loading stats...
-        </div>
-      </section>);
-
-  }
 
   return (
     <section
@@ -205,7 +187,7 @@ export default function StatsSection() {
                   className="inline-block mr-1"
                  >
 
-                      {Math.random() > 0.5 ? "1" : "0"}
+                      {binary[(index * 12 + i) % binary.length].pick > 0.5 ? "1" : "0"}
                     </span>
                 )}
                 </div>

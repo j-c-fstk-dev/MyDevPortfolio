@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface Drop {
   x: number;
@@ -12,14 +12,9 @@ interface Drop {
 
 export default function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isClient, setIsClient] = useState(false);
+
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -111,11 +106,8 @@ export default function MatrixRain() {
         cancelAnimationFrame(animationId);
       }
     };
-  }, [isClient]);
+  }, []);
 
-  if (!isClient) {
-    return null;
-  }
 
   return (
     <canvas

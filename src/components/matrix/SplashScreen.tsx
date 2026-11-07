@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useScatter } from "./scatter";
 
 interface SplashScreenProps {
   onChoose: (choice: "red" | "blue") => void;
@@ -13,20 +14,16 @@ const messages = [
   "This is your last chance."];
 
 export default function SplashScreen({ onChoose }: SplashScreenProps) {
+  const bits = useScatter(100, 3);
   const [step, setStep] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [showPills, setShowPills] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
   
 
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   useEffect(() => {
-    if (!isClient) return;
 
     if (step < messages.length) {
       const message = messages[step];
@@ -51,23 +48,8 @@ export default function SplashScreen({ onChoose }: SplashScreenProps) {
 
       return () => clearInterval(typeInterval);
     }
-  }, [step, isClient]);
+  }, [step]);
 
-  if (!isClient) {
-    return (
-      <div
-        className="fixed inset-0 bg-black flex items-center justify-center"
-       >
-
-        <div
-          className="text-matrix-primary-green font-mono-matrix"
-         >
-
-          Initializing...
-        </div>
-      </div>);
-
-  }
 
   return (
     <div
@@ -76,19 +58,19 @@ export default function SplashScreen({ onChoose }: SplashScreenProps) {
 
       {/* Matrix Rain Background */}
       <div className="absolute inset-0">
-        {Array.from({ length: 100 }).map((_, i) =>
+        {bits.map((item, i) =>
         <div
           key={i}
           className="absolute font-mono-matrix text-matrix-primary-green/20 text-xs animate-pulse"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 3}s`,
-            animationDuration: `${2 + Math.random() * 3}s`
+            left: item.left,
+            top: item.top,
+            animationDelay: item.delay,
+            animationDuration: item.duration
           }}
          >
 
-            {Math.random() > 0.5 ? "1" : "0"}
+            {item.pick > 0.5 ? "1" : "0"}
           </div>
         )}
       </div>

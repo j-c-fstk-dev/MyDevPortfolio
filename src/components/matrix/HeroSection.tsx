@@ -1,32 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import TerminalTyping from "./TerminalTyping";
+import { useScatter } from "./scatter";
 
 export default function HeroSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    setIsLoaded(true);
-  }, []);
-
-  if (!isClient) {
-    return (
-      <section
-        className="h-screen flex items-center justify-center bg-matrix-black"
-       >
-
-        <div
-          className="text-matrix-primary-green font-mono-matrix"
-         >
-
-          Loading...
-        </div>
-      </section>);
-
-  }
+  const floating = useScatter(15);
 
   return (
     <section
@@ -58,7 +36,7 @@ export default function HeroSection() {
 
         {/* Glitch Effect Title */}
         <div
-          className={`mb-6 sm:mb-8 transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`mb-6 sm:mb-8 transition-all duration-1000 rise-in`}
          >
 
           <h1
@@ -78,7 +56,7 @@ export default function HeroSection() {
 
         {/* Terminal Window */}
         <div
-          className={`bg-matrix-black/90 border-2 border-matrix-primary-green rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 transition-all duration-1000 delay-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`bg-matrix-black/90 border-2 border-matrix-primary-green rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 transition-all duration-1000 delay-500 rise-in`}
          >
 
           <div className="flex items-center mb-3 sm:mb-4">
@@ -108,7 +86,7 @@ export default function HeroSection() {
 
         {/* Action Buttons */}
         <div
-          className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-1000 delay-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-1000 delay-1000 rise-in`}
          >
 
           <button
@@ -164,15 +142,15 @@ export default function HeroSection() {
 
       {/* Floating Code Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 15 }).map((_, i) =>
+        {floating.map((item, i) =>
         <div
           key={i}
           className="absolute font-mono-matrix text-matrix-primary-green/30 text-xs animate-pulse"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${2 + Math.random() * 3}s`
+            left: item.left,
+            top: item.top,
+            animationDelay: item.delay,
+            animationDuration: item.duration
           }}
          >
 
@@ -188,7 +166,7 @@ export default function HeroSection() {
           "&&",
           "||",
           "!="][
-          Math.floor(Math.random() * 10)]
+          Math.floor(item.pick * 10)]
           }
           </div>
         )}

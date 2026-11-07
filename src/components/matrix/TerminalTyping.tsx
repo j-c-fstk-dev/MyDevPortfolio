@@ -23,17 +23,12 @@ export default function TerminalTyping() {
   const [currentChar, setCurrentChar] = useState(0);
   const [displayedText, setDisplayedText] = useState<string[]>([]);
   const [showCursor, setShowCursor] = useState(true);
-  const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   
 
 
   useEffect(() => {
-    if (!isClient) return;
 
     const typeSpeed = 50;
     const lineDelay = 500;
@@ -64,28 +59,18 @@ export default function TerminalTyping() {
     }, typeSpeed);
 
     return () => clearTimeout(timer);
-  }, [currentLine, currentChar, isClient]);
+  }, [currentLine, currentChar]);
 
   // Cursor blinking effect
   useEffect(() => {
-    if (!isClient) return;
 
     const cursorTimer = setInterval(() => {
       setShowCursor((prev) => !prev);
     }, 500);
 
     return () => clearInterval(cursorTimer);
-  }, [isClient]);
+  }, []);
 
-  if (!isClient) {
-    return (
-      <div className="text-left font-mono-matrix text-sm">
-        <div className="text-matrix-primary-green">
-          Loading terminal...
-        </div>
-      </div>);
-
-  }
 
   return (
     <div

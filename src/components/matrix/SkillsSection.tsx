@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useScatter } from "./scatter";
 import { skills } from "@/data/portfolio";
 
 const toCommand = (category: string) => category.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
@@ -13,17 +14,7 @@ export default function SkillsSection() {
 
   const activeSkills = skills[activeCategory];
 
-  // Generated once so the background doesn't reshuffle on every click.
-  const background = useMemo(
-    () =>
-      Array.from({ length: 60 }).map(() => ({
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        delay: `${Math.random() * 5}s`,
-        bit: Math.random() > 0.5 ? "1" : "0",
-      })),
-    []
-  );
+  const background = useScatter(60);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -49,7 +40,7 @@ export default function SkillsSection() {
             className="absolute font-mono-matrix text-matrix-primary-green text-xs animate-pulse"
             style={{ left: b.left, top: b.top, animationDelay: b.delay }}
           >
-            {b.bit}
+            {b.pick > 0.5 ? "1" : "0"}
           </div>
         ))}
       </div>

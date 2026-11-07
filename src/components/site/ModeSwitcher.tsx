@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useSyncExternalStore } from "react";
 
 const MatrixExperience = dynamic(() => import("@/components/matrix/MatrixExperience"), {
   ssr: false,
@@ -13,26 +13,35 @@ const MatrixContext = createContext<() => void>(() => {});
 /** Returns a function that switches the page to the Matrix version. */
 export const useEnterMatrix = () => useContext(MatrixContext);
 
+const MATRIX_HASH = "#matrix";
+
+function subscribe(onChange: () => void) {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+}
+
+/** Tell subscribers the hash changed (replaceState doesn't fire hashchange). */
+function setHash(hash: string) {
+  history.replaceState(null, "", hash || window.location.pathname + window.location.search);
+  window.dispatchEvent(new HashChangeEvent("hashchange"));
+}
+
 /**
  * Wraps the standard site (rendered on the server) and swaps it for the
- * Matrix version on demand. Visiting /#matrix opens the Matrix directly.
+ * Matrix version on demand. The mode lives in the URL hash, so /#matrix
+ * opens the Matrix directly and can be shared.
  */
 export default function ModeSwitcher({ children }: { children: React.ReactNode }) {
-  const [matrix, setMatrix] = useState(false);
+  const matrix = useSyncExternalStore(
+    subscribe,
+    () => window.location.hash === MATRIX_HASH,
+    () => false
+  );
 
-  const enter = useCallback(() => {
-    history.replaceState(null, "", "#matrix");
-    setMatrix(true);
-  }, []);
-
+  const enter = useCallback(() => setHash(MATRIX_HASH), []);
   const exit = useCallback(() => {
-    history.replaceState(null, "", window.location.pathname);
-    setMatrix(false);
+    setHash("");
     window.scrollTo({ top: 0 });
-  }, []);
-
-  useEffect(() => {
-    if (window.location.hash === "#matrix") setMatrix(true);
   }, []);
 
   return (

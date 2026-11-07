@@ -13,7 +13,7 @@ The site has two faces:
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS
 
 ## Editing the content
 
@@ -32,7 +32,7 @@ Then open http://localhost:3000.
 
 | Script | What it does |
 | --- | --- |
-| `npm run dev` | Development server with Turbopack |
+| `npm run dev` | Development server |
 | `npm run build` | Production build |
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint |

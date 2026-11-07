@@ -1,17 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 
 interface NavigationProps {
   currentSection: number;
 }
 
 export default function Navigation({ currentSection }: NavigationProps) {
-  const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const sections = [
   { id: 0, name: "INIT", label: "Home" },
@@ -23,16 +18,12 @@ export default function Navigation({ currentSection }: NavigationProps) {
 
 
   const scrollToSection = (sectionId: number) => {
-    if (!isClient) return;
     const element = document.getElementById(`section-${sectionId}`);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  if (!isClient) {
-    return null;
-  }
 
   return (
     <>
