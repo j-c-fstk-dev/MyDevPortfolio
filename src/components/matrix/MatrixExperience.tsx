@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import BootSequence from "./BootSequence";
+import { useEffect, useRef, useState } from "react";
 import ContactSection from "./ContactSection";
 import ExperienceSection from "./ExperienceSection";
 import HeroSection from "./HeroSection";
@@ -9,7 +8,6 @@ import MatrixRain from "./MatrixRain";
 import Navigation from "./Navigation";
 import ProjectsSection from "./ProjectsSection";
 import SkillsSection from "./SkillsSection";
-import SoundToggle from "./SoundToggle";
 import StatsSection from "./StatsSection";
 
 export interface Origin {
@@ -17,30 +15,19 @@ export interface Origin {
   y: number;
 }
 
-type Phase = "transition" | "boot" | "portfolio";
+type Phase = "transition" | "portfolio";
 
-/** Skip the boot sequence the second time someone enters in the same session. */
-const BOOTED_KEY = "matrix-booted";
 const TRANSITION_MS = 900;
 
 const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function alreadyBooted() {
-  try {
-    return sessionStorage.getItem(BOOTED_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
 function initialPhase(origin: Origin | null): Phase {
-  if (origin && !prefersReducedMotion()) return "transition";
-  return alreadyBooted() ? "portfolio" : "boot";
+  return origin && !prefersReducedMotion() ? "transition" : "portfolio";
 }
 
 /**
  * The Matrix version: a circle of falling code opens from where the visitor
- * clicked, a broken build gets fixed, then the terminal-style portfolio.
+ * clicked, then the terminal-style portfolio, whose hero terminal fixes a broken build.
  * Loaded on demand, so visitors who never open it don't download it.
  */
 export default function MatrixExperience({
@@ -56,7 +43,6 @@ export default function MatrixExperience({
 }) {
   const [phase, setPhase] = useState<Phase>(() => initialPhase(origin));
   const [open, setOpen] = useState(false);
-  const [reducedMotion] = useState(prefersReducedMotion);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentSection, setCurrentSection] = useState(0);
   const mainRef = useRef<HTMLElement>(null);
@@ -78,17 +64,8 @@ export default function MatrixExperience({
   const finishTransition = () => {
     onCovered();
     window.scrollTo({ top: 0, behavior: "instant" });
-    setPhase(alreadyBooted() ? "portfolio" : "boot");
-  };
-
-  const finishBoot = useCallback(() => {
-    try {
-      sessionStorage.setItem(BOOTED_KEY, "1");
-    } catch {
-      // Storage blocked: the boot sequence will simply play again next time.
-    }
     setPhase("portfolio");
-  }, []);
+  };
 
   // Portfolio: track scroll, move focus to the content, Escape leaves.
   useEffect(() => {
@@ -134,14 +111,11 @@ export default function MatrixExperience({
       }}
     >
       {/* One canvas from the first frame to the end; only its strength changes. */}
-      <MatrixRain intensity={phase === "transition" ? 0.9 : phase === "boot" ? 0.45 : 0.2} />
-
-      {phase === "boot" && <BootSequence onDone={finishBoot} onExit={onExit} reducedMotion={reducedMotion} />}
+      <MatrixRain intensity={phase === "transition" ? 0.9 : 0.25} />
 
       {phase === "portfolio" && (
         <>
           <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2">
-            <SoundToggle className="hidden h-12 bg-matrix-black/80 sm:block" />
             <button
               onClick={onExit}
               className="h-12 px-4 bg-matrix-black/80 border border-blue-500/40 rounded-full flex items-center gap-2 font-mono-matrix text-blue-300 hover:border-blue-400 hover:shadow-neon-blue transition-all duration-300"
