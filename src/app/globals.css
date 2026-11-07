@@ -73,6 +73,20 @@ summary:focus-visible {
    Matrix mode
    --------------------------------------------------------------------- */
 
+/* One-shot jolt when the build fails during the Matrix entrance. */
+@keyframes matrix-shake {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-6px, 2px); }
+    30% { transform: translate(5px, -3px); }
+    45% { transform: translate(-4px, -1px); }
+    60% { transform: translate(3px, 2px); }
+    80% { transform: translate(-2px, 0); }
+}
+
+.matrix-shake {
+    animation: matrix-shake 0.35s ease-out;
+}
+
 .matrix-mode ::selection {
     background: rgba(0, 255, 0, 0.3);
     color: #00FF00;
