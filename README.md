@@ -8,8 +8,11 @@ The site is available in English at `/` and in Portuguese at `/pt`, and has two 
 
 - **Standard portfolio**: the default view. A single page rendered on the server, with a light
   and a dark theme that follow the visitor's system setting.
-- **Matrix mode**: an opt-in terminal-style version, loaded only when someone asks for it. Use the
-  💊 button in the footer, or open the site with `#matrix` at the end of the URL.
+- **Matrix mode**: an opt-in terminal-style version, loaded only when someone asks for it. Open it
+  with the 💊 button in the footer, by typing `matrix` anywhere on the page, or with `#matrix` at
+  the end of the URL. The entrance plays a broken build being diagnosed and fixed (any key skips
+  it, and it plays once per session); Escape goes back to where you were on the standard site.
+  Sound effects are optional and off by default.
 
 ## Stack
 

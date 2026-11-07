@@ -2,119 +2,107 @@
 
 import { useEffect, useRef } from "react";
 
+/** Random glyphs, plus words from Jorge's stack that stream down some columns. */
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=<>{}[]|;:";
+const TERMS = ["SOLIDITY", "NEXT.JS", "REACT", "CELO", "NODE", "N8N", "TYPESCRIPT", "SUPABASE", "WEB3", "FARCASTER", "NOSTR", "STRIPE"];
+const WORD_CHANCE = 0.18;
+const FONT_SIZE = 14;
+
 interface Drop {
   x: number;
   y: number;
   speed: number;
-  char: string;
   opacity: number;
+  /** When set, the column spells this word, one letter per row. */
+  word: string | null;
+  row: number;
+  char: string;
 }
 
-export default function MatrixRain() {
+const randomChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+function newDrop(x: number, y: number): Drop {
+  const word = Math.random() < WORD_CHANCE ? TERMS[Math.floor(Math.random() * TERMS.length)] : null;
+  return {
+    x,
+    y,
+    speed: Math.random() * 3 + 1,
+    opacity: word ? 0.75 : Math.random() * 0.5 + 0.1,
+    word,
+    row: Math.floor(y / FONT_SIZE),
+    char: word ? word[0] : randomChar(),
+  };
+}
+
+/**
+ * The falling-code background. One canvas is used from the entrance transition
+ * through the whole Matrix portfolio; `intensity` sets how strongly it shows.
+ */
+export default function MatrixRain({ intensity = 0.2 }: { intensity?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-
   useEffect(() => {
-
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Matrix characters
-    const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?";
     const drops: Drop[] = [];
-    const fontSize = 14;
-    let columns = 0;
-    let animationId: number;
+    let animationId = 0;
 
-    const resizeCanvas = () => {
+    const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      columns = Math.floor(canvas.width / fontSize);
-
-      // Initialize drops
       drops.length = 0;
-      for (let i = 0; i < columns; i++) {
-        drops.push({
-          x: i * fontSize,
-          y: Math.random() * canvas.height,
-          speed: Math.random() * 3 + 1,
-          char: chars[Math.floor(Math.random() * chars.length)],
-          opacity: Math.random() * 0.5 + 0.1
-        });
+      for (let x = 0; x < canvas.width; x += FONT_SIZE) {
+        drops.push(newDrop(x, Math.random() * canvas.height));
       }
     };
 
     // next/font exposes the generated font-family name through a CSS variable.
     const fontFamily = getComputedStyle(document.body).getPropertyValue("--font-vt323").trim();
-    const font = `${fontSize}px ${fontFamily ? `${fontFamily}, ` : ""}monospace`;
+    const font = `${FONT_SIZE}px ${fontFamily ? `${fontFamily}, ` : ""}monospace`;
 
-    const animate = () => {
-      // Create trailing effect
-      ctx.fillStyle = "rgba(10, 10, 10, 0.05)";
+    const draw = () => {
+      ctx.fillStyle = "rgba(10, 10, 10, 0.05)"; // trailing fade
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw drops
       ctx.font = font;
 
-      drops.forEach((drop) => {
-        // Random character change
-        if (Math.random() < 0.1) {
-          drop.char = chars[Math.floor(Math.random() * chars.length)];
+      for (let i = 0; i < drops.length; i++) {
+        const drop = drops[i];
+        const row = Math.floor(drop.y / FONT_SIZE);
+        if (row !== drop.row) {
+          drop.row = row;
+          drop.char = drop.word ? drop.word[Math.abs(row) % drop.word.length] : randomChar();
+        } else if (!drop.word && Math.random() < 0.05) {
+          drop.char = randomChar();
         }
 
-        // Set color with opacity
-        const green = Math.floor(255 * drop.opacity);
-        ctx.fillStyle = `rgb(0, ${green}, 0)`;
-
-        // Draw character
+        ctx.fillStyle = `rgb(0, ${Math.floor(255 * drop.opacity)}, 0)`;
         ctx.fillText(drop.char, drop.x, drop.y);
-
-        // Move drop
         drop.y += drop.speed;
 
-        // Reset drop when it goes off screen
-        if (drop.y > canvas.height) {
-          drop.y = -fontSize;
-          drop.speed = Math.random() * 3 + 1;
-          drop.opacity = Math.random() * 0.5 + 0.1;
-        }
-      });
-
-      animationId = requestAnimationFrame(animate);
+        if (drop.y > canvas.height) drops[i] = newDrop(drop.x, -FONT_SIZE);
+      }
+      animationId = requestAnimationFrame(draw);
     };
 
-    resizeCanvas();
-    // Skip the endless animation for people who prefer reduced motion.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-    animate();
-
-    const handleResize = () => {
-      resizeCanvas();
-    };
-
-    window.addEventListener("resize", handleResize);
+    resize();
+    window.addEventListener("resize", resize);
+    // No endless animation for people who prefer reduced motion.
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) draw();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animationId);
     };
   }, []);
-
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-20"
-      style={{ background: "transparent" }}
-      />);
-
-
+      aria-hidden
+      className="fixed inset-0 h-full w-full pointer-events-none z-0 transition-opacity duration-1000"
+      style={{ opacity: intensity }}
+    />
+  );
 }
