@@ -26,7 +26,7 @@ const t = (en: string, pt: string): Text => ({ en, pt });
 const GITHUB_USER = "j-c-fstk-dev";
 const gh = (repo: string, owner = GITHUB_USER) => `https://github.com/${owner}/${repo}`;
 
-export type ProjectCategory = "web3" | "ai" | "web" | "automation";
+export type ProjectCategory = "web3" | "ai" | "web" | "desktop" | "automation";
 export type ProjectStatus = "live" | "beta" | "in-development" | "prototype";
 
 const contexts = {
@@ -35,6 +35,7 @@ const contexts = {
   hackathon: t("Hackathon", "Hackathon"),
   bounty: t("Bounty", "Bounty"),
   competition: t("Competition", "Competição"),
+  openSource: t("Open source", "Código aberto"),
 };
 
 const raw = {
@@ -161,6 +162,119 @@ const raw = {
       featured: true,
     },
     {
+      slug: "operator",
+      title: "Operator",
+      description: t(
+        "Keyboard-first project workspace with a retro terminal look. Local-first, with optional cloud sync and file storage.",
+        "Espaço de trabalho para projetos, guiado pelo teclado, com visual de terminal retrô. Local-first, com sincronização e armazenamento de arquivos opcionais na nuvem."
+      ),
+      tech: ["React", "TypeScript", "Supabase", "Web Audio"],
+      category: "web",
+      status: "live",
+      context: contexts.own,
+      repo: gh("Operator-Matrix-Retro-Terminal-Workspace"),
+      featured: true,
+    },
+    {
+      slug: "wondrix",
+      title: "Wondrix",
+      description: t(
+        "AI education agent for families. Team project for the Dubai Create AI Agents Championship (Best Societal AI Agent track).",
+        "Agente de IA educacional para famílias. Projeto em equipe para o Dubai Create AI Agents Championship (trilha Best Societal AI Agent)."
+      ),
+      tech: ["Next.js", "TypeScript", "AI agents"],
+      category: "ai",
+      status: "live",
+      context: contexts.hackathon,
+      repo: gh("Wondrix"),
+      featured: true,
+    },
+    {
+      slug: "prumo",
+      title: "Prumo",
+      description: t(
+        "Native Android app (Kotlin + Jetpack Compose) and interactive simulator with AI mentoring: a guided 15-minute diagnosis, a practical roadmap in narrative chapters and short presence audios to get ideas off paper without stalling.",
+        "Aplicativo Android nativo (Kotlin + Jetpack Compose) e simulador interativo com mentoria por IA: diagnóstico guiado em 15 minutos, roteiro prático em capítulos narrativos e micro-áudios de presença para tirar ideias do papel sem paralisia."
+      ),
+      tech: ["Kotlin", "Jetpack Compose", "TypeScript", "Gemini"],
+      category: "ai",
+      status: "live",
+      context: contexts.own,
+      repo: gh("Prumo"),
+      featured: true,
+    },
+    {
+      slug: "rastro",
+      title: "Rastro",
+      description: t(
+        "Real-world regenerative actions, signed by who did them and confirmed by who was there. Works offline with no account or wallet, built on Nostr, exports to the DeCleanup format.",
+        "Ações regenerativas do mundo real, assinadas por quem fez e confirmadas por quem estava lá. Funciona offline, sem conta nem carteira, é construído sobre Nostr e exporta no formato do DeCleanup."
+      ),
+      tech: ["React", "TypeScript", "Nostr", "IndexedDB", "Leaflet"],
+      category: "web3",
+      status: "live",
+      context: contexts.own,
+      repo: gh("rastro"),
+      featured: true,
+    },
+    {
+      slug: "clipvault",
+      title: "ClipVault",
+      description: t(
+        "Desktop clipboard manager that sorts everything you copy into categories automatically.",
+        "Gerenciador de área de transferência para desktop que organiza automaticamente em categorias tudo o que você copia."
+      ),
+      tech: ["Rust"],
+      category: "desktop",
+      status: "live",
+      context: contexts.own,
+      repo: gh("clipvault"),
+      featured: true,
+    },
+    {
+      slug: "maestro",
+      title: "MAESTRO",
+      description: t(
+        "Live electronic music web app with an AI conductor: change the track with commands and every change lands on the beat. Nine styles, two decks, autopilot and MP3 recording.",
+        "App web de música eletrônica ao vivo com um maestro de IA: você muda a faixa com comandos e cada mudança cai no tempo certo. Nove estilos, dois decks, piloto automático e gravação em MP3."
+      ),
+      tech: ["React", "TypeScript", "Strudel", "Web Audio", "LLM"],
+      category: "ai",
+      status: "live",
+      context: contexts.own,
+      repo: gh("maiestro"),
+      featured: true,
+    },
+    {
+      slug: "finecoding",
+      title: "FineCoding",
+      description: t(
+        "Blog template with AI integrations — also my development blog.",
+        "Template de blog com integrações de IA — também é meu blog de desenvolvimento."
+      ),
+      tech: ["TypeScript", "React"],
+      category: "web",
+      status: "live",
+      context: contexts.own,
+      live: "https://finecoding.netlify.app",
+      repo: gh("finecoding"),
+      featured: true,
+    },
+    {
+      slug: "matrix-hacker-desktop",
+      title: "Matrix Hacker Desktop",
+      description: t(
+        "Turns Linux into a Matrix-style hacker workstation: an ultra-light i3wm setup for old hardware (Core 2 Duo and up) with Matrix rain, a system dashboard, multi-panel terminals and a green neon theme. Works on Kali, Debian, Ubuntu, Arch and Fedora.",
+        "Transforma o Linux numa estação de trabalho hacker no estilo Matrix: um setup ultraleve de i3wm para hardware antigo (Core 2 Duo em diante), com chuva Matrix, painel do sistema, terminais em vários painéis e tema verde neon. Funciona no Kali, Debian, Ubuntu, Arch e Fedora."
+      ),
+      tech: ["Shell", "i3wm", "Linux"],
+      category: "desktop",
+      status: "live",
+      context: contexts.openSource,
+      repo: gh("matrix-hacker-desktop"),
+      featured: true,
+    },
+    {
       slug: "beregen",
       title: "BeRegen Ecosystem",
       description: t(
@@ -206,59 +320,6 @@ const raw = {
       featured: true,
     },
     {
-      slug: "rastro",
-      title: "Rastro",
-      description: t(
-        "Real-world regenerative actions, signed by who did them and confirmed by who was there. Works offline with no account or wallet, built on Nostr, exports to the DeCleanup format.",
-        "Ações regenerativas do mundo real, assinadas por quem fez e confirmadas por quem estava lá. Funciona offline, sem conta nem carteira, é construído sobre Nostr e exporta no formato do DeCleanup."
-      ),
-      tech: ["React", "TypeScript", "Nostr", "IndexedDB", "Leaflet"],
-      category: "web3",
-      status: "in-development",
-      context: contexts.own,
-      repo: gh("rastro"),
-      featured: true,
-    },
-    {
-      slug: "prumo",
-      title: "Prumo",
-      description: t(
-        "PWA that turns a short assessment into a niche diagnosis and a 90-day roadmap, with a contextual AI coach.",
-        "PWA que transforma uma avaliação curta num diagnóstico de nicho e num plano de 90 dias, com um coach de IA contextual."
-      ),
-      tech: ["React 19", "TypeScript", "Express", "Cloudflare Workers", "LLM APIs"],
-      category: "ai",
-      status: "in-development",
-      context: contexts.own,
-      repo: gh("Prumo"),
-    },
-    {
-      slug: "maestro",
-      title: "MAESTRO",
-      description: t(
-        "Live electronic music web app with an AI conductor: change the track with commands and every change lands on the beat. Nine styles, two decks, autopilot and MP3 recording.",
-        "App web de música eletrônica ao vivo com um maestro de IA: você muda a faixa com comandos e cada mudança cai no tempo certo. Nove estilos, dois decks, piloto automático e gravação em MP3."
-      ),
-      tech: ["React", "TypeScript", "Strudel", "Web Audio", "LLM"],
-      category: "ai",
-      status: "prototype",
-      context: contexts.own,
-      repo: gh("maiestro"),
-    },
-    {
-      slug: "operator",
-      title: "Operator",
-      description: t(
-        "Keyboard-first project workspace with a retro terminal look. Local-first, with optional cloud sync and file storage.",
-        "Espaço de trabalho para projetos, guiado pelo teclado, com visual de terminal retrô. Local-first, com sincronização e armazenamento de arquivos opcionais na nuvem."
-      ),
-      tech: ["React", "TypeScript", "Supabase", "Web Audio"],
-      category: "web",
-      status: "in-development",
-      context: contexts.own,
-      repo: gh("Operator-Matrix-Retro-Terminal-Workspace"),
-    },
-    {
       slug: "megazord",
       title: "Megazord MVP",
       description: t(
@@ -270,19 +331,6 @@ const raw = {
       status: "prototype",
       context: contexts.own,
       repo: gh("megazord-mvp"),
-    },
-    {
-      slug: "wondrix",
-      title: "Wondrix",
-      description: t(
-        "AI education agent for families. Team project for the Dubai Create AI Agents Championship (Best Societal AI Agent track).",
-        "Agente de IA educacional para famílias. Projeto em equipe para o Dubai Create AI Agents Championship (trilha Best Societal AI Agent)."
-      ),
-      tech: ["Next.js", "TypeScript", "AI agents"],
-      category: "ai",
-      status: "prototype",
-      context: contexts.hackathon,
-      repo: gh("Wondrix"),
     },
     {
       slug: "partomagnus",
@@ -391,26 +439,13 @@ const raw = {
       context: contexts.own,
       repo: gh("subguard-ai"),
     },
-    {
-      slug: "finecoding",
-      title: "FineCoding",
-      description: t(
-        "Blog template with AI integrations — also my development blog.",
-        "Template de blog com integrações de IA — também é meu blog de desenvolvimento."
-      ),
-      tech: ["TypeScript", "React"],
-      category: "web",
-      status: "live",
-      context: contexts.own,
-      live: "https://finecoding.netlify.app",
-      repo: gh("finecoding"),
-    },
   ] as RawProject[],
 
   categoryLabels: {
     web3: t("Web3", "Web3"),
     ai: t("AI", "IA"),
     web: t("Web apps", "Apps web"),
+    desktop: t("Desktop & Linux", "Desktop e Linux"),
     automation: t("Automation", "Automação"),
   },
 
