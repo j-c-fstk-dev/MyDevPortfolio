@@ -60,11 +60,11 @@ export default function Page() {
     return (
       <div
         className="min-h-screen bg-black flex items-center justify-center"
-        data-oid="jglpjf1">
+       >
 
         <div
           className="text-matrix-primary-green font-mono-matrix"
-          data-oid=":xhz91k">
+         >
 
           Initializing Matrix...
         </div>
@@ -74,13 +74,13 @@ export default function Page() {
 
   // Show splash screen first
   if (showSplash) {
-    return <SplashScreen onChoose={handlePillChoice} data-oid="xj20rj8" />;
+    return <SplashScreen onChoose={handlePillChoice} />;
   }
 
   // Show normal portfolio if blue pill was chosen
   if (userChoice === "blue") {
     return (
-      <NormalPortfolio onExitMatrix={handleSwitchReality} data-oid="fulp-67" />);
+      <NormalPortfolio onExitMatrix={handleSwitchReality} />);
 
   }
 
@@ -88,60 +88,60 @@ export default function Page() {
   return (
     <div
       className="relative bg-matrix-black text-matrix-light-gray overflow-x-hidden"
-      data-oid="0sc284a">
+     >
 
       {/* Matrix Rain Background */}
-      <MatrixRain data-oid="ws0v:zh" />
+      <MatrixRain />
 
       {/* Reality Switch Toggle */}
       <button
         onClick={handleSwitchReality}
         className="fixed top-4 right-4 z-50 w-12 h-12 bg-matrix-black/80 border border-blue-500/30 rounded-full flex items-center justify-center hover:border-blue-500 hover:shadow-neon-blue transition-all duration-300 group"
         title="Switch to Normal Reality"
-        data-oid="9.6e1au">
+       >
 
         <div
           className="text-blue-400 group-hover:text-blue-300 transition-all"
-          data-oid="lf5vtko">
+         >
 
           💊
         </div>
       </button>
 
       {/* Navigation */}
-      <Navigation currentSection={currentSection} data-oid="210bp3x" />
+      <Navigation currentSection={currentSection} />
 
       {/* Scroll Progress Indicator */}
       <div
         className="fixed top-0 left-0 w-full h-1 bg-matrix-dark-gray z-50"
-        data-oid="3n.uvi2">
+       >
 
         <div
           className="h-full bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue transition-all duration-100"
           style={{ width: `${scrollProgress * 100}%` }}
-          data-oid=".-6hdvc" />
+          />
 
       </div>
 
       {/* Main Content */}
-      <main className="relative z-10" data-oid="x5x_iso">
+      <main className="relative z-10">
         {/* Hero Section */}
-        <HeroSection data-oid="23dkcm2" />
+        <HeroSection />
 
         {/* Stats Section */}
-        <StatsSection data-oid="wn3.150" />
+        <StatsSection />
 
         {/* Skills Section */}
-        <SkillsSection data-oid="_ga-:vg" />
+        <SkillsSection />
 
         {/* Projects Section */}
-        <ProjectsSection data-oid="49emab8" />
+        <ProjectsSection />
 
         {/* Experience Section */}
-        <ExperienceSection data-oid="zwdk:m2" />
+        <ExperienceSection />
 
         {/* Contact Section */}
-        <ContactSection data-oid="05ss7xr" />
+        <ContactSection />
       </main>
     </div>);
 

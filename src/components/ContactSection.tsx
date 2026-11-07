@@ -89,13 +89,13 @@ export default function ContactSection() {
       ref={sectionRef}
       id="section-5"
       className="min-h-screen flex items-center justify-center py-20 relative"
-      data-oid="itorjio">
+     >
 
       {/* Background Network */}
-      <div className="absolute inset-0 opacity-10" data-oid="z_ha7vc">
-        <svg className="w-full h-full" data-oid="-t5p3io">
+      <div className="absolute inset-0 opacity-10">
+        <svg className="w-full h-full">
           {Array.from({ length: 20 }).map((_, i) =>
-          <g key={i} data-oid="tj:cshq">
+          <g key={i}>
               <circle
               cx={`${Math.random() * 100}%`}
               cy={`${Math.random() * 100}%`}
@@ -103,7 +103,7 @@ export default function ContactSection() {
               fill="#00FF00"
               className="animate-pulse"
               style={{ animationDelay: `${i * 0.2}s` }}
-              data-oid="ywnqekm" />
+              />
 
 
               {Array.from({ length: 3 }).map((_, j) =>
@@ -117,7 +117,7 @@ export default function ContactSection() {
               strokeWidth="0.5"
               className="animate-pulse"
               style={{ animationDelay: `${(i + j) * 0.1}s` }}
-              data-oid="tp4v6tq" />
+              />
 
             )}
             </g>
@@ -125,39 +125,39 @@ export default function ContactSection() {
         </svg>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10" data-oid="68hhgkt">
+      <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16" data-oid="40.fumi">
+        <div className="text-center mb-16">
           <h2
             className="text-4xl md:text-6xl font-mono-matrix text-glow-green mb-4"
-            data-oid="-i3iex6">
+           >
 
             CONTACT_INTERFACE
           </h2>
           <div
             className="text-xl font-mono-matrix text-matrix-electric-blue"
-            data-oid="oq5qyo6">
+           >
 
             &gt; ESTABLISHING_CONNECTION...
           </div>
           <div
             className="w-32 h-1 bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue mx-auto mt-4"
-            data-oid="_ywoqn9">
+           >
           </div>
         </div>
 
         <div
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto"
-          data-oid="1dq-0l4">
+         >
 
           {/* Contact Methods */}
           <div
             className={`space-y-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
-            data-oid="y44_o0p">
+           >
 
             <h3
               className="font-mono-matrix text-2xl text-matrix-primary-green mb-8 text-glow-green"
-              data-oid="iut2kg5">
+             >
 
               COMMUNICATION_PROTOCOLS
             </h3>
@@ -168,32 +168,32 @@ export default function ContactSection() {
               className={`bg-matrix-black/50 border border-matrix-primary-green/30 rounded-lg p-6 hover:border-matrix-primary-green hover:shadow-neon-green transition-all duration-500 cursor-pointer group`}
               style={{ transitionDelay: `${index * 0.1}s` }}
               onClick={() => window.open(method.command, "_blank")}
-              data-oid=":_3fa7a">
+             >
 
-                <div className="flex items-center gap-4" data-oid="hgzifh:">
+                <div className="flex items-center gap-4">
                   <span
                   className="text-2xl group-hover:scale-110 transition-transform"
-                  data-oid="q5mb5zk">
+                 >
 
                     {method.icon}
                   </span>
-                  <div className="flex-1" data-oid="ow43fvm">
+                  <div className="flex-1">
                     <div
                     className="font-mono-matrix text-matrix-electric-blue text-sm mb-1"
-                    data-oid="1_.s-qe">
+                   >
 
                       {method.label}
                     </div>
                     <div
                     className="font-mono-matrix text-matrix-light-gray group-hover:text-matrix-primary-green transition-colors"
-                    data-oid="ghfcbwn">
+                   >
 
                       {method.value}
                     </div>
                   </div>
                   <div
                   className="text-matrix-primary-green opacity-0 group-hover:opacity-100 transition-opacity"
-                  data-oid="x0xyht_">
+                 >
 
                     →
                   </div>
@@ -204,24 +204,24 @@ export default function ContactSection() {
             {/* Terminal Status */}
             <div
               className="bg-matrix-black/70 border border-matrix-primary-green/30 rounded-lg p-4 mt-8"
-              data-oid="dvzc7iy">
+             >
 
               <div
                 className="font-mono-matrix text-sm space-y-1"
-                data-oid="f_1zm0d">
+               >
 
-                <div className="text-matrix-electric-blue" data-oid="pt-fo2r">
+                <div className="text-matrix-electric-blue">
                   $ status --availability
                 </div>
-                <div className="text-matrix-primary-green" data-oid="ik086tk">
+                <div className="text-matrix-primary-green">
                   ● ONLINE - Available for new projects
                 </div>
-                <div className="text-matrix-light-gray" data-oid="16vin35">
+                <div className="text-matrix-light-gray">
                   Response time: &lt; 24 hours
                 </div>
                 <div
                   className="text-matrix-primary-green animate-pulse"
-                  data-oid="qipck:3">
+                 >
 
                   _
                 </div>
@@ -232,11 +232,11 @@ export default function ContactSection() {
           {/* Contact Form */}
           <div
             className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
-            data-oid="xj9ysoc">
+           >
 
             <h3
               className="font-mono-matrix text-2xl text-matrix-primary-green mb-8 text-glow-green"
-              data-oid="s3v2_iz">
+             >
 
               DIRECT_MESSAGE_SYSTEM
             </h3>
@@ -244,13 +244,13 @@ export default function ContactSection() {
             <form
               onSubmit={handleSubmit}
               className="space-y-6"
-              data-oid="5gsc0a8">
+             >
 
               {/* Name Input */}
-              <div data-oid="o.3yo_8">
+              <div>
                 <label
                   className="block font-mono-matrix text-matrix-electric-blue text-sm mb-2"
-                  data-oid="e0i8azt">
+                 >
 
                   NAME_INPUT:
                 </label>
@@ -262,15 +262,15 @@ export default function ContactSection() {
                   required
                   className="w-full bg-matrix-black/50 border-2 border-matrix-primary-green/30 rounded px-4 py-3 font-mono-matrix text-matrix-light-gray focus:border-matrix-primary-green focus:shadow-neon-green outline-none transition-all"
                   placeholder="Enter your name..."
-                  data-oid="up9p0bt" />
+                  />
 
               </div>
 
               {/* Email Input */}
-              <div data-oid="dkso9bc">
+              <div>
                 <label
                   className="block font-mono-matrix text-matrix-electric-blue text-sm mb-2"
-                  data-oid="m0yjna:">
+                 >
 
                   EMAIL_ADDRESS:
                 </label>
@@ -282,15 +282,15 @@ export default function ContactSection() {
                   required
                   className="w-full bg-matrix-black/50 border-2 border-matrix-primary-green/30 rounded px-4 py-3 font-mono-matrix text-matrix-light-gray focus:border-matrix-primary-green focus:shadow-neon-green outline-none transition-all"
                   placeholder="your.email@domain.com"
-                  data-oid="s8-yjca" />
+                  />
 
               </div>
 
               {/* Message Input */}
-              <div data-oid="u4kl.zg">
+              <div>
                 <label
                   className="block font-mono-matrix text-matrix-electric-blue text-sm mb-2"
-                  data-oid="vahgpf-">
+                 >
 
                   MESSAGE_CONTENT:
                 </label>
@@ -302,7 +302,7 @@ export default function ContactSection() {
                   rows={6}
                   className="w-full bg-matrix-black/50 border-2 border-matrix-primary-green/30 rounded px-4 py-3 font-mono-matrix text-matrix-light-gray focus:border-matrix-primary-green focus:shadow-neon-green outline-none transition-all resize-none"
                   placeholder="Enter your message..."
-                  data-oid="hkzge74" />
+                  />
 
               </div>
 
@@ -315,16 +315,16 @@ export default function ContactSection() {
                 "bg-matrix-primary-green/10 border-matrix-primary-green/30 text-matrix-primary-green/50 cursor-not-allowed" :
                 "bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green"}`
                 }
-                data-oid="2.s4:gz">
+               >
 
                 {isSubmitting ?
                 <span
                   className="flex items-center justify-center gap-2"
-                  data-oid="5yt2t.o">
+                 >
 
                     <div
                     className="w-4 h-4 border-2 border-matrix-primary-green border-t-transparent rounded-full animate-spin"
-                    data-oid="_8zjb77">
+                   >
                   </div>
                     TRANSMITTING...
                   </span> :
@@ -337,11 +337,11 @@ export default function ContactSection() {
               {submitStatus === "success" &&
               <div
                 className="bg-matrix-primary-green/20 border border-matrix-primary-green rounded p-4"
-                data-oid="ptxbklo">
+               >
 
                   <div
                   className="font-mono-matrix text-matrix-primary-green text-sm"
-                  data-oid="0rwz.aa">
+                 >
 
                     ✓ MESSAGE_TRANSMITTED_SUCCESSFULLY
                   </div>
@@ -351,11 +351,11 @@ export default function ContactSection() {
               {submitStatus === "error" &&
               <div
                 className="bg-red-500/20 border border-red-500 rounded p-4"
-                data-oid="nhbt0c.">
+               >
 
                   <div
                   className="font-mono-matrix text-red-400 text-sm"
-                  data-oid="xin23:7">
+                 >
 
                     ✗ TRANSMISSION_FAILED - Please try again
                   </div>
@@ -366,37 +366,37 @@ export default function ContactSection() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-20" data-oid="tmj-401">
+        <div className="text-center mt-20">
           <div
             className="bg-matrix-black/70 border border-matrix-primary-green/30 rounded-lg p-8 max-w-2xl mx-auto"
-            data-oid="60ep6v6">
+           >
 
             <h4
               className="font-mono-matrix text-xl text-matrix-primary-green mb-4 text-glow-green"
-              data-oid="u68egcq">
+             >
 
               END_OF_TRANSMISSION
             </h4>
-            <p className="text-matrix-light-gray mb-6" data-oid="rze5iwq">
+            <p className="text-matrix-light-gray mb-6">
               Thank you for exploring my digital realm. Ready to collaborate on
               the next big project?
             </p>
 
             <div
               className="flex flex-col sm:flex-row gap-4 justify-center"
-              data-oid="hghf_zc">
+             >
 
               <button
                 className="px-6 py-3 bg-matrix-primary-green/20 border-2 border-matrix-primary-green rounded font-mono-matrix text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green transition-all duration-300"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                data-oid="36qsc-d">
+               >
 
                 &gt; RESTART_SEQUENCE
               </button>
               <button
                 className="px-6 py-3 bg-matrix-electric-blue/20 border-2 border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 hover:shadow-neon-blue transition-all duration-300"
                 onClick={() => window.open("mailto:dev@matrix.com", "_blank")}
-                data-oid="41l4mi3">
+               >
 
                 &gt; HIRE_DEVELOPER
               </button>
@@ -405,17 +405,17 @@ export default function ContactSection() {
             {/* Copyright */}
             <div
               className="mt-8 pt-6 border-t border-matrix-primary-green/20"
-              data-oid="s0tlfze">
+             >
 
               <div
                 className="font-mono-matrix text-matrix-primary-green/50 text-sm"
-                data-oid="q40dk24">
+               >
 
                 © 2024 Matrix Developer | Built with React & TypeScript
               </div>
               <div
                 className="font-mono-matrix text-matrix-primary-green/30 text-xs mt-2"
-                data-oid="stzdgli">
+               >
 
                 "There is no spoon" - The Matrix (1999)
               </div>

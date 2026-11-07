@@ -39,14 +39,14 @@ export default function Navigation({ currentSection }: NavigationProps) {
       {/* Side Navigation - Hidden on mobile */}
       <nav
         className="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 space-y-3 hidden md:block"
-        data-oid="6cg.26c">
+       >
 
         {sections.map((section) =>
         <div
           key={section.id}
           className="group relative cursor-pointer"
           onClick={() => scrollToSection(section.id)}
-          data-oid="98q2fev">
+         >
 
             <div
             className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
@@ -54,16 +54,16 @@ export default function Navigation({ currentSection }: NavigationProps) {
             "bg-matrix-primary-green border-matrix-primary-green shadow-neon-green scale-125" :
             "bg-transparent border-matrix-primary-green/50 hover:border-matrix-primary-green hover:shadow-neon-green"}`
             }
-            data-oid="no2x858" />
+            />
 
 
             <div
             className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            data-oid="0.v7ssn">
+           >
 
               <div
               className="bg-matrix-black/90 border border-matrix-primary-green/50 px-3 py-1 rounded font-mono-matrix text-sm text-matrix-primary-green whitespace-nowrap"
-              data-oid="eya1gb:">
+             >
 
                 {section.name}
               </div>
@@ -75,15 +75,15 @@ export default function Navigation({ currentSection }: NavigationProps) {
       {/* Top Navigation */}
       <header
         className="fixed top-0 left-0 right-0 z-40 bg-matrix-black/80 backdrop-blur-sm border-b border-matrix-primary-green/20"
-        data-oid="yttlpzo">
+       >
 
         <div
           className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center"
-          data-oid="zsnfkfo">
+         >
 
           <div
             className="font-mono-matrix text-lg sm:text-xl text-glow-green"
-            data-oid="2.ip-w.">
+           >
 
             &gt; MATRIX_DEV.EXE
           </div>
@@ -91,7 +91,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
           {/* Desktop Navigation */}
           <nav
             className="hidden lg:flex space-x-6 xl:space-x-8"
-            data-oid="l2o:.:n">
+           >
 
             {sections.map((section) =>
             <button
@@ -102,7 +102,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
               "text-matrix-primary-green" :
               "text-matrix-light-gray/70"}`
               }
-              data-oid="syg5c0n">
+             >
 
                 {section.label.toUpperCase()}
               </button>
@@ -110,7 +110,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
           </nav>
 
           {/* Mobile Navigation Dots */}
-          <div className="flex lg:hidden space-x-2" data-oid="r2j-uug">
+          <div className="flex lg:hidden space-x-2">
             {sections.map((section) =>
             <button
               key={section.id}
@@ -121,7 +121,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
               "bg-matrix-primary-green/30 hover:bg-matrix-primary-green/60"}`
               }
               title={section.label}
-              data-oid="p4ls1c6" />
+              />
 
             )}
           </div>

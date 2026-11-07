@@ -83,8 +83,8 @@ export default function TerminalTyping() {
 
   if (!isClient) {
     return (
-      <div className="text-left font-mono-matrix text-sm" data-oid="tk:8gup">
-        <div className="text-matrix-primary-green" data-oid="-y8y8b2">
+      <div className="text-left font-mono-matrix text-sm">
+        <div className="text-matrix-primary-green">
           Loading terminal...
         </div>
       </div>);
@@ -94,17 +94,17 @@ export default function TerminalTyping() {
   return (
     <div
       className="text-left font-mono-matrix text-xs sm:text-sm overflow-x-auto"
-      data-oid="r17rfim">
+     >
 
       {displayedText.map((line, index) =>
       <div
         key={index}
         className="min-h-[1.2em] whitespace-nowrap sm:whitespace-normal"
-        data-oid="19zo_wr">
+       >
 
           {line && line.includes && line.includes("████") ?
         // Progress bar styling
-        <div className="text-matrix-primary-green" data-oid="o_i4b4z">
+        <div className="text-matrix-primary-green">
               {line.split(" ").map((word, wordIndex) =>
           <span
             key={wordIndex}
@@ -113,7 +113,7 @@ export default function TerminalTyping() {
             "text-glow-green" :
             ""
             }
-            data-oid="h:._pi5">
+           >
 
                   {word}
                   {wordIndex < line.split(" ").length - 1 ? " " : ""}
@@ -122,11 +122,11 @@ export default function TerminalTyping() {
             </div> :
         line && line.startsWith && line.startsWith("$") ?
         // Command styling
-        <div data-oid="nx76uf2">
-              <span className="text-matrix-electric-blue" data-oid="uoab0v3">
+        <div>
+              <span className="text-matrix-electric-blue">
                 $
               </span>
-              <span className="text-matrix-light-gray" data-oid="qj0sqq1">
+              <span className="text-matrix-light-gray">
                 {line.substring(1)}
               </span>
             </div> :
@@ -138,12 +138,12 @@ export default function TerminalTyping() {
         line.includes(".dart") ||
         line.includes(".py")) ?
         // File listing styling - responsive
-        <div className="text-matrix-primary-green" data-oid=":x_5dde">
+        <div className="text-matrix-primary-green">
               {line.split("    ").map((file, fileIndex) =>
           <span
             key={fileIndex}
             className="mr-2 sm:mr-4 hover:text-glow-green transition-all duration-300 inline-block"
-            data-oid="glg6ml8">
+           >
 
                   {file}
                 </span>
@@ -153,13 +153,13 @@ export default function TerminalTyping() {
         // Status message styling
         <div
           className="text-matrix-electric-blue text-glow-blue animate-pulse"
-          data-oid="vhg.gti">
+         >
 
               {line}
             </div> :
 
         // Regular text
-        <div className="text-matrix-light-gray" data-oid="-xjcnnf">
+        <div className="text-matrix-light-gray">
               {line || ""}
             </div>
         }
@@ -170,7 +170,7 @@ export default function TerminalTyping() {
       {currentLine < lines.length &&
       <span
         className={`text-matrix-primary-green ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}
-        data-oid="v95k1yz">
+       >
 
           █
         </span>

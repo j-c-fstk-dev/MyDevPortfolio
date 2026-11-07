@@ -114,7 +114,7 @@ export default function MatrixRain() {
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-20"
       style={{ background: "transparent" }}
-      data-oid="edwylqb" />);
+      />);
 
 
 }

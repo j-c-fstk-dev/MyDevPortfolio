@@ -72,10 +72,10 @@ export default function SkillsSection() {
       ref={sectionRef}
       id="section-2"
       className="min-h-screen flex items-center justify-center py-20 relative"
-      data-oid="z_ijz6u">
+     >
 
       {/* Background Matrix */}
-      <div className="absolute inset-0 opacity-5" data-oid="61epveq">
+      <div className="absolute inset-0 opacity-5">
         {Array.from({ length: 100 }).map((_, i) =>
         <div
           key={i}
@@ -86,38 +86,38 @@ export default function SkillsSection() {
             animationDelay: `${Math.random() * 5}s`,
             animationDuration: `${2 + Math.random() * 3}s`
           }}
-          data-oid="5r-tk8l">
+         >
 
             {Math.random() > 0.5 ? "1" : "0"}
           </div>
         )}
       </div>
 
-      <div className="container mx-auto px-6 relative z-10" data-oid="zcreq5l">
+      <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16" data-oid="2nm_pc8">
+        <div className="text-center mb-16">
           <h2
             className="text-4xl md:text-6xl font-mono-matrix text-glow-green mb-4"
-            data-oid="uhip:43">
+           >
 
             SKILL_MATRIX
           </h2>
           <div
             className="text-xl font-mono-matrix text-matrix-electric-blue"
-            data-oid="ew2ss:b">
+           >
 
             &gt; LOADING_CAPABILITIES...
           </div>
           <div
             className="w-32 h-1 bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue mx-auto mt-4"
-            data-oid="f.1tib4">
+           >
           </div>
         </div>
 
         {/* Category Tabs */}
         <div
           className="flex flex-wrap justify-center gap-4 mb-12"
-          data-oid="gyfoa58">
+         >
 
           {categories.map((category) =>
           <button
@@ -128,7 +128,7 @@ export default function SkillsSection() {
             "bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green shadow-neon-green" :
             "bg-matrix-black/50 border-matrix-primary-green/30 text-matrix-light-gray hover:border-matrix-primary-green hover:text-matrix-primary-green"}`
             }
-            data-oid="pn0o3w9">
+           >
 
               {category}
             </button>
@@ -138,7 +138,7 @@ export default function SkillsSection() {
         {/* Skills Grid */}
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          data-oid="28kv8jf">
+         >
 
           {filteredSkills.map((skill, index) =>
           <div
@@ -149,27 +149,27 @@ export default function SkillsSection() {
             "translate-y-10 opacity-0"}`
             }
             style={{ transitionDelay: `${index * 0.1}s` }}
-            data-oid="w5i4e1o">
+           >
 
               {/* Skill Header */}
               <div
               className="flex items-center justify-between mb-4"
-              data-oid="z1t2rge">
+             >
 
-                <div className="flex items-center gap-3" data-oid="txtn55m">
-                  <span className="text-2xl" data-oid="xj06-pe">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">
                     {skill.icon}
                   </span>
                   <span
                   className="font-mono-matrix text-matrix-light-gray"
-                  data-oid="np1wdzr">
+                 >
 
                     {skill.name}
                   </span>
                 </div>
                 <span
                 className="font-mono-matrix text-matrix-primary-green text-sm"
-                data-oid="uvslm:7">
+               >
 
                   {skill.level}%
                 </span>
@@ -178,7 +178,7 @@ export default function SkillsSection() {
               {/* Progress Bar */}
               <div
               className="w-full bg-matrix-dark-gray rounded-full h-3 mb-4"
-              data-oid="bfn5lsu">
+             >
 
                 <div
                 className="h-3 rounded-full bg-gradient-to-r from-matrix-primary-green to-matrix-secondary-green transition-all duration-1000 ease-out"
@@ -186,22 +186,22 @@ export default function SkillsSection() {
                   width: isVisible ? `${skill.level}%` : "0%",
                   transitionDelay: `${index * 0.1 + 0.5}s`
                 }}
-                data-oid="rtu1sl8">
+               >
               </div>
               </div>
 
               {/* Binary Representation */}
               <div
               className="font-mono-matrix text-xs text-matrix-primary-green/50 overflow-hidden"
-              data-oid="5retdqm">
+             >
 
-                <div className="animate-pulse" data-oid="g76wf9v">
+                <div className="animate-pulse">
                   {Array.from({ length: Math.floor(skill.level / 5) }).map(
                   (_, i) =>
                   <span
                     key={i}
                     className="inline-block mr-1"
-                    data-oid="7hpri5k">
+                   >
 
                         {Math.random() > 0.3 ? "1" : "0"}
                       </span>
@@ -216,26 +216,26 @@ export default function SkillsSection() {
         {/* Terminal Output */}
         <div
           className="mt-16 bg-matrix-black/70 border-2 border-matrix-primary-green rounded-lg p-6 max-w-4xl mx-auto"
-          data-oid="i9dsepn">
+         >
 
-          <div className="flex items-center mb-4" data-oid="qw8c4m0">
-            <div className="flex space-x-2" data-oid="opiveko">
+          <div className="flex items-center mb-4">
+            <div className="flex space-x-2">
               <div
                 className="w-3 h-3 rounded-full bg-red-500"
-                data-oid="ub1sgfd">
+               >
               </div>
               <div
                 className="w-3 h-3 rounded-full bg-yellow-500"
-                data-oid="mjhu9g5">
+               >
               </div>
               <div
                 className="w-3 h-3 rounded-full bg-matrix-primary-green"
-                data-oid="p8hmtg0">
+               >
               </div>
             </div>
             <div
               className="flex-1 text-center font-mono-matrix text-matrix-primary-green"
-              data-oid="c2k16e8">
+             >
 
               SKILL_ANALYZER_v3.0
             </div>
@@ -243,15 +243,15 @@ export default function SkillsSection() {
 
           <div
             className="font-mono-matrix text-sm space-y-2"
-            data-oid="f8g_yay">
+           >
 
-            <div className="text-matrix-electric-blue" data-oid="fr:yxno">
+            <div className="text-matrix-electric-blue">
               $ analyze --category {activeCategory.toLowerCase()}
             </div>
-            <div className="text-matrix-light-gray" data-oid="-mr-n.u">
+            <div className="text-matrix-light-gray">
               Scanning {filteredSkills.length} skills...
             </div>
-            <div className="text-matrix-primary-green" data-oid="l2xghf6">
+            <div className="text-matrix-primary-green">
               Average proficiency:{" "}
               {Math.round(
                 filteredSkills.reduce((acc, skill) => acc + skill.level, 0) /
@@ -259,12 +259,12 @@ export default function SkillsSection() {
               )}
               %
             </div>
-            <div className="text-matrix-light-gray" data-oid="p1i:-r7">
+            <div className="text-matrix-light-gray">
               Status: READY_FOR_PRODUCTION
             </div>
             <div
               className="text-matrix-primary-green animate-pulse"
-              data-oid="ngr:htu">
+             >
 
               _
             </div>

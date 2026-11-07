@@ -11,9 +11,9 @@ export default function RootLayout({
   children
 }: Readonly<{children: React.ReactNode;}>) {
   return (
-    <html lang="en" data-oid="b1jifow">
-      <head data-oid="x0ail_k"></head>
-      <body className="antialiased" data-oid="hqec2:a">
+    <html lang="en">
+      <head></head>
+      <body className="antialiased">
         {children}
 
         <Script
@@ -21,7 +21,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           type="module"
           id="onlook-preload-script.js"
-          data-oid=":kbir4j">
+         >
         </Script>
       </body>
     </html>);

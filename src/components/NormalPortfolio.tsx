@@ -173,31 +173,31 @@ export default function NormalPortfolio({
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#FFFFFF] font-sans" data-oid="prym87p">
+    <div className="min-h-screen bg-[#0A0A0A] text-[#FFFFFF] font-sans">
       {/* Hidden Matrix Exit Button */}
       <button
         onClick={onExitMatrix}
         className="fixed bottom-4 right-4 w-12 h-12 bg-black/5 border border-gray-200 rounded-full flex items-center justify-center hover:bg-black/10 transition-all duration-300 z-50 group opacity-20 hover:opacity-100"
         title="Exit Matrix"
-        data-oid="vjkkr8:"
+       
       >
-        <span className="text-red-500 group-hover:animate-pulse" data-oid="e-0rzdt">
+        <span className="text-red-500 group-hover:animate-pulse">
           🔴
         </span>
       </button>
 
       {/* Navigation */}
-      <nav className="bg-[#1A1A1A] shadow-sm border-b border-gray-700 sticky top-0 z-40" data-oid=".-.9iqw">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" data-oid="jn0jkvb">
-          <div className="flex justify-between items-center h-16" data-oid="tcv_1sf">
-            <div className="flex items-center" data-oid="z8gzq9v">
-              <h1 className="text-xl font-bold text-[#FFFFFF]" data-oid="f4-abg2">
+      <nav className="bg-[#1A1A1A] shadow-sm border-b border-gray-700 sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-[#FFFFFF]">
                 Jorge Augusto Medeiros Lopes
               </h1>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8" data-oid="m.cfk__">
+            <div className="hidden md:flex space-x-8">
               {["about", "skills", "projects", "experience", "contact"].map(
                 (section) => (
                   <button
@@ -206,7 +206,7 @@ export default function NormalPortfolio({
                     className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                       activeSection === section ? "text-[#00F0FF] border-b-2 border-[#00F0FF]" : "text-[#FFFFFF] hover:text-[#D1D1D1]"
                     }`}
-                    data-oid="vdi0pry"
+                   
                   >
                     {section.charAt(0).toUpperCase() + section.slice(1)}
                   </button>
@@ -215,19 +215,19 @@ export default function NormalPortfolio({
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden" data-oid="._t_4.y">
+            <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-[#FFFFFF] hover:text-[#D1D1D1] focus:outline-none"
-                data-oid="46i9t17"
+               
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-oid="l.ze13t">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
                     d="M4 6h16M4 12h16M4 18h16"
-                    data-oid="4kfnd4m"
+                   
                   />
                 </svg>
               </button>
@@ -236,8 +236,8 @@ export default function NormalPortfolio({
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="md:hidden border-t border-gray-700" data-oid="2us4wag">
-              <div className="px-2 pt-2 pb-3 space-y-1" data-oid="rygl9uc">
+            <div className="md:hidden border-t border-gray-700">
+              <div className="px-2 pt-2 pb-3 space-y-1">
                 {["about", "skills", "projects", "experience", "contact"].map(
                   (section) => (
                     <button
@@ -249,7 +249,7 @@ export default function NormalPortfolio({
                       className={`block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ${
                         activeSection === section ? "text-[#00F0FF] bg-[#0A0A0A]" : "text-[#FFFFFF] hover:text-[#D1D1D1] hover:bg-[#1A1A1A]"
                       }`}
-                      data-oid="-:j_:hf"
+                     
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
                     </button>
@@ -262,14 +262,14 @@ export default function NormalPortfolio({
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16" data-oid="dd.0lhw">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
         {/* About Section */}
         {activeSection === "about" && (
-          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]" data-oid="9jdtwad">
-            <div className="text-center" data-oid="vf64c4g">
+          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]">
+            <div className="text-center">
             <div
   className="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden"
-  data-oid=":d-oc1z"
+ 
 >
   <img
     src="https://res.cloudinary.com/dr0weongo/image/upload/v1754567145/1kjsy9_mqwlus.jpg"
@@ -277,33 +277,33 @@ export default function NormalPortfolio({
     className="w-full h-full object-cover"
   />
 </div>
-              <h2 className="text-3xl font-bold mb-4 text-[#00F0FF]" data-oid="es03ijs">
+              <h2 className="text-3xl font-bold mb-4 text-[#00F0FF]">
                 Jorge Augusto Medeiros Lopes (Professional Name: Jorge Cristo) | Full-Stack Developer | AI/ML & Web3 Enthusiast
               </h2>
-              <p className="text-xl text-[#D1D1D1] max-w-2xl mx-auto" data-oid="o1ovjdy">
+              <p className="text-xl text-[#D1D1D1] max-w-2xl mx-auto">
                 Highly motivated and self-taught Full-Stack Developer with a strong passion for building innovative digital solutions, particularly at the intersection of web development, Web3 technologies, and artificial intelligence. Proficient across a wide range of programming languages, frameworks, and databases, with a keen interest in Machine Learning, Large Language Models (LLMs), and cloud platforms. My diverse background, including engineering and content creation, has cultivated exceptional problem-solving abilities, a proactive approach to learning, and a talent for transforming complex ideas into functional applications and engaging user experiences. Actively working on personal projects and a dedicated portfolio to showcase a robust and versatile skill set.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 mt-12" data-oid="-ziip7n">
-              <div className="bg-[#0A0A0A] p-6 rounded-lg border border-[#00F0FF] text-[#D1D1D1]" data-oid="i9c_boo">
-                <h3 className="text-xl font-semibold mb-4 text-[#FFFFFF]" data-oid="duy.zkp">
+            <div className="grid md:grid-cols-2 gap-8 mt-12">
+              <div className="bg-[#0A0A0A] p-6 rounded-lg border border-[#00F0FF] text-[#D1D1D1]">
+                <h3 className="text-xl font-semibold mb-4 text-[#FFFFFF]">
                   What I Do
                 </h3>
-                <ul className="space-y-2" data-oid=".i-bmq1">
+                <ul className="space-y-2">
                   {whatIDo.map((item, index) => (
-                    <li key={index} data-oid={`what-i-do-${index}`}>• {item}</li>
+                    <li key={index}>• {item}</li>
                   ))}
                 </ul>
               </div>
 
-              <div className="bg-[#0A0A0A] p-6 rounded-lg border border-[#00F0FF] text-[#D1D1D1]" data-oid="33k7j17">
-                <h3 className="text-xl font-semibold mb-4 text-[#FFFFFF]" data-oid="oiv06x7">
+              <div className="bg-[#0A0A0A] p-6 rounded-lg border border-[#00F0FF] text-[#D1D1D1]">
+                <h3 className="text-xl font-semibold mb-4 text-[#FFFFFF]">
                   Quick Facts
                 </h3>
-                <ul className="space-y-2" data-oid="n.9xnek">
+                <ul className="space-y-2">
                   {quickFacts.map((item, index) => (
-                    <li key={index} data-oid={`quick-fact-${index}`}>• {item}</li>
+                    <li key={index}>• {item}</li>
                   ))}
                 </ul>
               </div>
@@ -354,18 +354,18 @@ export default function NormalPortfolio({
 
         {/* Skills Section */}
         {activeSection === "skills" && (
-          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]" data-oid="0r5.8jb">
-            <div className="text-center" data-oid="8t51:yb">
-              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4" data-oid="yvx9dwn">
+          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4">
                 Skills & Technologies
               </h2>
-              <p className="text-[#D1D1D1] max-w-2xl mx-auto" data-oid="dgauhgz">
+              <p className="text-[#D1D1D1] max-w-2xl mx-auto">
                 Here are the technologies I work with regularly and my
                 proficiency levels.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6" data-oid="2nhj:l1">
+            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
               {Object.entries(skills).map(([category, skillList]) => (
                 <div key={category} className="bg-[#0A0A0A] p-6 rounded-lg border border-[#00F0FF] shadow-sm">
                   <h3 className="text-xl font-semibold mb-4 text-[#FFFFFF]">{category}</h3>
@@ -390,34 +390,34 @@ export default function NormalPortfolio({
 
         {/* Projects Section */}
         {activeSection === "projects" && (
-          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]" data-oid="zz2gvjz">
-            <div className="text-center mb-8" data-oid="auznvj.">
-              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4" data-oid="tt_xo1u">
+          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4">
                 Featured Projects
               </h2>
-              <p className="text-[#D1D1D1] max-w-2xl mx-auto" data-oid="yq3v0z-">
+              <p className="text-[#D1D1D1] max-w-2xl mx-auto">
                 Actively developing a comprehensive online portfolio showcasing various full-stack applications and projects. Numerous personal projects available on GitHub, demonstrating proficiency in diverse technologies and problem-solving approaches. Examples include Web3 applications, AI-powered tools, and various web development projects.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" data-oid="j4mrsqq">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {projects.map((project: Project, index: number) => (
                 <div
                   key={index}
                   className="bg-[#0A0A0A] border border-[#00F0FF] rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col"
-                  data-oid="2_9hned"
+                 
                 >
-                  <div className="p-6" data-oid="2bjv:2o">
-                    <div className="text-4xl mb-4" data-oid="70t93q9">
+                  <div className="p-6">
+                    <div className="text-4xl mb-4">
                       {project.image}
                     </div>
-                    <h3 className="text-xl font-semibold text-[#FFFFFF] mb-2" data-oid="7womn7y">
+                    <h3 className="text-xl font-semibold text-[#FFFFFF] mb-2">
                       {project.title}
                     </h3>
-                    <p className="text-[#D1D1D1] mb-4" data-oid="d6jkw9_">
+                    <p className="text-[#D1D1D1] mb-4">
                       {project.description}
                     </p>
-                    <div className="flex flex-wrap gap-2" data-oid=".u68ojx">
+                    <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
                         <span key={tech} className="px-2 py-1 bg-[#1A1A1A] text-[#00F0FF] text-xs rounded-full border border-[#00F0FF]">
                           {tech}
@@ -425,7 +425,7 @@ export default function NormalPortfolio({
                       ))}
                     </div>
                   </div>
-                  <div className="px-6 py-3 bg-[#0A0A0A] border-t border-[#00F0FF] mt-auto flex justify-between items-center" data-oid="nwuby7p">
+                  <div className="px-6 py-3 bg-[#0A0A0A] border-t border-[#00F0FF] mt-auto flex justify-between items-center">
                     {project.liveDemoLink && (
                       <a
                         href={project.liveDemoLink}
@@ -467,37 +467,37 @@ export default function NormalPortfolio({
 
         {/* Experience Section */}
         {activeSection === "experience" && (
-          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]" data-oid="i1tq4if">
-            <div className="text-center" data-oid="cm0j06d">
-              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4" data-oid="q.f6zvv">
+          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4">
                 Work Experience
               </h2>
-              <p className="text-[#D1D1D1] max-w-2xl mx-auto" data-oid="ul_rh__">
+              <p className="text-[#D1D1D1] max-w-2xl mx-auto">
                 My professional journey and key accomplishments.
               </p>
             </div>
 
-            <div className="space-y-6" data-oid="xyfb9qc">
+            <div className="space-y-6">
               {experience.map((job: Job, index: number) => (
                 <div
                   key={index}
                   className="bg-[#0A0A0A] border border-[#00F0FF] p-6 rounded-lg shadow-sm text-[#D1D1D1]"
-                  data-oid="8ntdogj"
+                 
                 >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4" data-oid="6vsy0ft">
-                    <div data-oid="jz26rxs">
-                      <h3 className="text-xl font-semibold text-[#FFFFFF]" data-oid="3:zr6a8">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-[#FFFFFF]">
                         {job.title}
                       </h3>
-                      <p className="text-[#00F0FF] font-medium" data-oid="s.e_6ep">
+                      <p className="text-[#00F0FF] font-medium">
                         {job.company}
                       </p>
                     </div>
-                    <span className="text-[#D1D1D1] text-sm mt-2 md:mt-0" data-oid="qh.tvcn">
+                    <span className="text-[#D1D1D1] text-sm mt-2 md:mt-0">
                       {job.period}
                     </span>
                   </div>
-                  <p className="text-[#D1D1D1]" data-oid="fg25cte">
+                  <p className="text-[#D1D1D1]">
                     {job.description}
                   </p>
                 </div>
@@ -508,61 +508,61 @@ export default function NormalPortfolio({
 
         {/* Contact Section */}
         {activeSection === "contact" && (
-          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]" data-oid="sdounft">
-            <div className="text-center" data-oid="74ol6sr">
-              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4" data-oid="d8c813e">
+          <div className="space-y-8 bg-[#1A1A1A] p-8 rounded-lg shadow-xl text-[#FFFFFF]">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-[#00F0FF] mb-4">
                 Get In Touch
               </h2>
-              <p className="text-[#D1D1D1] max-w-2xl mx-auto" data-oid="8we85ow">
+              <p className="text-[#D1D1D1] max-w-2xl mx-auto">
                 I'm always interested in new opportunities and collaborations.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8" data-oid="5vxj70z">
-              <div className="space-y-6" data-oid="hgnt3k.">
-                <div className="flex items-center space-x-4 text-[#D1D1D1]" data-oid="2nkbnzb">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4 text-[#D1D1D1]">
                   <div
                     className="w-12 h-12 bg-[#0A0A0A] rounded-full flex items-center justify-center text-[#00F0FF] text-2xl border border-[#00F0FF]"
-                    data-oid="gsb692a"
+                   
                   >
                     📧
                   </div>
-                  <div data-oid="p.fu-ak">
-                    <h3 className="font-semibold text-[#FFFFFF]" data-oid="p-w7on4">
+                  <div>
+                    <h3 className="font-semibold text-[#FFFFFF]">
                       Email
                     </h3>
-                    <p className="text-[#D1D1D1]" data-oid="w4bvzjz">
+                    <p className="text-[#D1D1D1]">
                       jorge.dev.c@gmail.com
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4 text-[#D1D1D1]" data-oid="ff0:s9d">
+                <div className="flex items-center space-x-4 text-[#D1D1D1]">
                   <div
                     className="w-12 h-12 bg-[#0A0A0A] rounded-full flex items-center justify-center text-[#00F0FF] text-2xl border border-[#00F0FF]"
-                    data-oid="p8n:5-_"
+                   
                   >
                     📱
                   </div>
-                  <div data-oid="4.a-.qt">
-                    <h3 className="font-semibold text-[#FFFFFF]" data-oid="lje.qm2">
+                  <div>
+                    <h3 className="font-semibold text-[#FFFFFF]">
                       Phone
                     </h3>
-                    <p className="text-[#D1D1D1]" data-oid="rxfprj2">
+                    <p className="text-[#D1D1D1]">
                       +55 (12) 98254-9745
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4 text-[#D1D1D1]" data-oid="zrrlovq">
+                <div className="flex items-center space-x-4 text-[#D1D1D1]">
                   <div
                     className="w-12 h-12 bg-[#0A0A0A] rounded-full flex items-center justify-center text-[#00F0FF] text-2xl border border-[#00F0FF]"
-                    data-oid="2vi4el:"
+                   
                   >
                     🐙
                   </div>
-                  <div data-oid="bj8ea-i">
-                    <h3 className="font-semibold text-[#FFFFFF]" data-oid="1h:c_qk">
+                  <div>
+                    <h3 className="font-semibold text-[#FFFFFF]">
                       GitHub
                     </h3>
                     <p className="text-[#D1D1D1]">
@@ -573,47 +573,47 @@ export default function NormalPortfolio({
               </div>
 
               {/* Form */}
-              <form className="space-y-4" data-oid=".xswkka">
-                <div data-oid="2mh1h-g">
-                  <label className="block text-sm font-medium text-[#D1D1D1] mb-1" data-oid="h231_xv">
+              <form className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#D1D1D1] mb-1">
                     Name
                   </label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 border border-[#00F0FF] rounded-md bg-[#0A0A0A] text-[#FFFFFF] focus:outline-none focus:ring-2 focus:ring-[#00F0FF] focus:border-transparent"
                     placeholder="Your name"
-                    data-oid="18c.te1"
+                   
                   />
                 </div>
 
-                <div data-oid="ue-.vzw">
-                  <label className="block text-sm font-medium text-[#D1D1D1] mb-1" data-oid="0p72i48">
+                <div>
+                  <label className="block text-sm font-medium text-[#D1D1D1] mb-1">
                     Email
                   </label>
                   <input
                     type="email"
                     className="w-full px-3 py-2 border border-[#00F0FF] rounded-md bg-[#0A0A0A] text-[#FFFFFF] focus:outline-none focus:ring-2 focus:ring-[#00F0FF] focus:border-transparent"
                     placeholder="your@email.com"
-                    data-oid="x0wdpzv"
+                   
                   />
                 </div>
 
-                <div data-oid="nja84zt">
-                  <label className="block text-sm font-medium text-[#D1D1D1] mb-1" data-oid="a:igi24">
+                <div>
+                  <label className="block text-sm font-medium text-[#D1D1D1] mb-1">
                     Message
                   </label>
                   <textarea
                     rows={4}
                     className="w-full px-3 py-2 border border-[#00F0FF] rounded-md bg-[#0A0A0A] text-[#FFFFFF] focus:outline-none focus:ring-2 focus:ring-[#00F0FF] focus:border-transparent"
                     placeholder="Your message..."
-                    data-oid="1cyo0sc"
+                   
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   className="w-full bg-[#00F0FF] text-[#0A0A0A] py-2 px-4 rounded-md hover:bg-[#00D1E0] transition-colors duration-200 font-bold"
-                  data-oid="twpqh0."
+                 
                 >
                   Send Message
                 </button>
@@ -624,13 +624,13 @@ export default function NormalPortfolio({
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#1A1A1A] border-t border-[#00F0FF] mt-16" data-oid="b23v7my">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-oid="1b6r7ud">
-          <div className="text-center text-[#D1D1D1]" data-oid="52lt.e9">
-            <p data-oid="i4qq63i">
+      <footer className="bg-[#1A1A1A] border-t border-[#00F0FF] mt-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-[#D1D1D1]">
+            <p>
               &copy; 2024 Jorge Cristo. All rights reserved.
             </p>
-            <p className="text-sm mt-2" data-oid="v.zk8-5">
+            <p className="text-sm mt-2">
               Built with React & TypeScript
             </p>
           </div>
