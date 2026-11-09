@@ -73,7 +73,20 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   };
 
   return (
-    <html lang={lang === "pt" ? "pt-BR" : "en"} className={`${bricolage.variable} ${vt323.variable}`}>
+    <html
+      lang={lang === "pt" ? "pt-BR" : "en"}
+      className={`${bricolage.variable} ${vt323.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Turn on scroll animations before first paint (skipped with reduced motion), so nothing flashes. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion')",
+          }}
+        />
+      </head>
       <body className="antialiased">
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />

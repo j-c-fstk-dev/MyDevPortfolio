@@ -4,6 +4,8 @@ import Contact from "@/components/site/Contact";
 import Experience from "@/components/site/Experience";
 import Hero from "@/components/site/Hero";
 import ModeSwitcher from "@/components/site/ModeSwitcher";
+import RailTrack from "@/components/site/RailTrack";
+import ScrollEffects from "@/components/site/ScrollEffects";
 import Services from "@/components/site/Services";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
@@ -28,6 +30,17 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         {d.skipToContent}
       </a>
       <SiteHeader lang={lang} />
+      <ScrollEffects />
+      <RailTrack
+        label={d.nav.track}
+        stations={[
+          { id: "top", label: d.nav.start },
+          { id: "work", label: d.nav.work },
+          { id: "experience", label: d.nav.experience },
+          { id: "about", label: d.nav.about },
+          { id: "contact", label: d.nav.contact },
+        ]}
+      />
       <main id="main">
         <Hero lang={lang} />
         <Services lang={lang} />

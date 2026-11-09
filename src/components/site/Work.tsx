@@ -64,6 +64,101 @@ function FeaturedRow({ project, lang, d }: { project: Project; lang: Locale; d: 
   );
 }
 
+/** How many featured projects get the stacked full-width panel treatment. */
+const DECK_SIZE = 6;
+
+const deckLink =
+  "font-medium text-mist underline decoration-signal/60 decoration-2 underline-offset-4 transition-[text-decoration-color] hover:decoration-signal";
+
+/**
+ * A featured project as a dark panel that sticks to the top while the next
+ * one slides over it, building a stack as the visitor scrolls.
+ */
+function DeckPanel({
+  project,
+  index,
+  total,
+  lang,
+  d,
+}: {
+  project: Project;
+  index: number;
+  total: number;
+  lang: Locale;
+  d: Dictionary["work"];
+}) {
+  const { statusLabels } = getContent(lang);
+  const shot = withScreenshot.has(project.slug);
+  const number = String(index + 1).padStart(2, "0");
+
+  return (
+    <li
+      className="sticky mb-[10vh] last:mb-0"
+      style={{ top: `calc(5rem + ${index * 14}px)` }}
+    >
+      <article className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_-18px_40px_-20px_rgb(0_0_0/0.45)] sm:p-10">
+        <div className="flex items-start justify-between gap-6">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+            <span className="font-medium">{project.context}</span>
+            <span className="inline-flex items-center gap-2 text-mist/70">
+              <span
+                className={`h-2 w-2 rounded-full ${project.status === "live" ? "bg-signal" : "border-[1.5px] border-mist/60"}`}
+                aria-hidden
+              />
+              {statusLabels[project.status]}
+            </span>
+          </div>
+          <span className="text-sm tabular-nums text-mist/60">
+            {number} / {String(total).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] md:gap-12">
+          <div>
+            <h3 className="text-[clamp(2.4rem,6vw,4.75rem)] font-extrabold leading-[0.95] tracking-[-0.02em] [font-stretch:76%]">
+              {project.title}
+            </h3>
+            {shot && (
+              <Image
+                src={`/projects/${project.slug}.jpg`}
+                alt={d.screenshotAlt(project.title)}
+                width={1280}
+                height={800}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="mt-6 aspect-[16/10] w-full rounded-xl object-cover object-top"
+              />
+            )}
+          </div>
+          <div className="self-end">
+            <p className="text-lg leading-relaxed text-mist/90">{project.description}</p>
+            <p className="mt-3 text-sm text-mist/60">{project.tech.join(", ")}</p>
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+              {project.live && (
+                <a href={project.live} target="_blank" rel="noopener noreferrer" className={deckLink}>
+                  {d.visitSite}
+                </a>
+              )}
+              {project.repo && (
+                <a href={project.repo} target="_blank" rel="noopener noreferrer" className={deckLink}>
+                  {d.sourceCode}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Big outlined number, a quiet echo of the panel's position. */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -bottom-6 right-4 text-[clamp(6rem,14vw,11rem)] font-extrabold leading-none text-transparent [-webkit-text-stroke:1.5px_rgb(var(--mist)/0.18)] [font-stretch:75%]"
+        >
+          {number}
+        </span>
+      </article>
+    </li>
+  );
+}
+
 export default async function Work({ lang }: { lang: Locale }) {
   const { projects, contact, categoryLabels, statusLabels } = getContent(lang);
   const dict = getDictionary(lang);
@@ -79,11 +174,19 @@ export default async function Work({ lang }: { lang: Locale }) {
 
   return (
     <Section id="work" title={d.title} intro={d.intro}>
-      <ul className="border-b border-line">
-        {featured.map((project) => (
-          <FeaturedRow key={project.slug} project={project} lang={lang} d={d} />
+      <ol>
+        {featured.slice(0, DECK_SIZE).map((project, i) => (
+          <DeckPanel key={project.slug} project={project} index={i} total={featured.length} lang={lang} d={d} />
         ))}
-      </ul>
+      </ol>
+
+      {featured.length > DECK_SIZE && (
+        <ul className="mt-16 border-b border-line">
+          {featured.slice(DECK_SIZE).map((project) => (
+            <FeaturedRow key={project.slug} project={project} lang={lang} d={d} />
+          ))}
+        </ul>
+      )}
 
       <div className="mt-20">
         <h3 className="text-2xl font-bold [font-stretch:85%]">{d.moreTitle}</h3>

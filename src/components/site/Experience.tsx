@@ -8,13 +8,27 @@ export default function Experience({ lang }: { lang: Locale }) {
 
   return (
     <Section id="experience" title={d.title}>
-      <ol>
+      {/* The track draws itself as the visitor scrolls; each job is a station that lights up when passed. */}
+      <ol data-progress="draw" className="relative pl-8 sm:pl-10">
+        <span aria-hidden className="absolute bottom-0 left-[7px] top-0 w-[2px] bg-line sm:left-[11px]">
+          <span
+            className="block w-full origin-top bg-signal"
+            style={{ height: "100%", transform: "scaleY(var(--p, 1))" }}
+          />
+        </span>
         {experience.map((job) => (
           <li
             key={job.title}
-            className="grid gap-3 border-t border-line py-10 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10"
+            data-pass
+            className="group relative grid gap-3 border-t border-line py-10 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10"
           >
-            <p className="font-medium tabular-nums text-lichen">{job.period}</p>
+            <span
+              aria-hidden
+              className="absolute -left-8 top-11 h-4 w-4 rounded-full border-2 border-line bg-mist transition-colors duration-500 group-data-[passed=true]:border-signal group-data-[passed=true]:bg-signal sm:-left-10 sm:h-6 sm:w-6"
+            />
+            <p className="font-medium tabular-nums text-lichen transition-colors duration-500 group-data-[passed=true]:text-ink">
+              {job.period}
+            </p>
             <div className="max-w-prose">
               <h3 className="text-2xl font-bold leading-tight [font-stretch:85%]">{job.title}</h3>
               <p className="mt-1 font-medium text-pine">
