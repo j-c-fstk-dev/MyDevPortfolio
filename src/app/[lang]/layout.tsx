@@ -78,16 +78,18 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       className={`${bricolage.variable} ${vt323.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Turn on scroll animations before first paint (skipped with reduced motion), so nothing flashes. */}
+      <body className="antialiased">
+        {/*
+          Turn on scroll animations before first paint (skipped with reduced motion), so nothing
+          flashes. It sits at the start of <body>, not in <head>: hosts like Netlify inject a
+          comment and a newline into <head>, which made React's hydration of a <head> script fail.
+        */}
         <script
           dangerouslySetInnerHTML={{
             __html:
               "if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion')",
           }}
         />
-      </head>
-      <body className="antialiased">
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       </body>
