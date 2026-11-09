@@ -7,6 +7,7 @@ import ModeSwitcher from "@/components/site/ModeSwitcher";
 import RailTrack from "@/components/site/RailTrack";
 import ScrollEffects from "@/components/site/ScrollEffects";
 import Services from "@/components/site/Services";
+import Transition from "@/components/site/Transition";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import Work from "@/components/site/Work";
@@ -45,8 +46,11 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         <Hero lang={lang} />
         <Services lang={lang} />
         <Work lang={lang} />
+        <Transition from="dark" to="light" shape="ridge" />
         <Experience lang={lang} />
+        <Transition from="light" to="dark" shape="diagonal" />
         <About lang={lang} />
+        <Transition from="dark" to="amber" shape="blocks" />
         <Contact lang={lang} />
       </main>
       <SiteFooter lang={lang} />

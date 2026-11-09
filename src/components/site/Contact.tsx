@@ -15,7 +15,7 @@ export default function Contact({ lang }: { lang: Locale }) {
   ];
 
   return (
-    <Section id="contact" title={d.title} intro={d.intro} tone="light" seam="blocks">
+    <Section id="contact" title={d.title} intro={d.intro} tone="amber">
       <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <a

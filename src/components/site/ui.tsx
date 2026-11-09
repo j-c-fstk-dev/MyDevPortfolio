@@ -1,57 +1,56 @@
 /** Small shared building blocks for the standard site. */
 
-import Seam, { type SeamShape } from "./Seam";
-
-export type Tone = "light" | "dark";
+export type Tone = "light" | "dark" | "amber";
 
 export const container = "mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8";
 
 /**
- * A page section. Sections alternate tone (light or dark); a section can bring
- * its colour in through a seam that grows over the end of the previous one.
+ * A page section with its own tone (light, dark or amber). Its title is set
+ * huge and drifts sideways a little as the section scrolls past.
  */
 export function Section({
   id,
   title,
   intro,
   tone = "light",
-  seam,
   children,
 }: {
   id: string;
   title: string;
   intro?: string;
   tone?: Tone;
-  seam?: SeamShape;
   children: React.ReactNode;
 }) {
   return (
-    <section
-      id={id}
-      aria-labelledby={`${id}-title`}
-      data-tone={tone}
-      className="relative bg-mist pb-32 pt-20 text-ink sm:pb-44 sm:pt-28"
-    >
-      {seam && <Seam shape={seam} />}
+    <section id={id} aria-labelledby={`${id}-title`} data-tone={tone} className="relative bg-mist pb-28 pt-24 text-ink sm:pb-36 sm:pt-32">
       <div className={container}>
-        <div className="mb-12 max-w-prose">
-          <h2
-            id={`${id}-title`}
-            data-reveal="condense"
-            aria-label={title}
-            className="text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.025em] [font-stretch:82%]"
-          >
-            <Letters text={title} />
-          </h2>
-          {intro && (
-            <p data-reveal="lines" className="mt-4 text-lg text-lichen">
-              <Lines text={intro} />
-            </p>
-          )}
-        </div>
+        <SectionTitle id={`${id}-title`} title={title} />
+        {intro && (
+          <p data-reveal="lines" className="mb-14 mt-6 max-w-prose text-lg text-lichen sm:text-xl">
+            <Lines text={intro} />
+          </p>
+        )}
+        {!intro && <div className="mb-14" />}
         {children}
       </div>
     </section>
+  );
+}
+
+/** The giant section title: letters rise in, the word condenses, and it drifts with the scroll. */
+export function SectionTitle({ id, title }: { id?: string; title: string }) {
+  return (
+    <div data-progress="through" className="overflow-x-clip">
+      <h2
+        id={id}
+        data-reveal="condense"
+        aria-label={title}
+        className="text-[clamp(3.25rem,10vw,9.5rem)] font-extrabold leading-[0.9] tracking-[-0.03em] [font-stretch:76%]"
+        style={{ transform: "translateX(max(0px, calc((0.6 - var(--p, 0.6)) * 9vw)))" }}
+      >
+        <Letters text={title} />
+      </h2>
+    </div>
   );
 }
 
@@ -122,30 +121,5 @@ export function Lines({ text }: { text: string }) {
         </span>
       ))}
     </>
-  );
-}
-
-/**
- * A list read by a moving amber bar. The list is drawn twice: normally, and as
- * an amber copy with dark text that is clipped to a strip at the reading line
- * (55% down the screen). As the list scrolls past, the strip travels through
- * it, lighting rows, phrases and headings in turn. ScrollEffects sets --p.
- */
-export function ScanList({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div data-progress="scan" className={`relative ${className}`}>
-      {children}
-      <div
-        aria-hidden
-        inert
-        className="scan-copy pointer-events-none absolute inset-0 bg-signal"
-        style={{
-          clipPath:
-            "inset(calc(var(--p, -1) * 100% - var(--band, 1.4rem)) 0 calc(100% - var(--p, -1) * 100% - var(--band, 1.4rem)) 0)",
-        }}
-      >
-        {children}
-      </div>
-    </div>
   );
 }

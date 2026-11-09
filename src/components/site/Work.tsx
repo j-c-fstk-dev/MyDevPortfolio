@@ -67,6 +67,9 @@ function FeaturedRow({ project, lang, d }: { project: Project; lang: Locale; d: 
 /** How many featured projects get the stacked full-width panel treatment. */
 const DECK_SIZE = 6;
 
+/** Stacked panels cycle through these colours (see [data-panel] in globals.css). */
+const PANEL_COLOURS = ["mist", "amber", "mint"] as const;
+
 const deckLink =
   "font-medium text-mist underline decoration-signal/60 decoration-2 underline-offset-4 transition-[text-decoration-color] hover:decoration-signal";
 
@@ -77,26 +80,26 @@ const deckLink =
 function DeckPanel({
   project,
   index,
-  total,
   lang,
   d,
 }: {
   project: Project;
   index: number;
-  total: number;
   lang: Locale;
   d: Dictionary["work"];
 }) {
   const { statusLabels } = getContent(lang);
   const shot = withScreenshot.has(project.slug);
-  const number = String(index + 1).padStart(2, "0");
 
   return (
     <li
       className="sticky mb-[10vh] last:mb-0"
       style={{ top: `calc(5rem + ${index * 14}px)` }}
     >
-      <article className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_-18px_40px_-20px_rgb(0_0_0/0.45)] sm:p-10">
+      <article
+        data-panel={PANEL_COLOURS[index % PANEL_COLOURS.length]}
+        className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_-18px_40px_-20px_rgb(0_0_0/0.45)] sm:p-10"
+      >
         <div className="flex items-start justify-between gap-6">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="font-medium">{project.context}</span>
@@ -108,9 +111,6 @@ function DeckPanel({
               {statusLabels[project.status]}
             </span>
           </div>
-          <span className="text-sm tabular-nums text-mist/60">
-            {number} / {String(total).padStart(2, "0")}
-          </span>
         </div>
 
         <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] md:gap-12">
@@ -146,14 +146,6 @@ function DeckPanel({
             </div>
           </div>
         </div>
-
-        {/* Big outlined number, a quiet echo of the panel's position. */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-6 right-4 text-[clamp(6rem,14vw,11rem)] font-extrabold leading-none text-transparent [-webkit-text-stroke:1.5px_rgb(var(--mist)/0.18)] [font-stretch:75%]"
-        >
-          {number}
-        </span>
       </article>
     </li>
   );
@@ -173,10 +165,10 @@ export default async function Work({ lang }: { lang: Locale }) {
   const repos = await getRecentRepos(contact.githubHandle, { exclude: [...listed, contact.githubHandle] });
 
   return (
-    <Section id="work" title={d.title} intro={d.intro} tone="dark" seam="circle">
+    <Section id="work" title={d.title} intro={d.intro} tone="dark">
       <ol>
         {featured.slice(0, DECK_SIZE).map((project, i) => (
-          <DeckPanel key={project.slug} project={project} index={i} total={featured.length} lang={lang} d={d} />
+          <DeckPanel key={project.slug} project={project} index={i} lang={lang} d={d} />
         ))}
       </ol>
 
