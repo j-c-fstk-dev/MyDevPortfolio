@@ -27,7 +27,10 @@ const progressOf = (el: HTMLElement) => {
 
 export default function ScrollEffects() {
   useEffect(() => {
-    const reduced = !document.documentElement.classList.contains("motion");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // The inline script sets this before first paint; set it again in case a failed hydration
+    // re-rendered <html> and dropped the class.
+    if (!reduced) document.documentElement.classList.add("motion");
 
     // The header and the rail take the tone showing beneath them.
     const followTone = (vh: number) => {
