@@ -25,7 +25,7 @@ export default function Hero({ lang }: { lang: Locale }) {
   const d = getDictionary(lang).hero;
 
   return (
-    <section id="top" data-progress="exit" className="relative overflow-hidden pb-20 pt-14 sm:pb-28 sm:pt-24">
+    <section id="top" data-tone="light" data-progress="exit" className="relative overflow-hidden bg-mist pb-20 pt-14 text-ink sm:pb-28 sm:pt-24">
       <div className={container}>
         <Headline lines={profile.headline} />
 

@@ -8,7 +8,7 @@ export default function SiteFooter({ lang }: { lang: Locale }) {
   const d = getDictionary(lang).footer;
 
   return (
-    <footer className="border-t border-line py-10">
+    <footer data-tone="light" className="border-t border-line bg-mist py-10 text-ink">
       <div className={`${container} flex flex-col gap-6 text-[15px] text-lichen sm:flex-row sm:items-center sm:justify-between`}>
         <p>
           © {new Date().getFullYear()} {profile.name}. {d.builtWith}

@@ -16,6 +16,19 @@
     color-scheme: light;
 }
 
+/* Sections alternate tone. A dark-tone section uses a deep pine palette... */
+[data-tone="dark"] {
+    --mist: 17 44 41;
+    --surface: 25 57 53;
+    --ink: 230 238 234;
+    --pine: 134 201 185;
+    --on-pine: 17 44 41;
+    --lichen: 160 186 178;
+    --line: 50 82 76;
+    --signal: 242 184 75;
+    color-scheme: dark;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --mist: 14 26 24;
@@ -27,6 +40,19 @@
         --line: 45 64 58;
         --signal: 242 184 75;
         color-scheme: dark;
+    }
+
+    /* ...and with a dark system theme the alternation flips: "dark" sections turn light. */
+    [data-tone="dark"] {
+        --mist: 237 241 238;
+        --surface: 247 249 247;
+        --ink: 19 35 32;
+        --pine: 31 79 79;
+        --on-pine: 237 241 238;
+        --lichen: 82 107 100;
+        --line: 198 210 204;
+        --signal: 227 162 26;
+        color-scheme: light;
     }
 }
 
@@ -123,6 +149,17 @@ summary:focus-visible {
 
 .motion [data-reveal="condense"]:not([data-visible="true"]) {
     font-stretch: 100%;
+}
+
+/* Ink seam: the goo filter fuses the blobs. Skipped on small screens to keep scrolling smooth. */
+.seam-goo {
+    filter: url(#seam-goo);
+}
+
+@media (max-width: 640px) {
+    .seam-goo {
+        filter: none;
+    }
 }
 
 /* ---------------------------------------------------------------------

@@ -1,20 +1,38 @@
 /** Small shared building blocks for the standard site. */
 
+import Seam, { type SeamShape } from "./Seam";
+
+export type Tone = "light" | "dark";
+
 export const container = "mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8";
 
+/**
+ * A page section. Sections alternate tone (light or dark); a section can bring
+ * its colour in through a seam that grows over the end of the previous one.
+ */
 export function Section({
   id,
   title,
   intro,
+  tone = "light",
+  seam,
   children,
 }: {
   id: string;
   title: string;
   intro?: string;
+  tone?: Tone;
+  seam?: SeamShape;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="border-t border-line py-20 sm:py-28">
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      data-tone={tone}
+      className="relative bg-mist pb-32 pt-20 text-ink sm:pb-44 sm:pt-28"
+    >
+      {seam && <Seam shape={seam} />}
       <div className={container}>
         <div className="mb-12 max-w-prose">
           <h2

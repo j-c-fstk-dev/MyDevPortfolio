@@ -7,7 +7,7 @@ export default function Experience({ lang }: { lang: Locale }) {
   const d = getDictionary(lang).experience;
 
   return (
-    <Section id="experience" title={d.title}>
+    <Section id="experience" title={d.title} tone="light" seam="ridge">
       {/* The track draws itself as the visitor scrolls; each job is a station that lights up when passed. */}
       <ol data-progress="draw" className="relative pl-8 sm:pl-10">
         <span aria-hidden className="absolute bottom-0 left-[7px] top-0 w-[2px] bg-line sm:left-[11px]">

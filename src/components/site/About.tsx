@@ -8,7 +8,7 @@ export default function About({ lang }: { lang: Locale }) {
   const d = getDictionary(lang).about;
 
   return (
-    <Section id="about" title={d.title}>
+    <Section id="about" title={d.title} tone="dark" seam="ink">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div>
           <Image
