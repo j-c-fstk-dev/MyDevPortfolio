@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { getContent, type Locale } from "@/data/portfolio";
 import { getDictionary } from "@/data/ui";
-import { Lines, ScanList, Section, TextLink } from "./ui";
+import { Lines, Section, TextLink } from "./ui";
 
 export default function About({ lang }: { lang: Locale }) {
   const { profile, contact, skills, education, languages } = getContent(lang);
   const d = getDictionary(lang).about;
 
   return (
-    <Section id="about" title={d.title} tone="dark" seam="ink">
+    <Section id="about" title={d.title} tone="dark">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         {/* Stays in view while the long tools list scrolls past. */}
         <div className="self-start lg:sticky lg:top-24">
@@ -35,7 +35,7 @@ export default function About({ lang }: { lang: Locale }) {
 
         <div>
           <h3 className="text-2xl font-bold [font-stretch:85%]">{d.tools}</h3>
-          <ScanList className="mt-6">
+          <div className="mt-6">
             {skills.map((group) => (
               <div key={group.category} className="pt-6 first:pt-0">
                 <h4 data-pass className="dim-until-passed text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold leading-tight [font-stretch:78%]">
@@ -50,7 +50,7 @@ export default function About({ lang }: { lang: Locale }) {
                 </ul>
               </div>
             ))}
-          </ScanList>
+          </div>
 
           <div className="mt-12 grid gap-10 sm:grid-cols-2">
             <div>

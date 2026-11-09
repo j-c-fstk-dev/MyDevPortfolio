@@ -1,70 +1,88 @@
 import { getContent, type Locale } from "@/data/portfolio";
 import { getDictionary } from "@/data/ui";
-import { ScanList, Section, TextLink } from "./ui";
+import HorizontalTrack from "./HorizontalTrack";
+import { Letters, TextLink } from "./ui";
 
+/**
+ * Experience as a train ride: the page pins and the jobs pass from right to
+ * left along a rail. Each job is a station that lights up as it reaches the
+ * middle; the rail line fills as the ride goes on.
+ */
 export default function Experience({ lang }: { lang: Locale }) {
   const { experience, previousCareer } = getContent(lang);
   const d = getDictionary(lang).experience;
 
-  return (
-    <Section id="experience" title={d.title} tone="light" seam="ridge">
-      {/* The track draws itself as the visitor scrolls; each job is a station that lights up when passed. */}
-      <ol data-progress="draw" className="relative pl-8 sm:pl-10">
-        <span aria-hidden className="absolute bottom-0 left-[7px] top-0 w-[2px] bg-line sm:left-[11px]">
-          <span
-            className="block w-full origin-top bg-signal"
-            style={{ height: "100%", transform: "scaleY(var(--p, 1))" }}
-          />
-        </span>
-        {experience.map((job) => (
-          <li
-            key={job.title}
-            data-pass
-            className="group relative grid gap-3 border-t border-line py-10 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10"
-          >
-            <span
-              aria-hidden
-              className="absolute -left-8 top-11 h-4 w-4 rounded-full border-2 border-line bg-mist transition-colors duration-500 group-data-[passed=true]:border-signal group-data-[passed=true]:bg-signal sm:-left-10 sm:h-6 sm:w-6"
-            />
-            <p className="font-medium tabular-nums text-lichen transition-colors duration-500 group-data-[passed=true]:text-ink">
-              {job.period}
-            </p>
-            <div className="max-w-prose">
-              <h3 className="text-2xl font-bold leading-tight [font-stretch:85%]">{job.title}</h3>
-              <p className="mt-1 font-medium text-pine">
-                {job.link ? <TextLink href={job.link}>{job.company}</TextLink> : job.company}
-              </p>
-              <p className="mt-4 leading-relaxed">{job.summary}</p>
-              <ScanList className="mt-4">
-                <ul className="space-y-2">
-                  {job.highlights.map((h) => (
-                    <li key={h} className="relative pl-5 leading-relaxed text-ink/85">
-                      <span className="absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-pine" aria-hidden />
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-              </ScanList>
-              <p className="mt-4 text-sm text-lichen">{job.tech.join(", ")}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
+  const rail = (
+    <div aria-hidden className="hz-rail relative mb-10 h-[2px] w-full shrink-0 bg-line">
+      <div className="h-full origin-left bg-signal" style={{ transform: "scaleX(var(--p, 0))" }} />
+    </div>
+  );
 
-      <div className="mt-8 rounded-2xl bg-surface p-6 ring-1 ring-line sm:p-10">
-        <h3 className="text-2xl font-bold [font-stretch:85%]">{d.beforeTech}</h3>
-        <p className="mt-2 max-w-prose leading-relaxed text-lichen">{d.beforeTechIntro}</p>
-        <ol className="mt-8 grid gap-8 md:grid-cols-3">
-          {previousCareer.map((job) => (
-            <li key={job.title}>
-              <p className="text-sm tabular-nums text-lichen">{job.period}</p>
-              <h4 className="mt-1 text-lg font-semibold leading-snug">{job.title}</h4>
-              <p className="text-pine">{job.company}</p>
-              <p className="mt-2 text-[15px] leading-relaxed text-ink/80">{job.summary}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </Section>
+  const station =
+    "hz-station absolute -top-[51px] left-6 h-5 w-5 rounded-full border-2 border-line bg-mist transition-colors duration-500 group-data-[passed=true]:border-signal group-data-[passed=true]:bg-signal sm:left-9";
+
+  return (
+    <section id="experience" aria-labelledby="experience-title" data-tone="light" className="relative bg-mist text-ink">
+      <HorizontalTrack rail={rail}>
+        {/* The departure board: the giant title. */}
+        <div className="hz-card flex w-[min(80vw,30rem)] shrink-0 flex-col justify-center">
+          <h2
+            id="experience-title"
+            data-reveal="condense"
+            aria-label={d.title}
+            className="text-[clamp(3.25rem,10vw,9rem)] font-extrabold leading-[0.9] tracking-[-0.03em] [font-stretch:76%]"
+          >
+            <Letters text={d.title} />
+          </h2>
+        </div>
+
+        {experience.map((job) => (
+          <article
+            key={job.title}
+            data-station
+            className="hz-card group relative w-[min(84vw,38rem)] shrink-0 rounded-[1.75rem] bg-surface p-6 ring-1 ring-line/70 sm:p-9"
+          >
+            <span aria-hidden className={station} />
+            <p className="text-sm font-medium tabular-nums text-lichen">{job.period}</p>
+            <h3 className="mt-2 text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold leading-tight [font-stretch:80%]">
+              {job.title}
+            </h3>
+            <p className="mt-1 font-medium text-pine">
+              {job.link ? <TextLink href={job.link}>{job.company}</TextLink> : job.company}
+            </p>
+            <p className="mt-4 leading-relaxed">{job.summary}</p>
+            <ul className="mt-4 space-y-2">
+              {job.highlights.map((h) => (
+                <li key={h} className="relative pl-5 text-[15px] leading-relaxed text-ink/85 sm:text-base">
+                  <span className="absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-pine" aria-hidden />
+                  {h}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-sm text-lichen">{job.tech.join(", ")}</p>
+          </article>
+        ))}
+
+        {/* Earlier stops on the line, before tech. */}
+        <article
+          data-station
+          className="hz-card group relative w-[min(84vw,44rem)] shrink-0 rounded-[1.75rem] bg-ink p-6 text-mist sm:p-9"
+        >
+          <span aria-hidden className={station} />
+          <h3 className="text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold leading-tight [font-stretch:80%]">{d.beforeTech}</h3>
+          <p className="mt-2 max-w-prose leading-relaxed text-mist/75">{d.beforeTechIntro}</p>
+          <ol className="mt-6 grid gap-6 sm:grid-cols-3">
+            {previousCareer.map((job) => (
+              <li key={job.title}>
+                <p className="text-sm tabular-nums text-mist/60">{job.period}</p>
+                <h4 className="mt-1 font-semibold leading-snug">{job.title}</h4>
+                <p className="text-sm text-mist/80">{job.company}</p>
+                <p className="mt-2 text-sm leading-relaxed text-mist/75">{job.summary}</p>
+              </li>
+            ))}
+          </ol>
+        </article>
+      </HorizontalTrack>
+    </section>
   );
 }

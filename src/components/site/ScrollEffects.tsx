@@ -7,41 +7,42 @@ import { useEffect } from "react";
  * nothing; it writes CSS custom properties that the styles read.
  *
  * - [data-progress="through"]: --p goes 0 → 1 while the element crosses the viewport.
- * - [data-progress="exit"]:    --p goes 0 → 1 while the element scrolls off the top.
  * - [data-progress="draw"]:    --p goes 0 → 1 as the element passes the middle of the screen.
- * - [data-progress="seam"]:    --p goes 0 → 1 from the seam entering at the bottom until the
- *                              section it belongs to reaches the top of the screen.
- * - [data-progress="scan"]:    like "draw" but not clamped, so the reading bar leaves the list cleanly.
- * - [data-reveal="lines"]:     its .rl-word children get --line (the line they wrapped onto).
- * - [data-tone-follow]:        takes the data-tone of the section under it ("top" or "middle" of the screen).
+ * - [data-progress="pin"]:     --p goes 0 → 1 while a tall runway with a sticky stage is scrolled
+ *                              through (the stage stays on screen the whole time).
+ * - [data-cover]:              a layer that, once its --p reaches the given threshold, fills the
+ *                              screen with its own data-tone (the hero disc, colour transitions).
+ * - [data-tone-follow]:        takes the tone showing under it ("top" or "middle" of the screen).
  * - [data-reveal]:             gets data-visible="true" once it enters the viewport.
+ * - [data-reveal="lines"]:     its .rl-word children get --line (the line they wrapped onto).
  * - [data-pass]:               gets data-passed="true" once its top crosses the middle of the screen.
  *
  * With reduced motion nothing moves: reveals are shown at once and --p stays unset.
  */
+
+const progressOf = (el: HTMLElement) => {
+  const holder = el.closest<HTMLElement>("[data-progress]");
+  return parseFloat(holder?.style.getPropertyValue("--p") || "0");
+};
+
 export default function ScrollEffects() {
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = !document.documentElement.classList.contains("motion");
 
-    // The header and the rail take the tone of the section beneath them.
+    // The header and the rail take the tone showing beneath them.
     const followTone = (vh: number) => {
-      const sections = Array.from(document.querySelectorAll<HTMLElement>("section[data-tone]"));
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>("section[data-tone], footer[data-tone], [data-tone-source]")
+      );
+      const covers = reduced ? [] : Array.from(document.querySelectorAll<HTMLElement>("[data-cover]"));
       document.querySelectorAll<HTMLElement>("[data-tone-follow]").forEach((el) => {
         const y = el.dataset.toneFollow === "top" ? 32 : vh / 2;
-        // A seam that has mostly filled already shows its section's colour above that section's top.
-        const coveredBy = sections.find((section) => {
-          const seam = section.querySelector<HTMLElement>(':scope > [data-progress="seam"]');
-          if (!seam) return false;
-          const rect = seam.getBoundingClientRect();
-          const p = parseFloat(seam.style.getPropertyValue("--p") || "1");
-          return p >= 0.6 && rect.top <= y && rect.bottom > y;
-        });
-        const under =
-          coveredBy ??
-          sections.find((section) => {
-            const rect = section.getBoundingClientRect();
-            return rect.top <= y && rect.bottom > y;
-          });
+        const inside = (node: HTMLElement) => {
+          const rect = node.getBoundingClientRect();
+          return rect.top <= y && rect.bottom > y;
+        };
+        const cover = covers.find((c) => inside(c) && progressOf(c) >= parseFloat(c.dataset.cover || "0.6"));
+        const under = cover ?? sections.find(inside);
         if (under?.dataset.tone) el.dataset.tone = under.dataset.tone;
       });
     };
@@ -100,18 +101,12 @@ export default function ScrollEffects() {
       document.querySelectorAll<HTMLElement>("[data-progress]").forEach((el) => {
         const rect = el.getBoundingClientRect();
         const mode = el.dataset.progress;
-        if (mode === "scan") {
-          el.style.setProperty("--p", ((vh * 0.55 - rect.top) / Math.max(rect.height, 1)).toFixed(4));
-          return;
-        }
         const p =
-          mode === "exit"
-            ? -rect.top / Math.max(rect.height, 1)
+          mode === "pin"
+            ? -rect.top / Math.max(rect.height - vh, 1)
             : mode === "draw"
               ? (vh * 0.55 - rect.top) / Math.max(rect.height, 1)
-              : mode === "seam"
-                ? (vh - rect.top) / (vh * 0.85 + rect.height)
-                : (vh - rect.top) / (vh + rect.height);
+              : (vh - rect.top) / (vh + rect.height);
         el.style.setProperty("--p", Math.min(Math.max(p, 0), 1).toFixed(4));
       });
       followTone(vh);
