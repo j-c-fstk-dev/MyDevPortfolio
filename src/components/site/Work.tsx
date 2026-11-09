@@ -173,7 +173,7 @@ export default async function Work({ lang }: { lang: Locale }) {
   const repos = await getRecentRepos(contact.githubHandle, { exclude: [...listed, contact.githubHandle] });
 
   return (
-    <Section id="work" title={d.title} intro={d.intro}>
+    <Section id="work" title={d.title} intro={d.intro} tone="dark" seam="circle">
       <ol>
         {featured.slice(0, DECK_SIZE).map((project, i) => (
           <DeckPanel key={project.slug} project={project} index={i} total={featured.length} lang={lang} d={d} />

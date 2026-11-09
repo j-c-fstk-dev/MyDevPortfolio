@@ -1,13 +1,13 @@
 import { getContent, type Locale } from "@/data/portfolio";
 import { getDictionary } from "@/data/ui";
-import { Section, TextLink } from "./ui";
+import { ScanList, Section, TextLink } from "./ui";
 
 export default function Experience({ lang }: { lang: Locale }) {
   const { experience, previousCareer } = getContent(lang);
   const d = getDictionary(lang).experience;
 
   return (
-    <Section id="experience" title={d.title}>
+    <Section id="experience" title={d.title} tone="light" seam="ridge">
       {/* The track draws itself as the visitor scrolls; each job is a station that lights up when passed. */}
       <ol data-progress="draw" className="relative pl-8 sm:pl-10">
         <span aria-hidden className="absolute bottom-0 left-[7px] top-0 w-[2px] bg-line sm:left-[11px]">
@@ -35,14 +35,16 @@ export default function Experience({ lang }: { lang: Locale }) {
                 {job.link ? <TextLink href={job.link}>{job.company}</TextLink> : job.company}
               </p>
               <p className="mt-4 leading-relaxed">{job.summary}</p>
-              <ul className="mt-4 space-y-2">
-                {job.highlights.map((h) => (
-                  <li key={h} className="relative pl-5 leading-relaxed text-ink/85">
-                    <span className="absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-pine" aria-hidden />
-                    {h}
-                  </li>
-                ))}
-              </ul>
+              <ScanList className="mt-4">
+                <ul className="space-y-2">
+                  {job.highlights.map((h) => (
+                    <li key={h} className="relative pl-5 leading-relaxed text-ink/85">
+                      <span className="absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-pine" aria-hidden />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </ScanList>
               <p className="mt-4 text-sm text-lichen">{job.tech.join(", ")}</p>
             </div>
           </li>

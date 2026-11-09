@@ -14,7 +14,11 @@ export default function SiteHeader({ lang }: { lang: Locale }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-mist/85 backdrop-blur-md">
+    <header
+      data-tone="light"
+      data-tone-follow="top"
+      className="sticky top-0 z-40 border-b border-line/70 bg-mist/85 text-ink backdrop-blur-md transition-colors duration-500"
+    >
       <div className={`${container} flex h-16 items-center justify-between gap-4`}>
         <a href="#top" className="text-lg font-bold tracking-tight [font-stretch:85%]">
           <span className="sm:hidden" aria-hidden>

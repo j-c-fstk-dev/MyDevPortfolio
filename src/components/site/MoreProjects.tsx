@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Project, ProjectCategory, ProjectStatus } from "@/data/portfolio";
+import { ScanList } from "./ui";
 
 type Filter = "all" | ProjectCategory;
 
@@ -45,43 +46,45 @@ export default function MoreProjects({
         {categories.map((c) => chip(c, categoryLabels[c]))}
       </div>
 
-      <ul className="mt-6 grid gap-x-10 md:grid-cols-2" aria-live="polite">
-        {visible.map((project) => {
-          const href = project.live ?? project.repo;
-          return (
-            <li key={project.slug} className="border-t border-line py-5">
-              <div className="flex items-baseline justify-between gap-4">
-                <h4 className="text-lg font-semibold">
-                  {href ? (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] hover:decoration-signal"
-                    >
-                      {project.title}
-                    </a>
-                  ) : (
-                    project.title
-                  )}
-                </h4>
-                <span className="shrink-0 text-sm text-lichen">{statusLabels[project.status]}</span>
-              </div>
-              <p className="mt-1 leading-relaxed text-lichen">{project.description}</p>
-              {project.live && project.repo && (
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 inline-block text-sm text-pine underline decoration-pine/30 underline-offset-4 hover:decoration-signal"
-                >
-                  {labels.sourceCode}
-                </a>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+      <ScanList className="mt-6">
+        <ul className="grid gap-x-10 md:grid-cols-2" aria-live="polite">
+          {visible.map((project) => {
+            const href = project.live ?? project.repo;
+            return (
+              <li key={project.slug} className="border-t border-line py-5">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h4 className="text-lg font-semibold">
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] hover:decoration-signal"
+                      >
+                        {project.title}
+                      </a>
+                    ) : (
+                      project.title
+                    )}
+                  </h4>
+                  <span className="shrink-0 text-sm text-lichen">{statusLabels[project.status]}</span>
+                </div>
+                <p className="mt-1 leading-relaxed text-lichen">{project.description}</p>
+                {project.live && project.repo && (
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-block text-sm text-pine underline decoration-pine/30 underline-offset-4 hover:decoration-signal"
+                  >
+                    {labels.sourceCode}
+                  </a>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </ScanList>
     </div>
   );
 }

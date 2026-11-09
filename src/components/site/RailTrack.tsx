@@ -82,6 +82,8 @@ export default function RailTrack({ stations, label }: { stations: Station[]; la
       {/* Wide screens: the vertical track in the left margin (the current station is labelled where there is room). */}
       <nav
         aria-label={label}
+        data-tone="light"
+        data-tone-follow="middle"
         className="pointer-events-none fixed bottom-10 left-6 top-28 z-30 hidden xl:block"
       >
         <div ref={trackRef} className="relative h-full w-[2px] bg-line">
