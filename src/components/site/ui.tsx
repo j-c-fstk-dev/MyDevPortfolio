@@ -19,11 +19,16 @@ export function Section({
         <div className="mb-12 max-w-prose">
           <h2
             id={`${id}-title`}
+            data-reveal="condense"
             className="text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.025em] [font-stretch:82%]"
           >
             {title}
           </h2>
-          {intro && <p className="mt-4 text-lg text-lichen">{intro}</p>}
+          {intro && (
+            <p data-reveal className="mt-4 text-lg text-lichen [transition-delay:150ms]">
+              {intro}
+            </p>
+          )}
         </div>
         {children}
       </div>
