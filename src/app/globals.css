@@ -151,6 +151,64 @@ summary:focus-visible {
     font-stretch: 100%;
 }
 
+/* Titles: letters rise in turn (on top of the condense transition of the title itself). */
+.motion [data-reveal] .rl-char {
+    display: inline-block;
+    transition:
+        opacity 0.5s ease-out,
+        transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 28ms);
+}
+
+.motion [data-reveal]:not([data-visible="true"]) .rl-char {
+    opacity: 0;
+    transform: translateY(0.45em);
+}
+
+/* The title itself only condenses; its letters do the rising. */
+.motion [data-reveal="condense"]:not([data-visible="true"]) {
+    opacity: 1;
+    transform: none;
+}
+
+/* Paragraphs: lines rise one after another. */
+.motion [data-reveal="lines"]:not([data-visible="true"]) {
+    opacity: 1;
+    transform: none;
+}
+
+.motion [data-reveal="lines"] .rl-word {
+    display: inline-block;
+    transition:
+        opacity 0.6s ease-out,
+        transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--line, 0) * 110ms);
+}
+
+.motion [data-reveal="lines"]:not([data-visible="true"]) .rl-word {
+    opacity: 0;
+    transform: translateY(0.9em);
+}
+
+/* The amber reading bar's copy: everything inside reads dark on amber. */
+.scan-copy {
+    --ink: 19 35 32;
+    --lichen: 19 35 32;
+    --pine: 19 35 32;
+    --line: 19 35 32;
+    --mist: 227 162 26;
+    color: rgb(19 35 32);
+}
+
+/* Group headings start dim and light up once the reading line reaches them. */
+.motion [data-pass].dim-until-passed:not([data-passed="true"]) {
+    opacity: 0.3;
+}
+
+.dim-until-passed {
+    transition: opacity 0.5s ease-out;
+}
+
 /* Ink seam: the goo filter fuses the blobs. Skipped on small screens to keep scrolling smooth. */
 .seam-goo {
     filter: url(#seam-goo);

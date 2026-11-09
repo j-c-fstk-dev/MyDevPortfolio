@@ -11,6 +11,8 @@ import { useEffect } from "react";
  * - [data-progress="draw"]:    --p goes 0 → 1 as the element passes the middle of the screen.
  * - [data-progress="seam"]:    --p goes 0 → 1 from the seam entering at the bottom until the
  *                              section it belongs to reaches the top of the screen.
+ * - [data-progress="scan"]:    like "draw" but not clamped, so the reading bar leaves the list cleanly.
+ * - [data-reveal="lines"]:     its .rl-word children get --line (the line they wrapped onto).
  * - [data-tone-follow]:        takes the data-tone of the section under it ("top" or "middle" of the screen).
  * - [data-reveal]:             gets data-visible="true" once it enters the viewport.
  * - [data-pass]:               gets data-passed="true" once its top crosses the middle of the screen.
@@ -26,10 +28,20 @@ export default function ScrollEffects() {
       const sections = Array.from(document.querySelectorAll<HTMLElement>("section[data-tone]"));
       document.querySelectorAll<HTMLElement>("[data-tone-follow]").forEach((el) => {
         const y = el.dataset.toneFollow === "top" ? 32 : vh / 2;
-        const under = sections.find((section) => {
-          const rect = section.getBoundingClientRect();
-          return rect.top <= y && rect.bottom > y;
+        // A seam that has mostly filled already shows its section's colour above that section's top.
+        const coveredBy = sections.find((section) => {
+          const seam = section.querySelector<HTMLElement>(':scope > [data-progress="seam"]');
+          if (!seam) return false;
+          const rect = seam.getBoundingClientRect();
+          const p = parseFloat(seam.style.getPropertyValue("--p") || "1");
+          return p >= 0.6 && rect.top <= y && rect.bottom > y;
         });
+        const under =
+          coveredBy ??
+          sections.find((section) => {
+            const rect = section.getBoundingClientRect();
+            return rect.top <= y && rect.bottom > y;
+          });
         if (under?.dataset.tone) el.dataset.tone = under.dataset.tone;
       });
     };
@@ -44,6 +56,30 @@ export default function ScrollEffects() {
       window.addEventListener("scroll", onScroll, { passive: true });
       return () => window.removeEventListener("scroll", onScroll);
     }
+
+    // Number the visual lines of line-by-line paragraphs (redone when the width changes).
+    const indexLines = () => {
+      document.querySelectorAll<HTMLElement>('[data-reveal="lines"]').forEach((el) => {
+        let line = -1;
+        let lastTop = -Infinity;
+        el.querySelectorAll<HTMLElement>(".rl-word").forEach((word) => {
+          if (word.offsetTop > lastTop + 2) {
+            line++;
+            lastTop = word.offsetTop;
+          }
+          word.style.setProperty("--line", String(line));
+        });
+      });
+    };
+    indexLines();
+    let width = window.innerWidth;
+    const onResize = () => {
+      if (window.innerWidth !== width) {
+        width = window.innerWidth;
+        indexLines();
+      }
+    };
+    window.addEventListener("resize", onResize);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -64,6 +100,10 @@ export default function ScrollEffects() {
       document.querySelectorAll<HTMLElement>("[data-progress]").forEach((el) => {
         const rect = el.getBoundingClientRect();
         const mode = el.dataset.progress;
+        if (mode === "scan") {
+          el.style.setProperty("--p", ((vh * 0.55 - rect.top) / Math.max(rect.height, 1)).toFixed(4));
+          return;
+        }
         const p =
           mode === "exit"
             ? -rect.top / Math.max(rect.height, 1)
@@ -91,6 +131,7 @@ export default function ScrollEffects() {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
