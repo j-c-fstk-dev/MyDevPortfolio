@@ -13,16 +13,24 @@ export function Section({
   title,
   intro,
   tone = "light",
+  pullUp = false,
   children,
 }: {
   id: string;
   title: string;
   intro?: string;
   tone?: Tone;
+  /** Slide up over the end of the pinned moment before it (same colour), so there's no empty screen. */
+  pullUp?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} data-tone={tone} className="relative bg-mist pb-28 pt-24 text-ink sm:pb-36 sm:pt-32">
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      data-tone={tone}
+      className={`relative bg-mist pb-28 pt-24 text-ink sm:pb-36 sm:pt-32 ${pullUp ? "pull-up" : ""}`}
+    >
       <div className={container}>
         <SectionTitle id={`${id}-title`} title={title} />
         {intro && (

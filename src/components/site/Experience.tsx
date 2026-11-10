@@ -23,9 +23,9 @@ export default function Experience({ lang }: { lang: Locale }) {
 
   return (
     <section id="experience" aria-labelledby="experience-title" data-tone="light" className="relative bg-mist text-ink">
-      <HorizontalTrack rail={rail}>
-        {/* The departure board: the giant title. */}
-        <div className="hz-card flex w-[min(80vw,30rem)] shrink-0 flex-col justify-center">
+      <HorizontalTrack rail={rail} exitTone="dark">
+        {/* The departure board: the giant title. It drops in from above the centre. */}
+        <div data-hz-title className="hz-card flex w-[min(80vw,30rem)] shrink-0 flex-col justify-center">
           <h2
             id="experience-title"
             data-reveal="condense"
@@ -63,24 +63,28 @@ export default function Experience({ lang }: { lang: Locale }) {
           </article>
         ))}
 
-        {/* Earlier stops on the line, before tech. */}
+        {/* Earlier stops on the line. In the next section's colour: it grows to fill the screen on the way out. */}
         <article
           data-station
-          className="hz-card group relative w-[min(84vw,44rem)] shrink-0 rounded-[1.75rem] bg-ink p-6 text-mist sm:p-9"
+          data-exit-card
+          data-tone="dark"
+          className="hz-card group relative w-[min(84vw,44rem)] shrink-0 rounded-[1.75rem] bg-mist p-6 text-ink sm:p-9"
         >
           <span aria-hidden className={station} />
+          <div data-exit-content className="origin-center">
           <h3 className="text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold leading-tight [font-stretch:80%]">{d.beforeTech}</h3>
-          <p className="mt-2 max-w-prose leading-relaxed text-mist/75">{d.beforeTechIntro}</p>
+          <p className="mt-2 max-w-prose leading-relaxed text-lichen">{d.beforeTechIntro}</p>
           <ol className="mt-6 grid gap-6 sm:grid-cols-3">
             {previousCareer.map((job) => (
               <li key={job.title}>
-                <p className="text-sm tabular-nums text-mist/60">{job.period}</p>
+                <p className="text-sm tabular-nums text-lichen">{job.period}</p>
                 <h4 className="mt-1 font-semibold leading-snug">{job.title}</h4>
-                <p className="text-sm text-mist/80">{job.company}</p>
-                <p className="mt-2 text-sm leading-relaxed text-mist/75">{job.summary}</p>
+                <p className="text-sm text-pine">{job.company}</p>
+                <p className="mt-2 text-sm leading-relaxed text-ink/80">{job.summary}</p>
               </li>
             ))}
           </ol>
+          </div>
         </article>
       </HorizontalTrack>
     </section>

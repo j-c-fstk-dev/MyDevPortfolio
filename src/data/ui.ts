@@ -22,6 +22,8 @@ const dictionaries = {
       moreIntro: "Recent experiments, hackathon entries and products in progress. Everything else is on",
       all: "All",
       filterLabel: "Filter projects",
+      exploreMore: (n: number) => `Explore ${n} other projects`,
+      showLess: "Show fewer projects",
     },
     github: {
       title: "Recently on GitHub",
@@ -89,6 +91,8 @@ const dictionaries = {
       moreIntro: "Experimentos recentes, projetos de hackathon e produtos em andamento. O resto está no",
       all: "Todos",
       filterLabel: "Filtrar projetos",
+      exploreMore: (n: number) => `Explorar outros ${n} projetos`,
+      showLess: "Mostrar menos projetos",
     },
     github: {
       title: "Recentemente no GitHub",

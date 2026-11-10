@@ -3,6 +3,7 @@ import { getContent, type Locale, type Project } from "@/data/portfolio";
 import screenshots from "@/data/screenshots.json";
 import { getDictionary, type Dictionary } from "@/data/ui";
 import { getRecentRepos } from "@/lib/github";
+import Expandable from "./Expandable";
 import MoreProjects from "./MoreProjects";
 import RecentRepos from "./RecentRepos";
 import { Section, TextLink } from "./ui";
@@ -10,56 +11,70 @@ import { Section, TextLink } from "./ui";
 /** Slugs with a captured screenshot in public/projects/ (see scripts/capture-screenshots.mts). */
 const withScreenshot = new Set<string>(screenshots);
 
-export function StatusMark({ status, label }: { status: Project["status"]; label: string }) {
-  const live = status === "live";
-  return (
-    <span className="inline-flex items-center gap-2 text-sm text-lichen">
-      <span className={`h-2 w-2 rounded-full ${live ? "bg-pine" : "border-[1.5px] border-lichen"}`} aria-hidden />
-      {label}
-    </span>
-  );
-}
-
-function FeaturedRow({ project, lang, d }: { project: Project; lang: Locale; d: Dictionary["work"] }) {
+/**
+ * A featured project after the stacked deck: a card that flies in from off
+ * screen as it scrolls into view, from the left or the right in turn, and
+ * settles on its own side of a zig-zag. Tied to the scroll (--p), not a timer.
+ * Without motion --p is unset and the card simply sits in place.
+ */
+function FlyCard({ project, index, lang, d }: { project: Project; index: number; lang: Locale; d: Dictionary["work"] }) {
   const { statusLabels } = getContent(lang);
   const shot = withScreenshot.has(project.slug);
+  const from = index % 2 === 0 ? -1 : 1;
+  // 0 → 1 as the card travels in during the first third of its pass through the screen.
+  const k = "clamp(0, var(--p, 1) * 3.2, 1)";
+  const left = `calc(1 - ${k})`;
 
   return (
-    <li className="grid gap-4 border-t border-line py-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
-      <div>
-        <h3 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-bold leading-[1.05] tracking-[-0.02em] [font-stretch:80%]">
+    <li
+      data-progress="through"
+      className={`flex ${from < 0 ? "justify-start" : "justify-end"}`}
+    >
+      <article
+        data-panel={PANEL_COLOURS[(index + DECK_SIZE) % PANEL_COLOURS.length]}
+        className="w-full rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_18px_40px_-24px_rgb(0_0_0/0.5)] will-change-transform sm:w-[78%] sm:p-9"
+        style={{
+          transform: `translateX(calc(${from} * ${left} * ${left} * 110vw)) rotate(calc(${from} * ${left} * 7deg))`,
+        }}
+      >
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+          <span className="font-medium">{project.context}</span>
+          <span className="inline-flex items-center gap-2 text-mist/70">
+            <span
+              className={`h-2 w-2 rounded-full ${project.status === "live" ? "bg-signal" : "border-[1.5px] border-mist/60"}`}
+              aria-hidden
+            />
+            {statusLabels[project.status]}
+          </span>
+        </div>
+        <h3 className="mt-3 text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold leading-[0.95] tracking-[-0.02em] [font-stretch:76%]">
           {project.title}
         </h3>
-        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
-          <span className="text-sm font-medium">{project.context}</span>
-          <StatusMark status={project.status} label={statusLabels[project.status]} />
-        </div>
         {shot && (
-          <a
-            href={project.live ?? project.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 block overflow-hidden rounded-xl ring-1 ring-line transition-shadow hover:ring-pine/50"
-          >
-            <Image
-              src={`/projects/${project.slug}.jpg`}
-              alt={d.screenshotAlt(project.title)}
-              width={1280}
-              height={800}
-              sizes="(min-width: 1024px) 440px, (min-width: 768px) 40vw, 100vw"
-              className="aspect-[16/10] w-full object-cover object-top"
-            />
-          </a>
+          <Image
+            src={`/projects/${project.slug}.jpg`}
+            alt={d.screenshotAlt(project.title)}
+            width={1280}
+            height={800}
+            sizes="(min-width: 640px) 60vw, 100vw"
+            className="mt-5 aspect-[16/10] w-full rounded-xl object-cover object-top"
+          />
         )}
-      </div>
-      <div className="max-w-prose">
-        <p className="text-lg leading-relaxed">{project.description}</p>
-        <p className="mt-3 text-sm text-lichen">{project.tech.join(", ")}</p>
-        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
-          {project.live && <TextLink href={project.live}>{d.visitSite}</TextLink>}
-          {project.repo && <TextLink href={project.repo}>{d.sourceCode}</TextLink>}
+        <p className="mt-4 max-w-prose text-lg leading-relaxed text-mist/90">{project.description}</p>
+        <p className="mt-3 text-sm text-mist/60">{project.tech.join(", ")}</p>
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+          {project.live && (
+            <a href={project.live} target="_blank" rel="noopener noreferrer" className={deckLink}>
+              {d.visitSite}
+            </a>
+          )}
+          {project.repo && (
+            <a href={project.repo} target="_blank" rel="noopener noreferrer" className={deckLink}>
+              {d.sourceCode}
+            </a>
+          )}
         </div>
-      </div>
+      </article>
     </li>
   );
 }
@@ -173,14 +188,19 @@ export default async function Work({ lang }: { lang: Locale }) {
       </ol>
 
       {featured.length > DECK_SIZE && (
-        <ul className="mt-16 border-b border-line">
-          {featured.slice(DECK_SIZE).map((project) => (
-            <FeaturedRow key={project.slug} project={project} lang={lang} d={d} />
+        <ul className="mt-20 space-y-10 overflow-x-clip sm:space-y-14">
+          {featured.slice(DECK_SIZE).map((project, i) => (
+            <FlyCard key={project.slug} project={project} index={i} lang={lang} d={d} />
           ))}
         </ul>
       )}
 
-      <div className="mt-20">
+      {/* Everything else stays folded away until the visitor asks for it. */}
+      <Expandable
+        className="mt-24"
+        openLabel={d.exploreMore(others.length)}
+        closeLabel={d.showLess}
+      >
         <h3 className="text-2xl font-bold [font-stretch:85%]">{d.moreTitle}</h3>
         <p className="mt-2 text-lichen">
           {d.moreIntro} <TextLink href={`${contact.github}?tab=repositories`}>GitHub</TextLink>.
@@ -191,11 +211,10 @@ export default async function Work({ lang }: { lang: Locale }) {
           statusLabels={statusLabels}
           labels={{ all: d.all, filter: d.filterLabel, sourceCode: d.sourceCode }}
         />
-      </div>
-
-      {repos.length > 0 && (
-        <RecentRepos repos={repos} lang={lang} d={dict.github} allReposUrl={`${contact.github}?tab=repositories`} />
-      )}
+        {repos.length > 0 && (
+          <RecentRepos repos={repos} lang={lang} d={dict.github} allReposUrl={`${contact.github}?tab=repositories`} />
+        )}
+      </Expandable>
     </Section>
   );
 }
