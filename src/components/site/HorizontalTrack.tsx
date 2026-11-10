@@ -90,13 +90,18 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
         bloom.style.setProperty("--p", q.toFixed(4));
         if (q > 0) {
           const r = lastCard.getBoundingClientRect();
-          // The layer covers the whole screen; its clip draws the shape in screen coordinates.
+          // Work in the stage's coordinates, not the screen's: the layer covers the stage
+          // (the screen while it is pinned), so once the section scrolls away the layer
+          // leaves with it instead of staying over the rest of the page.
+          const st = stage.getBoundingClientRect();
+          const cardLeft = r.left - st.left;
+          const cardTop = r.top - st.top;
           Object.assign(bloom.style, {
             visibility: "visible",
-            left: `${-r.left}px`,
-            top: `${-r.top}px`,
-            width: `${vw}px`,
-            height: `${vh}px`,
+            left: `${-cardLeft}px`,
+            top: `${-cardTop}px`,
+            width: `${st.width}px`,
+            height: `${st.height}px`,
           });
           lastCard.style.backgroundColor = "transparent";
           if (lastStation) lastStation.style.opacity = "0";
@@ -115,9 +120,9 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
           } else {
             const g = ease((q - ROUND) / (1 - ROUND));
             // Far enough to cover the farthest corner of the screen from the card's centre.
-            const sx = r.left + cx;
-            const sy = r.top + cy;
-            const far = Math.hypot(Math.max(sx, vw - sx), Math.max(sy, vh - sy));
+            const sx = cardLeft + cx;
+            const sy = cardTop + cy;
+            const far = Math.hypot(Math.max(sx, st.width - sx), Math.max(sy, st.height - sy));
             lastCard.style.clipPath = `circle(${d / 2 + (far - d / 2) * g}px at ${cx}px ${cy}px)`;
           }
         } else {
