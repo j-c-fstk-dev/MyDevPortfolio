@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Tone } from "./ui";
 
 /** Extra scroll (in viewport heights) after the ride, while the last card fills the screen. */
 const EXIT_VH = 0.8;
@@ -15,34 +14,26 @@ const EXIT_VH = 0.8;
  *   track slides left as the runway is scrolled. [data-station] children get
  *   data-passed="true" once they reach the middle of the screen; the stage gets
  *   --p (0 → 1) for the rail line.
- * - Leaving: the [data-exit-card] (the last card) grows its colour until it
- *   fills the screen while its text zooms and fades, handing over to the next
- *   section, which starts in that same colour.
+ * - Leaving: the [data-exit-card] (the last card) rounds into a circle, which
+ *   then grows from the card's centre until it fills the screen, covering the
+ *   other cards. The card's text dives in (a strong zoom from its centre) and
+ *   fades at the end, handing over to the next section in that same colour.
+ *   The shape is the card's [data-exit-bloom] layer, so it sits above the
+ *   other cards.
  *
  * Without the .motion class (no JavaScript or reduced motion) the stage is a
  * normal block and the track wraps as a vertical stack.
  */
-export default function HorizontalTrack({
-  children,
-  rail,
-  exitTone,
-}: {
-  children: React.ReactNode;
-  rail?: React.ReactNode;
-  /** Tone of the section that follows; the last card grows in this colour. */
-  exitTone: Tone;
-}) {
+export default function HorizontalTrack({ children, rail }: { children: React.ReactNode; rail?: React.ReactNode }) {
   const runwayRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const fillRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const runway = runwayRef.current;
     const stage = stageRef.current;
     const track = trackRef.current;
-    const fill = fillRef.current;
-    if (!runway || !stage || !track || !fill) return;
+    if (!runway || !stage || !track) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let distance = 0;
@@ -52,7 +43,8 @@ export default function HorizontalTrack({
     const title = track.querySelector<HTMLElement>("[data-hz-title]");
     const lastCard = track.querySelector<HTMLElement>("[data-exit-card]");
     const lastContent = lastCard?.querySelector<HTMLElement>("[data-exit-content]");
-    const others = Array.from(track.children).filter((el) => el !== lastCard) as HTMLElement[];
+    const bloom = lastCard?.querySelector<HTMLElement>("[data-exit-bloom]");
+    const lastStation = lastCard?.querySelector<HTMLElement>(".hz-station");
 
     const clamp = (v: number) => Math.min(Math.max(v, 0), 1);
     const ease = (t: number) => 1 - (1 - t) ** 3;
@@ -91,24 +83,54 @@ export default function HorizontalTrack({
         }
       }
 
-      // Leave: the last card's colour fills the screen, its text zooms and fades.
+      // Leave: the card rounds into a circle, then the circle floods the screen.
       const q = exit > 0 ? clamp((-top - distance) / exit) : 0;
       stage.style.setProperty("--exit", q.toFixed(4));
-      fill.style.setProperty("--p", q.toFixed(4));
-      if (lastCard) {
-        const r = lastCard.getBoundingClientRect();
+      if (lastCard && bloom) {
+        bloom.style.setProperty("--p", q.toFixed(4));
         if (q > 0) {
-          const k = 1 - ease(q);
-          fill.style.visibility = "visible";
-          fill.style.clipPath = `inset(${r.top * k}px ${(vw - r.right) * k}px ${(vh - r.bottom) * k}px ${r.left * k}px round ${28 * k}px)`;
+          const r = lastCard.getBoundingClientRect();
+          // The layer covers the whole screen; its clip draws the shape in screen coordinates.
+          Object.assign(bloom.style, {
+            visibility: "visible",
+            left: `${-r.left}px`,
+            top: `${-r.top}px`,
+            width: `${vw}px`,
+            height: `${vh}px`,
+          });
+          lastCard.style.backgroundColor = "transparent";
+          if (lastStation) lastStation.style.opacity = "0";
+          // The whole card (the colour layer and the text) is clipped to the shape, so the
+          // zooming text only shows inside it. Coordinates are relative to the card.
+          const cx = r.width / 2;
+          const cy = r.height / 2;
+          const d = Math.min(r.width, r.height); // the circle the card rounds into
+          const ROUND = 0.3; // first 30%: round into a circle
+          if (q < ROUND) {
+            const m = ease(q / ROUND);
+            const w = r.width + (d - r.width) * m;
+            const h = r.height + (d - r.height) * m;
+            const radius = 28 + (d / 2 - 28) * m;
+            lastCard.style.clipPath = `inset(${cy - h / 2}px ${cx - w / 2}px ${cy - h / 2}px ${cx - w / 2}px round ${radius}px)`;
+          } else {
+            const g = ease((q - ROUND) / (1 - ROUND));
+            // Far enough to cover the farthest corner of the screen from the card's centre.
+            const sx = r.left + cx;
+            const sy = r.top + cy;
+            const far = Math.hypot(Math.max(sx, vw - sx), Math.max(sy, vh - sy));
+            lastCard.style.clipPath = `circle(${d / 2 + (far - d / 2) * g}px at ${cx}px ${cy}px)`;
+          }
         } else {
-          fill.style.visibility = "hidden";
+          bloom.style.visibility = "hidden";
+          lastCard.style.backgroundColor = "";
+          lastCard.style.clipPath = "";
+          if (lastStation) lastStation.style.opacity = "";
         }
         if (lastContent) {
-          lastContent.style.transform = `scale(${1 + q * 0.5})`;
-          lastContent.style.opacity = String(1 - clamp(q * 1.6));
+          // Dive into the card: a strong zoom from its centre, fading only at the very end.
+          lastContent.style.transform = `scale(${1 + 2.2 * ease(q)})`;
+          lastContent.style.opacity = String(1 - clamp((q - 0.6) / 0.3));
         }
-        others.forEach((el) => (el.style.opacity = String(1 - clamp(q * 2))));
       }
     };
 
@@ -139,15 +161,6 @@ export default function HorizontalTrack({
     <div ref={runwayRef} className="pin-runway relative">
       <div ref={stageRef} className="pin-stage hz-stage sticky top-0 flex h-screen flex-col justify-center overflow-x-clip">
         {rail}
-        {/* The last card's colour, grown to fill the screen on the way out. */}
-        <div
-          ref={fillRef}
-          aria-hidden
-          data-tone={exitTone}
-          data-progress="manual"
-          data-cover="0.5"
-          className="hz-fill pointer-events-none invisible absolute inset-0 bg-mist"
-        />
         <div ref={trackRef} className="hz-track relative flex w-max items-stretch gap-6 px-4 will-change-transform sm:gap-8 sm:px-[6vw]">
           {children}
         </div>
