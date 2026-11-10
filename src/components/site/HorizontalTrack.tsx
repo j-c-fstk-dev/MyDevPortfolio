@@ -140,7 +140,21 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
     };
 
     const measure = () => {
-      distance = Math.max(track.scrollWidth - window.innerWidth, 0);
+      const vw = window.innerWidth;
+      // Where the ride stops comes from the last card's own layout box, not from the
+      // track's scrollWidth: during the exit the card's colour layer overflows the
+      // track, and counting it pushed the card further left (and off screen on phones).
+      // The card ends against the right margin on wide screens, centred on phones.
+      const end = track.lastElementChild as HTMLElement | null;
+      if (end) {
+        const stop =
+          vw < 640
+            ? end.offsetLeft + end.offsetWidth / 2 - vw / 2
+            : end.offsetLeft + end.offsetWidth - (vw - parseFloat(getComputedStyle(track).paddingRight));
+        distance = Math.max(stop, 0);
+      } else {
+        distance = Math.max(track.scrollWidth - vw, 0);
+      }
       exit = lastCard ? window.innerHeight * EXIT_VH : 0;
       runway.style.height = `${distance + exit + window.innerHeight}px`;
       update();
