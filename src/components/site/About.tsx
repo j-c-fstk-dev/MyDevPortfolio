@@ -8,7 +8,7 @@ export default function About({ lang }: { lang: Locale }) {
   const d = getDictionary(lang).about;
 
   return (
-    <Section id="about" title={d.title} tone="dark">
+    <Section id="about" title={d.title} tone="dark" pullUp>
       <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         {/* Stays in view while the long tools list scrolls past. */}
         <div className="self-start lg:sticky lg:top-24">

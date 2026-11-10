@@ -10,6 +10,7 @@ import { useEffect } from "react";
  * - [data-progress="draw"]:    --p goes 0 → 1 as the element passes the middle of the screen.
  * - [data-progress="pin"]:     --p goes 0 → 1 while a tall runway with a sticky stage is scrolled
  *                              through (the stage stays on screen the whole time).
+ * - [data-progress="manual"]:  left alone; its own component sets --p.
  * - [data-cover]:              a layer that, once its --p reaches the given threshold, fills the
  *                              screen with its own data-tone (the hero disc, colour transitions).
  * - [data-tone-follow]:        takes the tone showing under it ("top" or "middle" of the screen).
@@ -104,6 +105,7 @@ export default function ScrollEffects() {
       document.querySelectorAll<HTMLElement>("[data-progress]").forEach((el) => {
         const rect = el.getBoundingClientRect();
         const mode = el.dataset.progress;
+        if (mode === "manual") return; // driven by its own component
         const p =
           mode === "pin"
             ? -rect.top / Math.max(rect.height - vh, 1)

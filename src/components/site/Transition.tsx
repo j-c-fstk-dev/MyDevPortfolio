@@ -1,16 +1,18 @@
 import type { Tone } from "./ui";
 
 /**
- * A colour transition between two sections. A tall runway holds a stage that
- * stays on screen (sticky) while the next section's colour takes it over with
- * a shape. Because the stage is the whole screen, the shape is never cut by a
- * section edge. ScrollEffects drives --p (0 → 1) across the runway.
+ * A colour transition between two sections. A runway that overlaps the last
+ * screen of the previous section holds a transparent stage that stays on
+ * screen (sticky). While that last screen scrolls by, the next section's
+ * colour grows over it with a shape, so there is never an empty screen. The
+ * stage is the whole screen, so the shape is never cut by a section edge.
+ * ScrollEffects drives --p (0 → 1) across the runway.
  *
  * Without JavaScript or with reduced motion the runway is not rendered and the
  * sections simply meet.
  */
 
-export type TransitionShape = "ridge" | "diagonal" | "blocks";
+export type TransitionShape = "ridge" | "blocks";
 
 const P = "var(--p, 0)";
 
@@ -24,23 +26,6 @@ function ridgeClip() {
     return `${x.toFixed(2)}% calc((1.3 - ${P} * 1.45) * 100% - ${h} * 34% * (1 - ${P}))`;
   });
   return `polygon(0% 100%, ${peaks.join(", ")}, 100% 100%)`;
-}
-
-/**
- * The new colour sweeps in diagonally, from the top-left corner to the
- * bottom-right, with a gently bowed leading edge.
- */
-function diagonalClip() {
-  const front = `(${P} * 1.5 - 0.05) * 100%`;
-  // Leading edge from top to bottom: it leans back by 40% of the width and bows forward in the middle.
-  const edge = [
-    [0, 0],
-    [25, 4],
-    [50, 6],
-    [75, 4],
-    [100, 0],
-  ].map(([y, bow]) => `calc(${front} - ${(y / 100) * 40}% + ${bow}%) ${y}%`);
-  return `polygon(0% 0%, ${edge.join(", ")}, 0% 100%)`;
 }
 
 const COLS = 12;
@@ -74,8 +59,12 @@ function Blocks() {
 
 export default function Transition({ from, to, shape }: { from: Tone; to: Tone; shape: TransitionShape }) {
   return (
-    <div aria-hidden data-progress="pin" className="transition-screen pin-runway relative h-[190vh]">
-      <div data-tone={from} data-tone-source className="pin-stage sticky top-0 h-screen overflow-hidden bg-mist">
+    <div
+      aria-hidden
+      data-progress="pin"
+      className="transition-screen pin-runway pointer-events-none relative -mt-[100vh] h-[165vh]"
+    >
+      <div data-tone={from} className="pin-stage sticky top-0 h-screen overflow-hidden">
         {shape === "blocks" ? (
           <div data-tone={to} data-cover="0.75" className="absolute inset-0">
             <Blocks />
@@ -85,7 +74,7 @@ export default function Transition({ from, to, shape }: { from: Tone; to: Tone; 
             data-tone={to}
             data-cover="0.6"
             className="absolute inset-0 bg-mist"
-            style={{ clipPath: shape === "ridge" ? ridgeClip() : diagonalClip() }}
+            style={{ clipPath: ridgeClip() }}
           />
         )}
       </div>

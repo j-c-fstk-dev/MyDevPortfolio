@@ -48,7 +48,6 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         <Work lang={lang} />
         <Transition from="dark" to="light" shape="ridge" />
         <Experience lang={lang} />
-        <Transition from="light" to="dark" shape="diagonal" />
         <About lang={lang} />
         <Transition from="dark" to="amber" shape="blocks" />
         <Contact lang={lang} />

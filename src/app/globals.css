@@ -201,6 +201,19 @@ summary:focus-visible {
     animation: lamp-on 0.35s ease-out backwards;
 }
 
+/* Step numbers roll up from 0 like a counter. At rest they show their number. */
+.count-roll {
+    transform: translateY(calc(var(--n, 0) * -1em));
+}
+
+.motion .count-roll {
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.motion [data-reveal]:not([data-visible="true"]) .count-roll {
+    transform: translateY(0);
+}
+
 /* Lamps inside a revealed block wait until the block is on screen. */
 .motion [data-reveal]:not([data-visible="true"]) .signal-lamp {
     animation: none;
@@ -297,6 +310,11 @@ html:not(.motion) .pin-runway {
 html:not(.motion) .pin-stage {
     position: static;
     height: auto;
+}
+
+/* A section that slides up over the end of the pinned moment before it. */
+.motion .pull-up {
+    margin-top: -45vh;
 }
 
 html:not(.motion) .transition-screen {
