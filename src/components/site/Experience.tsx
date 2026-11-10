@@ -23,7 +23,7 @@ export default function Experience({ lang }: { lang: Locale }) {
 
   return (
     <section id="experience" aria-labelledby="experience-title" data-tone="light" className="relative bg-mist text-ink">
-      <HorizontalTrack rail={rail} exitTone="dark">
+      <HorizontalTrack rail={rail}>
         {/* The departure board: the giant title. It drops in from above the centre. */}
         <div data-hz-title className="hz-card flex w-[min(80vw,30rem)] shrink-0 flex-col justify-center">
           <h2
@@ -68,10 +68,19 @@ export default function Experience({ lang }: { lang: Locale }) {
           data-station
           data-exit-card
           data-tone="dark"
-          className="hz-card group relative w-[min(84vw,44rem)] shrink-0 rounded-[1.75rem] bg-mist p-6 text-ink sm:p-9"
+          className="hz-card group relative z-10 w-[min(84vw,44rem)] shrink-0 rounded-[1.75rem] bg-mist p-6 text-ink sm:p-9"
         >
+          {/* On the way out this layer takes over the card's colour: it rounds into a
+              circle and grows over the other cards until it fills the screen. */}
+          <div
+            aria-hidden
+            data-exit-bloom
+            data-progress="manual"
+            data-cover="0.5"
+            className="pointer-events-none invisible absolute bg-mist"
+          />
           <span aria-hidden className={station} />
-          <div data-exit-content className="origin-center">
+          <div data-exit-content className="relative origin-center">
           <h3 className="text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold leading-tight [font-stretch:80%]">{d.beforeTech}</h3>
           <p className="mt-2 max-w-prose leading-relaxed text-lichen">{d.beforeTechIntro}</p>
           <ol className="mt-6 grid gap-6 sm:grid-cols-3">
