@@ -75,12 +75,20 @@ export default function HorizontalTrack({
       // down into its slot at the start of the track as the section arrives.
       if (title) {
         const t = clamp((vh - top) / vh); // spread over the whole approach
-        const e = t * t * (3 - 2 * t);
-        const restX = title.offsetLeft + title.offsetWidth / 2; // centre in the track, before any shift
-        const restY = Math.max(top, 0) + track.offsetTop + title.offsetTop + title.offsetHeight / 2; // centre on screen, unshifted
-        const dx = (vw / 2 - restX) * (1 - e);
-        const dy = (vh * 0.22 - restY) * (1 - e);
-        title.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + 0.15 * (1 - e)})`;
+        if (t === 0) {
+          // The section is still below the screen: keep the title home and out of sight,
+          // so it never floats over the sections above.
+          title.style.transform = "";
+          title.style.opacity = "0";
+        } else {
+          const e = t * t * (3 - 2 * t);
+          const restX = title.offsetLeft + title.offsetWidth / 2; // centre in the track, before any shift
+          const restY = Math.max(top, 0) + track.offsetTop + title.offsetTop + title.offsetHeight / 2; // centre on screen, unshifted
+          const dx = (vw / 2 - restX) * (1 - e);
+          const dy = (vh * 0.22 - restY) * (1 - e);
+          title.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + 0.15 * (1 - e)})`;
+          title.style.opacity = String(clamp(t * 4));
+        }
       }
 
       // Leave: the last card's colour fills the screen, its text zooms and fades.
