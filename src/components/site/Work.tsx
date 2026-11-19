@@ -61,6 +61,9 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
           />
         )}
         <p className="mt-4 max-w-prose text-lg leading-relaxed text-mist/90">{project.description}</p>
+        {project.chains && (
+          <p className="mt-3 text-sm text-mist/90">{project.chains.join(" · ")}</p>
+        )}
         <p className="mt-3 text-sm text-mist/60">{project.tech.join(", ")}</p>
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
           {project.live && (
@@ -146,6 +149,9 @@ function DeckPanel({
           </div>
           <div className="self-end">
             <p className="text-lg leading-relaxed text-mist/90">{project.description}</p>
+            {project.chains && (
+              <p className="mt-3 text-sm text-mist/90">{project.chains.join(" · ")}</p>
+            )}
             <p className="mt-3 text-sm text-mist/60">{project.tech.join(", ")}</p>
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
               {project.live && (

@@ -133,6 +133,11 @@ export default function ProjectsSection() {
                   {toCommand(project.title)}
                 </h3>
                 <p className="text-matrix-light-gray text-sm mb-4 line-clamp-3">{project.description}</p>
+                {project.chains && (
+                  <p className="mb-4 font-mono-matrix text-matrix-light-gray text-sm">
+                    {project.chains.join(" · ")}
+                  </p>
+                )}
                 <div className="flex flex-wrap gap-1">
                   {project.tech.slice(0, 3).map((tech) => (
                     <span
@@ -182,6 +187,11 @@ export default function ProjectsSection() {
                 <div>
                   <h4 className="font-mono-matrix text-matrix-electric-blue mb-2">DESCRIPTION:</h4>
                   <p className="text-matrix-light-gray">{selected.description}</p>
+                  {selected.chains && (
+                    <p className="mt-3 font-mono-matrix text-matrix-light-gray text-sm">
+                      {selected.chains.join(" · ")}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <h4 className="font-mono-matrix text-matrix-electric-blue mb-2">TECH_STACK:</h4>
