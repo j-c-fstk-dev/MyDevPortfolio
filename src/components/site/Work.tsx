@@ -17,7 +17,6 @@ import { Section, TextLink } from "./ui";
 function FlyCard({ project, index, lang, d }: { project: Project; index: number; lang: Locale; d: Dictionary["work"] }) {
   const { statusLabels } = getContent(lang);
   const shot = projectScreenshot(project.slug);
-  const showInlineOnTouch = project.slug !== "textbook-upgrade-skill";
   const from = index % 2 === 0 ? -1 : 1;
   // 0 → 1 as the card travels in during the first third of its pass through the screen.
   const k = "clamp(0, var(--p, 1) * 3.2, 1)";
@@ -49,7 +48,7 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
         <h3 className="mt-3 text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold leading-[0.95] tracking-[-0.02em] [font-stretch:76%]">
           {project.title}
         </h3>
-        {shot && showInlineOnTouch && (
+        {shot && (
           <Image
             src={shot}
             alt={project.previewAlt ?? d.screenshotAlt(project.title)}
