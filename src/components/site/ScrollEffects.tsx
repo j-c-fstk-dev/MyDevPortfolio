@@ -28,6 +28,19 @@ const progressOf = (el: HTMLElement) => {
 
 export default function ScrollEffects() {
   useEffect(() => {
+    // Let tall cards scroll until their bottom is readable before pinning them.
+    const panels = document.querySelectorAll<HTMLElement>("[data-deck-panel]");
+    const observer = new ResizeObserver((entries) => {
+      for (const { target } of entries) {
+        const panel = target as HTMLElement;
+        panel.style.setProperty("--deck-panel-height", `${panel.offsetHeight}px`);
+      }
+    });
+    panels.forEach((panel) => observer.observe(panel));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // The inline script sets this before first paint; set it again in case a failed hydration
     // re-rendered <html> and dropped the class.
