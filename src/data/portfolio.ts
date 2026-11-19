@@ -133,32 +133,18 @@ const raw = {
   projects: [
     {
       slug: "decleanup-dapp",
-      title: "DeCleanup DApp",
+      title: "DeCleanup Network",
       description: t(
-        "Web3 platform that coordinates and rewards real-world cleanups. Used by 100+ people in community cleanup groups. Fixed production bugs, shipped features across front-end, back-end and database, and reviewed the Solidity contracts.",
-        "Plataforma Web3 que coordena e recompensa mutirões de limpeza reais, usada por mais de 100 pessoas em grupos comunitários. Corrigi bugs em produção, entreguei funcionalidades no front-end, back-end e banco de dados, e revisei os contratos em Solidity."
+        "DeCleanup Network is an open-source onchain protocol that turns community cleanups into verified, permanent records, rewarding volunteers with tokens and impact credentials that funders can check independently. Fixed production bugs, shipped features across front-end, back-end and database, and reviewed the Solidity contracts.",
+        "DeCleanup Network é um protocolo onchain de código aberto que transforma mutirões comunitários de limpeza em registros verificados e permanentes, recompensando voluntários com tokens e credenciais de impacto que financiadores podem verificar de forma independente. Corrigi bugs em produção, entreguei funcionalidades no front-end, back-end e banco de dados, e revisei os contratos em Solidity."
       ),
-      tech: ["TypeScript", "React", "Node.js", "Solidity", "Celo"],
+      chains: ["Base", "Celo", "Robinhood Chain (testnet)"],
+      tech: ["TypeScript", "React", "Node.js", "Solidity"],
       category: "web3",
       status: "live",
       context: contexts.client,
       live: "https://dapp.decleanup.net",
       repo: gh("decleanup-main-celo"),
-      featured: true,
-    },
-    {
-      slug: "decleanup-mini-app",
-      title: "DeCleanup Mini App",
-      description: t(
-        "Farcaster mini app that brings DeCleanup's cleanup actions into the social feed, with on-chain rewards.",
-        "Mini app para Farcaster que leva as ações de limpeza do DeCleanup para o feed social, com recompensas on-chain."
-      ),
-      tech: ["TypeScript", "React", "Solidity", "Farcaster"],
-      category: "web3",
-      status: "live",
-      context: contexts.client,
-      live: "https://miniapp.decleanup.net",
-      repo: gh("Farcaster-Mini-App", "DeCleanup-Network"),
       featured: true,
     },
     {
@@ -467,8 +453,8 @@ const raw = {
       ),
       highlights: [
         t(
-          "DeCleanup Network — full-stack developer on a Web3 platform that coordinates and rewards real cleanups, and on its Farcaster mini app; used by 100+ people.",
-          "DeCleanup Network — desenvolvedor full-stack de uma plataforma Web3 que coordena e recompensa mutirões de limpeza reais, e do seu mini app para Farcaster; usada por mais de 100 pessoas."
+          "DeCleanup Network — full-stack development for an open-source onchain protocol for verified community cleanups.",
+          "DeCleanup Network — desenvolvimento full-stack para um protocolo onchain de código aberto que registra mutirões comunitários de limpeza verificados."
         ),
         t(
           "Fixed production bugs and shipped new features across front-end, back-end and database; reviewed Solidity contracts and built the flows around them.",
@@ -479,7 +465,7 @@ const raw = {
           "Bass Forest e Monthly Earth Day — projetei e desenvolvi os dois sites do zero, sozinho."
         ),
       ],
-      tech: ["TypeScript", "React", "Node.js", "Solidity", "Celo", "Farcaster"],
+      tech: ["TypeScript", "React", "Node.js", "Solidity", "Celo"],
     },
     {
       title: t("Founder & Lead Developer", "Fundador e Desenvolvedor Líder"),
@@ -639,6 +625,7 @@ interface RawProject {
   slug: string;
   title: string;
   description: Text;
+  chains?: string[];
   tech: string[];
   category: ProjectCategory;
   status: ProjectStatus;
@@ -704,10 +691,10 @@ export function getContent(locale: Locale): Content {
   const live = raw.projects.filter((p) => p.status === "live").length;
   const labels =
     locale === "pt"
-      ? ["Projetos entregues", "Anos de trabalho com clientes", "Pessoas usando o DeCleanup", "Apps em produção"]
-      : ["Projects delivered", "Years of client work", "People using DeCleanup", "Apps live in production"];
-  const values = [20, new Date().getFullYear() - raw.profile.freelanceSince, 100, live];
-  const suffixes = ["+", "+", "+", ""];
+      ? ["Projetos entregues", "Anos de trabalho com clientes", "Apps em produção"]
+      : ["Projects delivered", "Years of client work", "Apps live in production"];
+  const values = [20, new Date().getFullYear() - raw.profile.freelanceSince, live];
+  const suffixes = ["+", "+", ""];
 
   const result: Content = {
     ...content,

@@ -21,7 +21,7 @@ const stats: StatItem[] = portfolioStats.map((stat, i) => ({
 export default function StatsSection() {
   const binary = useScatter(48);
   const [isVisible, setIsVisible] = useState(false);
-  const [animatedValues, setAnimatedValues] = useState<number[]>([0, 0, 0, 0]);
+  const [animatedValues, setAnimatedValues] = useState(() => stats.map(() => 0));
   const sectionRef = useRef<HTMLElement>(null);
 
 
@@ -118,7 +118,7 @@ export default function StatsSection() {
 
         {/* Stats Grid */}
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
          >
 
           {stats.map((stat, index) =>
