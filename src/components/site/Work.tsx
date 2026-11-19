@@ -73,6 +73,16 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
 /** How many featured projects get the stacked full-width panel treatment. */
 const DECK_SIZE = 6;
 
+// Repositories for projects deliberately left out of the portfolio.
+const hiddenProjectRepos = [
+  "site-monthly-earth-day",
+  "monthly-earth-day",
+  "monthlyearthday",
+  "monthlyearthdayf",
+  "monthlyearthday-portal",
+  "med-lp",
+];
+
 /** Stacked panels cycle through these colours (see [data-panel] in globals.css). */
 const PANEL_COLOURS = ["mist", "amber", "mint"] as const;
 
@@ -177,7 +187,7 @@ export default async function Work({ lang }: { lang: Locale }) {
     .flatMap((p) => [p.repo, ...(p.links ?? []).map((link) => link.href)])
     .map((url) => url?.match(new RegExp(`github\\.com/${contact.githubHandle}/([^/]+)`, "i"))?.[1])
     .filter((name): name is string => Boolean(name));
-  const repos = await getRecentRepos(contact.githubHandle, { exclude: [...listed, contact.githubHandle] });
+  const repos = await getRecentRepos(contact.githubHandle, { exclude: [...listed, ...hiddenProjectRepos, contact.githubHandle] });
 
   return (
     <Section id="work" title={d.title} intro={d.intro} tone="dark">
