@@ -17,7 +17,7 @@ import { Section, TextLink } from "./ui";
 function FlyCard({ project, index, lang, d }: { project: Project; index: number; lang: Locale; d: Dictionary["work"] }) {
   const { statusLabels } = getContent(lang);
   const shot = projectScreenshot(project.slug);
-  const showInlineOnDesktop = index === 0;
+  const showInlineOnTouch = project.slug !== "textbook-upgrade-skill";
   const from = index % 2 === 0 ? -1 : 1;
   // 0 → 1 as the card travels in during the first third of its pass through the screen.
   const k = "clamp(0, var(--p, 1) * 3.2, 1)";
@@ -29,7 +29,7 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
       className={`flex ${from < 0 ? "justify-start" : "justify-end"}`}
     >
       <article
-        data-project-preview={showInlineOnDesktop ? undefined : shot}
+        data-project-preview={shot}
         data-panel={PANEL_COLOURS[(index + DECK_SIZE) % PANEL_COLOURS.length]}
         className="w-full rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_18px_40px_-24px_rgb(0_0_0/0.5)] will-change-transform sm:w-[78%] sm:p-9"
         style={{
@@ -49,14 +49,14 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
         <h3 className="mt-3 text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold leading-[0.95] tracking-[-0.02em] [font-stretch:76%]">
           {project.title}
         </h3>
-        {shot && (
+        {shot && showInlineOnTouch && (
           <Image
             src={shot}
             alt={project.previewAlt ?? d.screenshotAlt(project.title)}
             width={1280}
             height={800}
             sizes="(min-width: 640px) 60vw, 100vw"
-            className={`mt-5 aspect-[16/10] w-full rounded-xl object-cover object-top ${showInlineOnDesktop ? "" : "project-inline-preview"}`}
+            className="project-inline-preview mt-5 aspect-[16/10] w-full rounded-xl object-cover object-top"
           />
         )}
         <p className="mt-4 max-w-prose text-lg leading-relaxed text-mist/90">{project.description}</p>
