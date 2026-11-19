@@ -1,5 +1,6 @@
 "use client";
 
+import ProjectHoverPreview from "@/components/site/ProjectHoverPreview";
 import { useEffect, useRef, useState } from "react";
 import ContactSection from "./ContactSection";
 import ExperienceSection from "./ExperienceSection";
@@ -9,6 +10,7 @@ import Navigation from "./Navigation";
 import ProjectsSection from "./ProjectsSection";
 import SkillsSection from "./SkillsSection";
 import StatsSection from "./StatsSection";
+import { getPhosphorColor, PHOSPHOR_STORAGE_KEY, type PhosphorColor } from "./phosphor";
 
 export interface Origin {
   x: number;
@@ -42,6 +44,13 @@ export default function MatrixExperience({
   onExit: () => void;
 }) {
   const [phase, setPhase] = useState<Phase>(() => initialPhase(origin));
+  const [phosphor, setPhosphor] = useState<PhosphorColor>(() => {
+    try {
+      return getPhosphorColor(window.localStorage.getItem(PHOSPHOR_STORAGE_KEY));
+    } catch {
+      return "green";
+    }
+  });
   const [open, setOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentSection, setCurrentSection] = useState(0);
@@ -93,11 +102,21 @@ export default function MatrixExperience({
     };
   }, [phase, onExit]);
 
+  const changePhosphor = (color: PhosphorColor) => {
+    setPhosphor(color);
+    try {
+      window.localStorage.setItem(PHOSPHOR_STORAGE_KEY, color);
+    } catch {
+      // The colour still works when storage is unavailable.
+    }
+  };
+
   const overlay = phase !== "portfolio";
   const circle = (radius: string) => `circle(${radius} at ${origin?.x ?? 0}px ${origin?.y ?? 0}px)`;
 
   return (
     <div
+      data-phosphor={phosphor}
       className={`matrix-mode bg-matrix-black text-matrix-light-gray ${
         overlay ? "fixed inset-0 z-[60] overflow-hidden" : "relative min-h-screen overflow-x-hidden"
       }`}
@@ -111,14 +130,14 @@ export default function MatrixExperience({
       }}
     >
       {/* One canvas from the first frame to the end; only its strength changes. */}
-      <MatrixRain intensity={phase === "transition" ? 0.9 : 0.25} />
+      <MatrixRain phosphor={phosphor} intensity={phase === "transition" ? 0.72 : 0.19} />
 
       {phase === "portfolio" && (
         <>
           <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2">
             <button
               onClick={onExit}
-              className="h-12 px-4 bg-matrix-black/80 border border-blue-500/40 rounded-full flex items-center gap-2 font-mono-matrix text-blue-300 hover:border-blue-400 hover:shadow-neon-blue transition-all duration-300"
+              className="h-12 px-4 bg-matrix-black/80 border border-matrix-accent/40 rounded-full flex items-center gap-2 font-mono-matrix text-matrix-highlight hover:border-matrix-accent hover:shadow-phosphor transition-all duration-300"
               aria-label="Leave the Matrix and go back to the standard portfolio (Escape)"
             >
               <span aria-hidden>💊</span>
@@ -126,11 +145,11 @@ export default function MatrixExperience({
             </button>
           </div>
 
-          <Navigation currentSection={currentSection} />
+          <Navigation currentSection={currentSection} phosphor={phosphor} onPhosphorChange={changePhosphor} />
 
           <div className="fixed top-0 left-0 w-full h-1 bg-matrix-dark-gray z-50">
             <div
-              className="h-full bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue transition-all duration-100"
+              className="h-full bg-gradient-to-r from-matrix-accent to-matrix-highlight transition-all duration-100"
               style={{ width: `${scrollProgress * 100}%` }}
             />
           </div>
@@ -143,6 +162,7 @@ export default function MatrixExperience({
             <ExperienceSection />
             <ContactSection />
           </main>
+          <ProjectHoverPreview mode="matrix" />
         </>
       )}
     </div>

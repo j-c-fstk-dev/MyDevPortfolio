@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { PhosphorColor } from "./phosphor";
 
 /** Random glyphs, plus words from Jorge's stack that stream down some columns. */
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=<>{}[]|;:";
@@ -38,7 +39,7 @@ function newDrop(x: number, y: number): Drop {
  * The falling-code background. One canvas is used from the entrance transition
  * through the whole Matrix portfolio; `intensity` sets how strongly it shows.
  */
-export default function MatrixRain({ intensity = 0.2 }: { intensity?: number }) {
+export default function MatrixRain({ phosphor, intensity }: { phosphor: PhosphorColor; intensity: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -46,6 +47,9 @@ export default function MatrixRain({ intensity = 0.2 }: { intensity?: number }) 
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
+    const colors = getComputedStyle(canvas);
+    const screen = colors.getPropertyValue("--matrix-screen").trim();
+    const accent = colors.getPropertyValue("--matrix-accent").trim();
     const drops: Drop[] = [];
     let animationId = 0;
 
@@ -63,7 +67,7 @@ export default function MatrixRain({ intensity = 0.2 }: { intensity?: number }) 
     const font = `${FONT_SIZE}px ${fontFamily ? `${fontFamily}, ` : ""}monospace`;
 
     const draw = () => {
-      ctx.fillStyle = "rgba(10, 10, 10, 0.05)"; // trailing fade
+      ctx.fillStyle = `rgb(${screen} / 0.05)`; // trailing fade
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = font;
 
@@ -77,7 +81,7 @@ export default function MatrixRain({ intensity = 0.2 }: { intensity?: number }) 
           drop.char = randomChar();
         }
 
-        ctx.fillStyle = `rgb(0, ${Math.floor(255 * drop.opacity)}, 0)`;
+        ctx.fillStyle = `rgb(${accent} / ${drop.opacity})`;
         ctx.fillText(drop.char, drop.x, drop.y);
         drop.y += drop.speed;
 
@@ -95,7 +99,7 @@ export default function MatrixRain({ intensity = 0.2 }: { intensity?: number }) 
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [phosphor]);
 
   return (
     <canvas

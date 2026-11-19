@@ -16,9 +16,9 @@ import {
 const toCommand = (text: string) => text.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
 
 const statusStyle: Record<ProjectStatus, { color: string; icon: string }> = {
-  live: { color: "text-matrix-primary-green", icon: "●" },
-  released: { color: "text-matrix-primary-green", icon: "●" },
-  beta: { color: "text-matrix-electric-blue", icon: "◐" },
+  live: { color: "text-matrix-accent", icon: "●" },
+  released: { color: "text-matrix-accent", icon: "●" },
+  beta: { color: "text-matrix-highlight", icon: "◐" },
   "in-development": { color: "text-yellow-400", icon: "⚡" },
   prototype: { color: "text-matrix-light-gray", icon: "◇" },
 };
@@ -33,7 +33,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.repo}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 bg-matrix-primary-green/20 border border-matrix-primary-green rounded font-mono-matrix text-matrix-primary-green hover:bg-matrix-primary-green/30 transition-all"
+          className="px-4 py-2 bg-matrix-accent/20 border border-matrix-accent rounded font-mono-matrix text-matrix-accent hover:bg-matrix-accent/30 transition-all"
         >
           VIEW_CODE ↗
         </a>
@@ -43,7 +43,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.live}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 bg-matrix-electric-blue/20 border border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 transition-all"
+          className="px-4 py-2 bg-matrix-highlight/20 border border-matrix-highlight rounded font-mono-matrix text-matrix-highlight hover:bg-matrix-highlight/30 transition-all"
         >
           {project.liveLabel ? toCommand(project.liveLabel) : "LIVE_SITE"} ↗
         </a>
@@ -54,7 +54,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 bg-matrix-electric-blue/20 border border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 transition-all"
+          className="px-4 py-2 bg-matrix-highlight/20 border border-matrix-highlight rounded font-mono-matrix text-matrix-highlight hover:bg-matrix-highlight/30 transition-all"
         >
           {toCommand(label)} ↗
         </a>
@@ -103,9 +103,9 @@ export default function ProjectsSection() {
     >
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-mono-matrix text-glow-green mb-4">PROJECT_ARCHIVE</h2>
-          <div className="text-xl font-mono-matrix text-matrix-electric-blue">&gt; SCANNING_REPOSITORIES...</div>
-          <div className="w-32 h-1 bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue mx-auto mt-4" />
+          <h2 className="text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">PROJECT_ARCHIVE</h2>
+          <div className="text-xl font-mono-matrix text-matrix-highlight">&gt; SCANNING_REPOSITORIES...</div>
+          <div className="w-32 h-1 bg-gradient-to-r from-matrix-accent to-matrix-highlight mx-auto mt-4" />
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -116,8 +116,8 @@ export default function ProjectsSection() {
               aria-pressed={filter === f}
               className={`px-4 py-2 font-mono-matrix text-sm border rounded transition-all duration-300 ${
                 filter === f
-                  ? "bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green"
-                  : "bg-matrix-black/50 border-matrix-primary-green/30 text-matrix-light-gray hover:border-matrix-primary-green"
+                  ? "bg-matrix-accent/20 border-matrix-accent text-matrix-accent"
+                  : "bg-matrix-black/50 border-matrix-accent/30 text-matrix-light-gray hover:border-matrix-accent"
               }`}
             >
               {f === "ALL" ? "ALL" : toCommand(categoryLabels[f])}
@@ -134,7 +134,7 @@ export default function ProjectsSection() {
                 data-project-preview={projectScreenshot(project.slug)}
                 type="button"
                 onClick={() => setSelected(project)}
-                className={`flex flex-col text-left bg-matrix-black/50 border border-matrix-primary-green/30 rounded-lg p-6 hover:border-matrix-primary-green hover:shadow-neon-green transition-all duration-500 ${
+                className={`flex flex-col text-left bg-matrix-black/50 border border-matrix-accent/30 rounded-lg p-6 hover:border-matrix-accent hover:bg-matrix-dark-gray transition-all duration-500 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
                 style={{ transitionDelay: `${Math.min(index, 8) * 0.05}s` }}
@@ -145,7 +145,7 @@ export default function ProjectsSection() {
                   </span>
                   <span className="text-matrix-light-gray">{toCommand(project.context)}</span>
                 </div>
-                <h3 className="font-mono-matrix text-xl text-matrix-primary-green mb-3 text-glow-green">
+                <h3 className="font-mono-matrix text-xl text-matrix-accent mb-3">
                   {toCommand(project.title)}
                 </h3>
                 <p className="text-matrix-light-gray text-sm mb-4 line-clamp-3">{project.description}</p>
@@ -158,7 +158,7 @@ export default function ProjectsSection() {
                   {project.tech.slice(0, 3).map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 bg-matrix-primary-green/20 border border-matrix-primary-green/50 rounded text-xs font-mono-matrix text-matrix-primary-green"
+                      className="px-2 py-1 bg-matrix-accent/20 border border-matrix-accent/50 rounded text-xs font-mono-matrix text-matrix-accent"
                     >
                       {tech}
                     </span>
@@ -183,16 +183,16 @@ export default function ProjectsSection() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="project-dialog-title"
-              className="bg-matrix-black border-2 border-matrix-primary-green rounded-lg p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="bg-matrix-black border-2 border-matrix-accent rounded-lg p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between gap-4 mb-6">
-                <h3 id="project-dialog-title" className="font-mono-matrix text-2xl text-glow-green">
+                <h3 id="project-dialog-title" className="font-mono-matrix text-2xl text-matrix-accent">
                   {toCommand(selected.title)}
                 </h3>
                 <button
                   onClick={() => setSelected(null)}
-                  className="text-matrix-light-gray hover:text-matrix-primary-green transition-colors"
+                  className="text-matrix-light-gray hover:text-matrix-accent transition-colors"
                   aria-label="Close"
                 >
                   ✕
@@ -207,11 +207,11 @@ export default function ProjectsSection() {
                     width={1280}
                     height={800}
                     sizes="(min-width: 640px) 576px, 100vw"
-                    className="aspect-[16/10] w-full rounded-lg border border-matrix-primary-green/30 object-cover object-top"
+                    className="aspect-[16/10] w-full rounded-lg border border-matrix-accent/30 object-cover object-top"
                   />
                 )}
                 <div>
-                  <h4 className="font-mono-matrix text-matrix-electric-blue mb-2">DESCRIPTION:</h4>
+                  <h4 className="font-mono-matrix text-matrix-highlight mb-2">DESCRIPTION:</h4>
                   <p className="text-matrix-light-gray">{selected.description}</p>
                   {selected.chains && (
                     <p className="mt-3 font-mono-matrix text-matrix-light-gray text-sm">
@@ -220,12 +220,12 @@ export default function ProjectsSection() {
                   )}
                 </div>
                 <div>
-                  <h4 className="font-mono-matrix text-matrix-electric-blue mb-2">TECH_STACK:</h4>
+                  <h4 className="font-mono-matrix text-matrix-highlight mb-2">TECH_STACK:</h4>
                   <div className="flex flex-wrap gap-2">
                     {selected.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-matrix-primary-green/20 border border-matrix-primary-green/50 rounded font-mono-matrix text-matrix-primary-green"
+                        className="px-3 py-1 bg-matrix-accent/20 border border-matrix-accent/50 rounded font-mono-matrix text-matrix-accent"
                       >
                         {tech}
                       </span>
@@ -234,13 +234,13 @@ export default function ProjectsSection() {
                 </div>
                 <div className="grid grid-cols-2 gap-4 font-mono-matrix">
                   <div>
-                    <h4 className="text-matrix-electric-blue mb-2">STATUS:</h4>
+                    <h4 className="text-matrix-highlight mb-2">STATUS:</h4>
                     <span className={statusStyle[selected.status].color}>
                       {statusStyle[selected.status].icon} {toCommand(statusLabels[selected.status])}
                     </span>
                   </div>
                   <div>
-                    <h4 className="text-matrix-electric-blue mb-2">BUILT_FOR:</h4>
+                    <h4 className="text-matrix-highlight mb-2">BUILT_FOR:</h4>
                     <span className="text-matrix-light-gray">{toCommand(selected.context)}</span>
                   </div>
                 </div>
@@ -253,21 +253,21 @@ export default function ProjectsSection() {
           </div>
         )}
 
-        <div className="bg-matrix-black/70 border-2 border-matrix-primary-green rounded-lg p-6 max-w-4xl mx-auto font-mono-matrix text-sm space-y-2">
-          <div className="text-matrix-electric-blue">$ ls projects/ | wc -l</div>
-          <div className="text-matrix-primary-green">
+        <div className="bg-matrix-black/70 border-2 border-matrix-accent rounded-lg p-6 max-w-4xl mx-auto font-mono-matrix text-sm space-y-2">
+          <div className="text-matrix-highlight">$ ls projects/ | wc -l</div>
+          <div className="text-matrix-accent">
             {projects.length} projects listed · {projects.filter((p) => p.status === "live").length} live in production
           </div>
-          <div className="text-matrix-electric-blue">$ open github</div>
+          <div className="text-matrix-highlight">$ open github</div>
           <a
             href={`${contact.github}?tab=repositories`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-matrix-light-gray hover:text-matrix-primary-green underline"
+            className="text-matrix-light-gray hover:text-matrix-accent underline"
           >
             {contact.github.replace("https://", "")} ↗
           </a>
-          <div className="text-matrix-primary-green animate-pulse">_</div>
+          <div className="text-matrix-accent animate-pulse">_</div>
         </div>
       </div>
     </section>

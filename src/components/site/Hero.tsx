@@ -32,7 +32,7 @@ export default function Hero({ lang }: { lang: Locale }) {
     "circle(calc(var(--r) + var(--p, 0) * var(--p, 0) * 150vmax) at calc(var(--cx) * (1 - var(--p, 0)) + 50% * var(--p, 0)) calc(var(--cy) * (1 - var(--p, 0)) + 50% * var(--p, 0)))";
 
   return (
-    <section id="top" data-tone="light" data-progress="pin" className="pin-runway relative h-[230vh] bg-mist text-ink">
+    <section id="top" data-tone="light" data-progress="pin" className="pin-runway relative h-[148vh] bg-mist sm:h-[164vh] text-ink">
       <div className="pin-stage sticky top-0 h-screen overflow-hidden">
         <div className={`${container} pt-20 sm:pt-28`}>
           <Headline lines={profile.headline} />

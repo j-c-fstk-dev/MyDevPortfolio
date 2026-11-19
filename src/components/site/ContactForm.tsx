@@ -46,12 +46,12 @@ export default function ContactForm({
     }
   };
 
-  const label = matrix ? "block font-mono-matrix text-matrix-electric-blue text-sm mb-2" : "block font-semibold mb-2";
+  const label = matrix ? "block font-mono-matrix text-matrix-highlight text-sm mb-2" : "block font-semibold mb-2";
   const input = matrix
-    ? "w-full bg-matrix-black/50 border-2 border-matrix-primary-green/30 rounded px-4 py-3 font-mono-matrix text-matrix-light-gray focus:border-matrix-primary-green outline-none transition-all"
+    ? "w-full bg-matrix-black/50 border-2 border-matrix-accent/30 rounded px-4 py-3 font-mono-matrix text-matrix-light-gray focus:border-matrix-accent outline-none transition-all"
     : "w-full rounded-xl bg-surface px-4 py-3 text-ink ring-1 ring-line placeholder:text-lichen/70 transition-shadow hover:ring-pine/50";
   const button = matrix
-    ? "w-full py-4 font-mono-matrix border-2 rounded transition-all duration-300 bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green disabled:opacity-60"
+    ? "w-full py-4 font-mono-matrix border-2 rounded transition-all duration-300 bg-matrix-accent/20 border-matrix-accent text-matrix-accent hover:bg-matrix-accent/30 hover:shadow-phosphor disabled:opacity-60"
     : "inline-flex items-center justify-center rounded-full bg-pine px-6 py-3 font-semibold text-on-pine transition-colors hover:bg-ink disabled:opacity-60";
   const note = matrix ? "font-mono-matrix text-sm" : "text-[15px]";
   const id = (field: string) => `${variant}-${field}`;
@@ -119,7 +119,7 @@ export default function ContactForm({
 
       <div aria-live="polite">
         {status === "sent" && (
-          <p className={`${note} ${matrix ? "text-matrix-primary-green" : "text-pine font-medium"}`}>{labels.sent}</p>
+          <p className={`${note} ${matrix ? "text-matrix-accent" : "text-pine font-medium"}`}>{labels.sent}</p>
         )}
         {status === "failed" && (
           <p className={`${note} ${matrix ? "text-red-400" : "text-ink"}`}>

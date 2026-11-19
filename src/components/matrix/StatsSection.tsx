@@ -15,7 +15,7 @@ const stats: StatItem[] = portfolioStats.map((stat, i) => ({
     label: stat.label.toUpperCase().replace(/[ &]+/g, "_"),
     value: stat.value,
     suffix: stat.suffix,
-    color: i % 2 === 0 ? "text-matrix-primary-green" : "text-matrix-electric-blue"
+    color: i % 2 === 0 ? "text-matrix-accent" : "text-matrix-highlight"
   }));
 
 export default function StatsSection() {
@@ -84,7 +84,7 @@ export default function StatsSection() {
           {Array.from({ length: 48 }).map((_, i) =>
           <div
             key={i}
-            className="border border-matrix-primary-green animate-pulse"
+            className="border border-matrix-accent animate-pulse"
             style={{ animationDelay: `${i * 0.05}s` }}
             />
 
@@ -99,19 +99,19 @@ export default function StatsSection() {
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16">
           <h2
-            className="text-3xl sm:text-4xl md:text-6xl font-mono-matrix text-glow-green mb-3 sm:mb-4"
+            className="text-3xl sm:text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-3 sm:mb-4"
            >
 
             SYSTEM_STATS
           </h2>
           <div
-            className="text-lg sm:text-xl font-mono-matrix text-matrix-electric-blue"
+            className="text-lg sm:text-xl font-mono-matrix text-matrix-highlight"
            >
 
             &gt; ANALYZING_PERFORMANCE_METRICS...
           </div>
           <div
-            className="w-24 sm:w-32 h-1 bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue mx-auto mt-3 sm:mt-4"
+            className="w-24 sm:w-32 h-1 bg-gradient-to-r from-matrix-accent to-matrix-highlight mx-auto mt-3 sm:mt-4"
            >
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function StatsSection() {
           {stats.map((stat, index) =>
           <div
             key={stat.label}
-            className={`bg-matrix-black/50 border-2 border-matrix-primary-green/30 rounded-lg p-4 sm:p-6 text-center hover:border-matrix-primary-green hover:shadow-neon-green transition-all duration-500 transform ${
+            className={`bg-matrix-black/50 border-2 border-matrix-accent/30 rounded-lg p-4 sm:p-6 text-center hover:border-matrix-accent hover:shadow-phosphor transition-all duration-500 transform ${
             isVisible ?
             "translate-y-0 opacity-100" :
             "translate-y-10 opacity-0"}`
@@ -137,7 +137,7 @@ export default function StatsSection() {
               className={`text-3xl sm:text-4xl md:text-5xl font-mono-matrix ${stat.color} mb-3 sm:mb-4`}
              >
 
-                <span className="text-glow-green">
+                <span className="text-phosphor-glow">
                   {animatedValues[index]}
                 </span>
                 <span
@@ -164,8 +164,8 @@ export default function StatsSection() {
                 <div
                 className={`h-2 rounded-full transition-all duration-1000 ${
                 stat.color.includes("green") ?
-                "bg-gradient-to-r from-matrix-primary-green to-matrix-secondary-green" :
-                "bg-gradient-to-r from-matrix-electric-blue to-matrix-neon-cyan"}`
+                "bg-gradient-to-r from-matrix-accent to-matrix-dim" :
+                "bg-gradient-to-r from-matrix-highlight to-matrix-dim"}`
                 }
                 style={{
                   width: isVisible ? "100%" : "0%",
@@ -177,7 +177,7 @@ export default function StatsSection() {
 
               {/* Binary Animation */}
               <div
-              className="mt-3 sm:mt-4 font-mono-matrix text-xs text-matrix-primary-green/50 overflow-hidden h-4"
+              className="mt-3 sm:mt-4 font-mono-matrix text-xs text-matrix-accent/50 overflow-hidden h-4"
              >
 
                 <div className="animate-pulse">
@@ -199,11 +199,11 @@ export default function StatsSection() {
         {/* Additional Info */}
         <div className="text-center mt-12 sm:mt-16">
           <div
-            className="bg-matrix-black/70 border border-matrix-primary-green/30 rounded-lg p-4 sm:p-6 max-w-2xl mx-auto"
+            className="bg-matrix-black/70 border border-matrix-accent/30 rounded-lg p-4 sm:p-6 max-w-2xl mx-auto"
            >
 
             <div
-              className="font-mono-matrix text-matrix-electric-blue mb-2 text-sm sm:text-base"
+              className="font-mono-matrix text-matrix-highlight mb-2 text-sm sm:text-base"
              >
 
               &gt; STATUS: OPERATIONAL

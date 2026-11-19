@@ -10,17 +10,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Matrix color palette
+        // Matrix phosphor palette, scoped to the Matrix experience.
         matrix: {
-          black: "#0A0A0A",
-          "dark-gray": "#1A1A1A",
-          "medium-gray": "#2A2A2A",
-          "light-gray": "#F0F0F0",
-          "primary-green": "#00FF00",
-          "secondary-green": "#00CC00",
-          "tertiary-green": "#009900",
-          "electric-blue": "#00FFFF",
-          "neon-cyan": "#00FFFF"
+          black: "rgb(var(--matrix-screen) / <alpha-value>)",
+          "dark-gray": "rgb(var(--matrix-surface) / <alpha-value>)",
+          "light-gray": "rgb(var(--matrix-text) / <alpha-value>)",
+          accent: "rgb(var(--matrix-accent) / <alpha-value>)",
+          highlight: "rgb(var(--matrix-highlight) / <alpha-value>)",
+          dim: "rgb(var(--matrix-dim) / <alpha-value>)",
         },
         // Standard site palette (values live in globals.css, with a dark variant)
         mist: "rgb(var(--mist) / <alpha-value>)",
@@ -37,21 +34,10 @@ export default {
         sans: ["var(--font-bricolage)", "system-ui", "sans-serif"]
       },
       animation: {
-        "glow-pulse": "glow-pulse 2s ease-in-out infinite alternate",
         "matrix-rain": "matrix-rain 20s linear infinite",
         glitch: "glitch 0.3s ease-in-out infinite"
       },
       keyframes: {
-        "glow-pulse": {
-          "0%": {
-            textShadow: "0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00",
-            filter: "brightness(1)"
-          },
-          "100%": {
-            textShadow: "0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00",
-            filter: "brightness(1.2)"
-          }
-        },
         "matrix-rain": {
           "0%": { transform: "translateY(-100vh)" },
           "100%": { transform: "translateY(100vh)" }
@@ -68,10 +54,7 @@ export default {
         matrix: "8px"
       },
       boxShadow: {
-        "neon-green": "0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00",
-        "neon-blue": "0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 15px #00FFFF",
-        "neon-red": "0 0 5px #FF0000, 0 0 10px #FF0000, 0 0 15px #FF0000",
-        "pixel-border": "inset 0 0 0 2px #00FF00"
+        phosphor: "0 0 12px rgb(var(--matrix-accent) / 0.14)",
       },
       perspective: {
         "1000": "1000px",
@@ -88,15 +71,8 @@ export default {
   plugins: [
   function ({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string | Record<string, string>>>) => void }) {
     const newUtilities = {
-      ".text-glow-green": {
-        textShadow: "0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00"
-      },
-      ".text-glow-blue": {
-        textShadow: "0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 15px #00FFFF"
-      },
-      ".pixel-border": {
-        border: "2px solid #00FF00",
-        borderImage: "linear-gradient(45deg, #00FF00, #00CC00) 1"
+      ".text-phosphor-glow": {
+        textShadow: "0 0 8px rgb(var(--matrix-accent) / 0.24)",
       },
       ".glitch-effect": {
         position: "relative",
