@@ -242,6 +242,20 @@ const raw = {
       featured: true,
     },
     {
+      slug: "megazord",
+      title: "Megazord MVP",
+      description: t(
+        "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
+        "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
+      ),
+      tech: ["Python", "n8n", "Cloudflare Workers", "Meta Graph API"],
+      category: "automation",
+      status: "prototype",
+      context: contexts.own,
+      repo: gh("megazord-mvp"),
+      featured: true,
+    },
+    {
       slug: "wondrix",
       title: "Wondrix",
       description: t(
@@ -360,34 +374,6 @@ const raw = {
       live: "https://bassforest.earth",
       repo: gh("bassforest", "BeRegen"),
       featured: true,
-    },
-    {
-      slug: "monthly-earth-day",
-      title: "Monthly Earth Day",
-      description: t(
-        "Community hub for monthly environmental actions. Designed and built solo from scratch.",
-        "Hub comunitário de ações ambientais mensais. Projetado e desenvolvido do zero, sozinho."
-      ),
-      tech: ["TypeScript", "React", "Node.js"],
-      category: "web",
-      status: "live",
-      context: contexts.client,
-      live: "https://monthlyearthday.org",
-      repo: gh("site-monthly-earth-day"),
-      featured: true,
-    },
-    {
-      slug: "megazord",
-      title: "Megazord MVP",
-      description: t(
-        "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
-        "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
-      ),
-      tech: ["Python", "n8n", "Cloudflare Workers", "Meta Graph API"],
-      category: "automation",
-      status: "prototype",
-      context: contexts.own,
-      repo: gh("megazord-mvp"),
     },
     {
       slug: "partomagnus",
@@ -575,8 +561,8 @@ const raw = {
           "Corrigi bugs em produção e entreguei novas funcionalidades no front-end, back-end e banco de dados; revisei contratos em Solidity e construí os fluxos ligados a eles."
         ),
         t(
-          "Bass Forest and Monthly Earth Day — designed and built both sites solo, from scratch.",
-          "Bass Forest e Monthly Earth Day — projetei e desenvolvi os dois sites do zero, sozinho."
+          "Bass Forest — designed and built the site solo, from scratch.",
+          "Bass Forest — projetei e desenvolvi o site do zero, sozinho."
         ),
       ],
       tech: ["TypeScript", "React", "Node.js", "Solidity", "Celo"],
