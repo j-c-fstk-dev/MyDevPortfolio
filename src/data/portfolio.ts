@@ -27,7 +27,7 @@ const GITHUB_USER = "j-c-fstk-dev";
 const gh = (repo: string, owner = GITHUB_USER) => `https://github.com/${owner}/${repo}`;
 
 export type ProjectCategory = "web3" | "ai" | "web" | "desktop" | "automation";
-export type ProjectStatus = "live" | "beta" | "in-development" | "prototype";
+export type ProjectStatus = "live" | "released" | "beta" | "in-development" | "prototype";
 
 const contexts = {
   client: t("Client", "Cliente"),
@@ -132,6 +132,21 @@ const raw = {
 
   projects: [
     {
+      slug: "chronoflare",
+      title: "ChronoFlare",
+      description: t(
+        "Explore satellite-detected fire activity in the Pantanal. Compare years of MODIS and VIIRS observations in an interactive calendar that shows sensor sources, gaps and uncertainty. An independent NASA Space Apps project.",
+        "Explore focos de calor detectados por satélite no Pantanal. Compare anos de observações MODIS e VIIRS em um calendário interativo que mostra as fontes, as lacunas e a incerteza dos dados. Projeto independente do NASA Space Apps."
+      ),
+      tech: ["TypeScript", "Vite", "Python", "NASA FIRMS"],
+      category: "web",
+      status: "live",
+      context: contexts.hackathon,
+      live: "https://chronoflare.vercel.app/",
+      repo: gh("chronoflare"),
+      featured: true,
+    },
+    {
       slug: "decleanup-dapp",
       title: "DeCleanup Network",
       description: t(
@@ -158,7 +173,53 @@ const raw = {
       category: "web",
       status: "live",
       context: contexts.own,
+      live: "https://matrix-operator.netlify.app/",
       repo: gh("Operator-Matrix-Retro-Terminal-Workspace"),
+      featured: true,
+    },
+    {
+      slug: "textbook-upgrade-skill",
+      title: "TextbookUpgradeSkill",
+      description: t(
+        "An open-source AI skill for turning existing teaching materials into workbooks, hands-on activities and recording scripts for video lessons.",
+        "Skill de IA de código aberto para transformar material didático existente em apostilas, atividades práticas e roteiros para gravar videoaulas."
+      ),
+      tech: ["Agent Skills", "Markdown", "AGPL-3.0"],
+      category: "ai",
+      status: "released",
+      context: contexts.openSource,
+      repo: gh("TextbookUpgradeSkill"),
+      links: [{ label: t("Installation guide", "Guia de instalação"), href: gh("TextbookUpgradeSkill#instalar-no-codex-cli-linux-ou-macos") }],
+      featured: true,
+    },
+    {
+      slug: "mural-dos-sonhos",
+      title: "Mural dos Sonhos",
+      description: t(
+        "An offline vision board with photo layouts, guided prompts and optional goal tracking. Install it as a PWA and export the finished board as a PNG.",
+        "Mural visual offline com layouts para fotos, perguntas guiadas e acompanhamento opcional de metas. Dá para instalar como PWA e exportar o mural pronto em PNG."
+      ),
+      tech: ["PWA", "TypeScript", "IndexedDB"],
+      category: "web",
+      status: "beta",
+      context: contexts.own,
+      live: "https://muraldossonhos.netlify.app/",
+      repo: gh("Mural-do-Sonhos"),
+      featured: true,
+    },
+    {
+      slug: "clipvault",
+      title: "ClipVault",
+      description: t(
+        "Desktop clipboard manager that sorts everything you copy into categories automatically.",
+        "Gerenciador de área de transferência para desktop que organiza automaticamente em categorias tudo o que você copia."
+      ),
+      tech: ["Rust"],
+      category: "desktop",
+      status: "released",
+      context: contexts.own,
+      links: [{ label: t("Download for Linux", "Baixar para Linux"), href: gh("clipvault/releases/latest") }],
+      repo: gh("clipvault"),
       featured: true,
     },
     {
@@ -170,8 +231,10 @@ const raw = {
       ),
       tech: ["Next.js", "TypeScript", "AI agents"],
       category: "ai",
-      status: "live",
+      status: "prototype",
       context: contexts.hackathon,
+      liveLabel: t("Open demo", "Abrir demo"),
+      live: "https://wondrix-phi.vercel.app/",
       repo: gh("Wondrix"),
       featured: true,
     },
@@ -179,13 +242,14 @@ const raw = {
       slug: "prumo",
       title: "Prumo",
       description: t(
-        "Native Android app (Kotlin + Jetpack Compose) and interactive simulator with AI mentoring: a guided 15-minute diagnosis, a practical roadmap in narrative chapters and short presence audios to get ideas off paper without stalling.",
-        "Aplicativo Android nativo (Kotlin + Jetpack Compose) e simulador interativo com mentoria por IA: diagnóstico guiado em 15 minutos, roteiro prático em capítulos narrativos e micro-áudios de presença para tirar ideias do papel sem paralisia."
+        "A mobile app and web companion with a guided diagnosis, personalized roadmap and AI coaching to help people take the first step on a new digital project.",
+        "Aplicativo para celular com versão web, diagnóstico guiado, roteiro personalizado e mentoria por IA para dar o primeiro passo em um projeto digital."
       ),
       tech: ["Kotlin", "Jetpack Compose", "TypeScript", "Gemini"],
       category: "ai",
       status: "live",
       context: contexts.own,
+      live: "https://prumo.jardimdofazer.com.br/",
       repo: gh("Prumo"),
       featured: true,
     },
@@ -200,21 +264,8 @@ const raw = {
       category: "web3",
       status: "live",
       context: contexts.own,
+      live: "https://j-c-fstk-dev.github.io/rastro/",
       repo: gh("rastro"),
-      featured: true,
-    },
-    {
-      slug: "clipvault",
-      title: "ClipVault",
-      description: t(
-        "Desktop clipboard manager that sorts everything you copy into categories automatically.",
-        "Gerenciador de área de transferência para desktop que organiza automaticamente em categorias tudo o que você copia."
-      ),
-      tech: ["Rust"],
-      category: "desktop",
-      status: "live",
-      context: contexts.own,
-      repo: gh("clipvault"),
       featured: true,
     },
     {
@@ -226,7 +277,7 @@ const raw = {
       ),
       tech: ["React", "TypeScript", "Strudel", "Web Audio", "LLM"],
       category: "ai",
-      status: "live",
+      status: "released",
       context: contexts.own,
       repo: gh("maiestro"),
       featured: true,
@@ -255,8 +306,9 @@ const raw = {
       ),
       tech: ["Shell", "i3wm", "Linux"],
       category: "desktop",
-      status: "live",
+      status: "released",
       context: contexts.openSource,
+      links: [{ label: t("Installation guide", "Guia de instalação"), href: gh("matrix-hacker-desktop#-instalação-rápida") }],
       repo: gh("matrix-hacker-desktop"),
       featured: true,
     },
@@ -309,8 +361,8 @@ const raw = {
       slug: "megazord",
       title: "Megazord MVP",
       description: t(
-        "Automation suite that pulls stories, links, sales and DMs and delivers the morning's content ready to post.",
-        "Suíte de automação que reúne stories, links, vendas e DMs e entrega o conteúdo da manhã pronto para postar."
+        "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
+        "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
       ),
       tech: ["Python", "n8n", "Cloudflare Workers", "Meta Graph API"],
       category: "automation",
@@ -322,8 +374,8 @@ const raw = {
       slug: "partomagnus",
       title: "PartoMagnus",
       description: t(
-        "Clinical PWA for real-time labor tracking based on WHO and FEBRASGO protocols: contraction analytics, phase detection, guided breathing and PDF reports.",
-        "PWA clínico para acompanhar o trabalho de parto em tempo real, baseado nos protocolos da OMS e da FEBRASGO: análise de contrações, detecção de fase, respiração guiada e relatórios em PDF."
+        "Locally tested PWA prototype for logging contractions, guided breathing and PDF summaries.",
+        "Protótipo de PWA testado localmente para registrar contrações, orientar a respiração e gerar resumos em PDF."
       ),
       tech: ["React", "TypeScript", "Zustand", "Tone.js"],
       category: "web",
@@ -348,13 +400,14 @@ const raw = {
       slug: "passpay",
       title: "PassPay",
       description: t(
-        "Gasless stablecoin payments using passkeys and account abstraction. Reference implementation.",
-        "Pagamentos em stablecoin sem taxa de gas, usando passkeys e account abstraction. Implementação de referência."
+        "Gasless stablecoin payments using passkeys and account abstraction. Reference implementation with a companion WebAuthn demo that simulates USDC payments.",
+        "Pagamentos em stablecoin sem taxa de gas, usando passkeys e account abstraction. Implementação de referência com uma demo WebAuthn que simula pagamentos em USDC."
       ),
       tech: ["TypeScript", "React", "Node.js", "Account abstraction"],
       category: "web3",
       status: "prototype",
       context: contexts.own,
+      links: [{ label: t("GasLess Transactions source", "Código da demo GasLess Transactions"), href: gh("GasLess-Transactions") }],
       repo: gh("PassPay"),
     },
     {
@@ -410,6 +463,8 @@ const raw = {
       category: "web",
       status: "in-development",
       context: contexts.own,
+      liveLabel: t("Visit store", "Visitar loja"),
+      live: "https://jardimdofazer.com.br/",
       repo: gh("jardimdofazer"),
     },
     {
@@ -425,6 +480,44 @@ const raw = {
       context: contexts.own,
       repo: gh("subguard-ai"),
     },
+    {
+      slug: "olha-o-que-eu-fiz",
+      title: "Olha o que eu fiz",
+      description: t(
+        "An offline PWA for recording a baby's milestones, with a timeline, weekly updates and a local backup.",
+        "PWA offline para registrar os marcos do bebê, com linha do tempo, boletim semanal e backup local."
+      ),
+      tech: ["React", "TypeScript", "IndexedDB", "PWA"],
+      category: "web",
+      status: "prototype",
+      context: contexts.own,
+    },
+    {
+      slug: "repet",
+      title: "RePet",
+      description: t(
+        "Loyalty prototype for pet shops, focused on recurring purchases and customer retention through WhatsApp.",
+        "Protótipo de fidelidade para pet shops, com foco em recompra e retenção de clientes pelo WhatsApp."
+      ),
+      tech: ["Next.js", "TypeScript", "Supabase"],
+      category: "web",
+      status: "prototype",
+      context: contexts.own,
+      repo: gh("RePet"),
+    },
+    {
+      slug: "proppilot",
+      title: "PropPilot",
+      description: t(
+        "A Python CLI for freelancers to manage clients and proposals, send templated messages and export their pipeline to CSV.",
+        "CLI em Python para freelancers gerenciarem clientes e propostas, enviarem mensagens a partir de modelos e exportarem dados em CSV."
+      ),
+      tech: ["Python", "CLI", "CSV"],
+      category: "automation",
+      status: "released",
+      context: contexts.own,
+      repo: gh("PropPilot"),
+    },
   ] as RawProject[],
 
   categoryLabels: {
@@ -437,6 +530,7 @@ const raw = {
 
   statusLabels: {
     live: t("Live", "No ar"),
+    released: t("Available", "Disponível"),
     beta: t("Beta", "Beta"),
     "in-development": t("In development", "Em desenvolvimento"),
     prototype: t("Prototype", "Protótipo"),
@@ -632,6 +726,8 @@ interface RawProject {
   /** Who it was built for, e.g. client, own product, hackathon. */
   context: Text;
   live?: string;
+  liveLabel?: Text;
+  links?: { label: Text; href: string }[];
   repo?: string;
   featured?: boolean;
 }

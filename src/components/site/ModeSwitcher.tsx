@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import ProjectHoverPreview from "./ProjectHoverPreview";
 import type { Origin } from "@/components/matrix/MatrixExperience";
 
 const loadMatrix = () => import("@/components/matrix/MatrixExperience");
@@ -91,6 +92,7 @@ export default function ModeSwitcher({ children }: { children: React.ReactNode }
     <MatrixContext.Provider value={enter}>
       {showSite && children}
       {matrix && <MatrixExperience origin={origin} onCovered={handleCovered} onExit={exit} />}
+      <ProjectHoverPreview key={matrix ? "matrix" : "site"} mode={matrix ? "matrix" : "site"} />
     </MatrixContext.Provider>
   );
 }

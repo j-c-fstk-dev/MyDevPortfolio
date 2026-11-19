@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import { projectScreenshot } from "@/lib/project-previews";
 import { useEffect, useRef, useState } from "react";
 import {
   categoryLabels,
@@ -15,6 +17,7 @@ const toCommand = (text: string) => text.toUpperCase().replace(/[^A-Z0-9]+/g, "_
 
 const statusStyle: Record<ProjectStatus, { color: string; icon: string }> = {
   live: { color: "text-matrix-primary-green", icon: "●" },
+  released: { color: "text-matrix-primary-green", icon: "●" },
   beta: { color: "text-matrix-electric-blue", icon: "◐" },
   "in-development": { color: "text-yellow-400", icon: "⚡" },
   prototype: { color: "text-matrix-light-gray", icon: "◇" },
@@ -42,9 +45,20 @@ function ProjectLinks({ project }: { project: Project }) {
           rel="noopener noreferrer"
           className="px-4 py-2 bg-matrix-electric-blue/20 border border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 transition-all"
         >
-          LIVE_SITE ↗
+          {project.liveLabel ? toCommand(project.liveLabel) : "LIVE_SITE"} ↗
         </a>
       )}
+      {project.links?.map(({ href, label }) => (
+        <a
+          key={href}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 bg-matrix-electric-blue/20 border border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 transition-all"
+        >
+          {toCommand(label)} ↗
+        </a>
+      ))}
     </div>
   );
 }
@@ -54,6 +68,7 @@ export default function ProjectsSection() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [filter, setFilter] = useState<(typeof filters)[number]>("ALL");
   const sectionRef = useRef<HTMLElement>(null);
+  const screenshot = selected && projectScreenshot(selected.slug);
 
   const visible = filter === "ALL" ? projects : projects.filter((p) => p.category === filter);
 
@@ -115,7 +130,8 @@ export default function ProjectsSection() {
             const status = statusStyle[project.status];
             return (
               <button
-                key={project.title}
+                key={project.slug}
+                data-project-preview={projectScreenshot(project.slug)}
                 type="button"
                 onClick={() => setSelected(project)}
                 className={`flex flex-col text-left bg-matrix-black/50 border border-matrix-primary-green/30 rounded-lg p-6 hover:border-matrix-primary-green hover:shadow-neon-green transition-all duration-500 ${
@@ -184,6 +200,16 @@ export default function ProjectsSection() {
               </div>
 
               <div className="space-y-6">
+                {screenshot && (
+                  <Image
+                    src={screenshot}
+                    alt={`Screenshot of ${selected.title}`}
+                    width={1280}
+                    height={800}
+                    sizes="(min-width: 640px) 576px, 100vw"
+                    className="aspect-[16/10] w-full rounded-lg border border-matrix-primary-green/30 object-cover object-top"
+                  />
+                )}
                 <div>
                   <h4 className="font-mono-matrix text-matrix-electric-blue mb-2">DESCRIPTION:</h4>
                   <p className="text-matrix-light-gray">{selected.description}</p>
