@@ -6,9 +6,11 @@ import { useEffect, useRef, useState } from "react";
 export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [screenshot, setScreenshot] = useState<string>();
+  const [loadedScreenshot, setLoadedScreenshot] = useState<string>();
 
   useEffect(() => {
-    const frame = frameRef.current!;
+    const frame = frameRef.current;
+    if (!frame) return;
     const desktop = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let active: string | undefined;
@@ -16,8 +18,8 @@ export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" 
     let pointerX = 0;
     let pointerY = 0;
 
-    const screenshotAt = (target: Element | null) =>
-      target?.closest<HTMLElement>("[data-project-preview]")?.dataset.projectPreview;
+    const previewTarget = (target: Element | null) =>
+      target?.closest<HTMLElement>("[data-project-preview]");
 
     const hide = () => {
       if (!active) return;
@@ -27,9 +29,8 @@ export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" 
 
     const follow = (event: PointerEvent) => {
       const target = event.target instanceof Element ? event.target : null;
-      const next = desktop.matches && event.pointerType === "mouse"
-        ? screenshotAt(target)
-        : undefined;
+      const trigger = desktop.matches && event.pointerType === "mouse" ? previewTarget(target) : undefined;
+      const next = trigger?.dataset.projectPreview;
 
       if (next !== dismissed) dismissed = undefined;
       if (!next || next === dismissed) {
@@ -40,6 +41,7 @@ export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" 
       pointerX = event.clientX;
       pointerY = event.clientY;
       if (active !== next || !reducedMotion.matches) {
+        frame.dataset.large = String(trigger?.hasAttribute("data-project-preview-large") ?? false);
         const gap = 20;
         const edge = 12;
         const width = frame.offsetWidth;
@@ -63,7 +65,7 @@ export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" 
       hide();
     };
     const handleScroll = () => {
-      if (active && screenshotAt(document.elementFromPoint(pointerX, pointerY)) !== active) hide();
+      if (active && previewTarget(document.elementFromPoint(pointerX, pointerY))?.dataset.projectPreview !== active) hide();
     };
     const dismiss = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
@@ -97,14 +99,17 @@ export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" 
       ref={frameRef}
       aria-hidden="true"
       data-hover-preview
-      className={`pointer-events-none fixed left-0 top-0 z-[70] aspect-[16/10] w-[clamp(288px,28vw,420px)] overflow-hidden rounded-xl shadow-2xl motion-safe:transition-opacity ${mode === "matrix" ? "border-2 border-matrix-primary-green bg-matrix-black" : "border border-white/20 bg-ink"} ${screenshot ? "opacity-100" : "opacity-0"}`}
+      className={`pointer-events-none fixed left-0 top-0 z-[70] aspect-[16/10] w-[clamp(288px,28vw,420px)] data-[large=true]:w-[min(52vw,740px)] overflow-hidden rounded-xl shadow-2xl motion-safe:transition-opacity ${mode === "matrix" ? "border-2 border-matrix-accent bg-matrix-black" : "border border-white/20 bg-ink"} ${screenshot && loadedScreenshot === screenshot ? "opacity-100" : "opacity-0"}`}
     >
       {screenshot && (
         <Image
+          key={screenshot}
           src={screenshot}
           alt=""
           fill
-          sizes="(min-width: 1500px) 420px, 28vw"
+          loading="eager"
+          unoptimized
+          onLoad={() => setLoadedScreenshot(screenshot)}
           className="object-cover object-top"
         />
       )}

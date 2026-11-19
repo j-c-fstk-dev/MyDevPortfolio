@@ -111,6 +111,7 @@ function DeckPanel({
 }) {
   const { statusLabels } = getContent(lang);
   const shot = projectScreenshot(project.slug);
+  const showInlineOnDesktop = index === 0;
 
   return (
     <li
@@ -118,7 +119,7 @@ function DeckPanel({
       style={{ top: `calc(5rem + ${index * 14}px)` }}
     >
       <article
-        data-project-preview={shot}
+        data-project-preview={showInlineOnDesktop ? undefined : shot}
         data-panel={PANEL_COLOURS[index % PANEL_COLOURS.length]}
         className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_-18px_40px_-20px_rgb(0_0_0/0.45)] sm:p-10"
       >
@@ -147,7 +148,9 @@ function DeckPanel({
                 width={1280}
                 height={800}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                className="project-inline-preview mt-6 aspect-[16/10] w-full rounded-xl object-cover object-top"
+                data-project-preview={showInlineOnDesktop ? shot : undefined}
+                data-project-preview-large={showInlineOnDesktop || undefined}
+                className={`mt-6 aspect-[16/10] w-full rounded-xl object-cover object-top ${showInlineOnDesktop ? "" : "project-inline-preview"}`}
               />
             )}
           </div>

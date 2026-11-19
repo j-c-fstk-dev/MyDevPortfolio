@@ -37,7 +37,7 @@ export default function SkillsSection() {
         {background.map((b, i) => (
           <div
             key={i}
-            className="absolute font-mono-matrix text-matrix-primary-green text-xs animate-pulse"
+            className="absolute font-mono-matrix text-matrix-accent text-xs animate-pulse"
             style={{ left: b.left, top: b.top, animationDelay: b.delay }}
           >
             {b.pick > 0.5 ? "1" : "0"}
@@ -47,9 +47,9 @@ export default function SkillsSection() {
 
       <div className="container mx-auto px-6 relative z-10 max-w-5xl">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-mono-matrix text-glow-green mb-4">SKILL_MATRIX</h2>
-          <div className="text-xl font-mono-matrix text-matrix-electric-blue">&gt; LOADING_CAPABILITIES...</div>
-          <div className="w-32 h-1 bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue mx-auto mt-4" />
+          <h2 className="text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">SKILL_MATRIX</h2>
+          <div className="text-xl font-mono-matrix text-matrix-highlight">&gt; LOADING_CAPABILITIES...</div>
+          <div className="w-32 h-1 bg-gradient-to-r from-matrix-accent to-matrix-highlight mx-auto mt-4" />
         </div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-10" role="tablist">
@@ -61,8 +61,8 @@ export default function SkillsSection() {
               onClick={() => setActiveCategory(category)}
               className={`px-4 py-2 font-mono-matrix border-2 rounded transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-matrix-primary-green/20 border-matrix-primary-green text-matrix-primary-green shadow-neon-green"
-                  : "bg-matrix-black/50 border-matrix-primary-green/30 text-matrix-light-gray hover:border-matrix-primary-green hover:text-matrix-primary-green"
+                  ? "bg-matrix-accent/20 border-matrix-accent text-matrix-accent shadow-phosphor"
+                  : "bg-matrix-black/50 border-matrix-accent/30 text-matrix-light-gray hover:border-matrix-accent hover:text-matrix-accent"
               }`}
             >
               {toCommand(category)}
@@ -70,35 +70,35 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        <div className="bg-matrix-black/70 border-2 border-matrix-primary-green rounded-lg p-6">
+        <div className="bg-matrix-black/70 border-2 border-matrix-accent rounded-lg p-6">
           <div className="flex items-center mb-4">
             <div className="flex space-x-2" aria-hidden>
               <div className="w-3 h-3 rounded-full bg-red-500" />
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-matrix-primary-green" />
+              <div className="w-3 h-3 rounded-full bg-matrix-accent" />
             </div>
-            <div className="flex-1 text-center font-mono-matrix text-matrix-primary-green">SKILL_ANALYZER</div>
+            <div className="flex-1 text-center font-mono-matrix text-matrix-accent">SKILL_ANALYZER</div>
           </div>
 
-          <div className="font-mono-matrix text-matrix-electric-blue mb-4">
+          <div className="font-mono-matrix text-matrix-highlight mb-4">
             $ ls ./stack/{toCommand(activeCategory).toLowerCase()}
           </div>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {activeSkills.map((skill, index) => (
               <li
                 key={skill}
-                className={`font-mono-matrix text-lg text-matrix-light-gray bg-matrix-black/50 border border-matrix-primary-green/30 rounded px-4 py-2 hover:border-matrix-primary-green hover:text-matrix-primary-green transition-all duration-500 ${
+                className={`font-mono-matrix text-lg text-matrix-light-gray bg-matrix-black/50 border border-matrix-accent/30 rounded px-4 py-2 hover:border-matrix-accent hover:text-matrix-accent transition-all duration-500 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
                 style={{ transitionDelay: `${index * 0.05}s` }}
               >
-                <span className="text-matrix-primary-green">&gt;</span> {skill}
+                <span className="text-matrix-accent">&gt;</span> {skill}
               </li>
             ))}
           </ul>
           <div className="font-mono-matrix text-sm text-matrix-light-gray mt-4">
             {activeSkills.length} entries found
-            <span className="text-matrix-primary-green animate-pulse"> _</span>
+            <span className="text-matrix-accent animate-pulse"> _</span>
           </div>
         </div>
       </div>

@@ -322,11 +322,15 @@ html:not(.motion) .transition-screen {
 }
 
 /* Horizontal timeline without motion: a plain vertical stack. */
-html:not(.motion) .hz-stage {
+html:not(.motion) .hz-stage,
+[data-hz-static] .hz-stage {
+    position: static;
+    height: auto;
     padding: 6rem 1rem;
 }
 
-html:not(.motion) .hz-track {
+html:not(.motion) .hz-track,
+[data-hz-static] .hz-track {
     width: auto;
     max-width: 72rem;
     margin: 0 auto;
@@ -334,12 +338,15 @@ html:not(.motion) .hz-track {
     padding: 0;
 }
 
-html:not(.motion) .hz-card {
+html:not(.motion) .hz-card,
+[data-hz-static] .hz-card {
     width: auto;
 }
 
 html:not(.motion) .hz-rail,
-html:not(.motion) .hz-station {
+html:not(.motion) .hz-station,
+[data-hz-static] .hz-rail,
+[data-hz-static] .hz-station {
     display: none;
 }
 
@@ -358,6 +365,72 @@ body::after {
    Matrix mode
    --------------------------------------------------------------------- */
 
+.matrix-mode {
+    --matrix-screen: 8 14 11;
+    --matrix-text: 216 229 221;
+    --matrix-accent: 105 217 147;
+    --matrix-highlight: 174 227 191;
+    --matrix-dim: 57 130 88;
+    --matrix-surface: 15 29 21;
+    color-scheme: dark;
+}
+
+.matrix-mode[data-phosphor="aqua"] {
+    --matrix-screen: 7 14 15;
+    --matrix-accent: 108 210 197;
+    --matrix-highlight: 168 225 217;
+    --matrix-dim: 52 124 116;
+    --matrix-surface: 15 29 30;
+}
+
+.matrix-mode[data-phosphor="blue"] {
+    --matrix-screen: 9 12 19;
+    --matrix-accent: 132 169 229;
+    --matrix-highlight: 181 204 241;
+    --matrix-dim: 67 98 148;
+    --matrix-surface: 18 25 40;
+}
+
+.matrix-mode[data-phosphor="purple"] {
+    --matrix-screen: 13 10 18;
+    --matrix-accent: 183 153 223;
+    --matrix-highlight: 218 197 242;
+    --matrix-dim: 112 82 143;
+    --matrix-surface: 25 19 38;
+}
+
+.matrix-mode[data-phosphor="pink"] {
+    --matrix-screen: 17 10 14;
+    --matrix-accent: 218 147 182;
+    --matrix-highlight: 237 193 214;
+    --matrix-dim: 136 74 107;
+    --matrix-surface: 34 18 29;
+}
+
+.matrix-mode[data-phosphor="red"] {
+    --matrix-screen: 17 11 10;
+    --matrix-accent: 229 150 136;
+    --matrix-highlight: 241 193 183;
+    --matrix-dim: 142 76 64;
+    --matrix-surface: 34 21 18;
+}
+
+.matrix-mode[data-phosphor="amber"] {
+    --matrix-screen: 17 13 8;
+    --matrix-accent: 226 177 105;
+    --matrix-highlight: 241 209 155;
+    --matrix-dim: 144 101 53;
+    --matrix-surface: 35 26 15;
+}
+
+.matrix-mode[data-phosphor="mono"] {
+    --matrix-screen: 13 14 14;
+    --matrix-accent: 194 207 205;
+    --matrix-highlight: 227 232 231;
+    --matrix-dim: 108 122 120;
+    --matrix-surface: 27 30 30;
+}
+
 /* One-shot jolt when the build fails during the Matrix entrance. */
 @keyframes matrix-shake {
     0%, 100% { transform: translate(0, 0); }
@@ -373,15 +446,16 @@ body::after {
 }
 
 .matrix-mode ::selection {
-    background: rgba(0, 255, 0, 0.3);
-    color: #00FF00;
+    background: rgb(var(--matrix-accent) / 0.28);
+    color: rgb(var(--matrix-highlight));
 }
 
 .matrix-mode a:focus-visible,
 .matrix-mode input:focus-visible,
 .matrix-mode textarea:focus-visible,
+.matrix-mode select:focus-visible,
 .matrix-mode button:focus-visible {
-    outline-color: #00FF00;
+    outline-color: rgb(var(--matrix-accent));
 }
 
 /* Matrix rain canvas styling */

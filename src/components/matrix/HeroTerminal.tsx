@@ -41,9 +41,9 @@ const CLOSED_KEY = "matrix-terminal-closed";
 
 const lineColor: Record<LineKind, string> = {
   cmd: "text-matrix-light-gray",
-  info: "text-matrix-electric-blue/80",
+  info: "text-matrix-highlight/80",
   err: "text-red-400",
-  ok: "text-matrix-primary-green text-glow-green",
+  ok: "text-matrix-accent text-phosphor-glow",
   out: "text-matrix-light-gray/90",
 };
 
@@ -132,11 +132,11 @@ export default function HeroTerminal({
   };
 
   const titleButton =
-    "rounded border border-matrix-primary-green/30 px-2 py-0.5 text-xs text-matrix-primary-green/80 hover:border-matrix-primary-green hover:text-matrix-primary-green sm:text-sm";
+    "rounded border border-matrix-accent/30 px-2 py-0.5 text-xs text-matrix-accent/80 hover:border-matrix-accent hover:text-matrix-accent sm:text-sm";
 
   if (!open) {
     return (
-      <div className="flex items-center justify-between gap-3 rounded-lg border border-matrix-primary-green/40 bg-matrix-black/80 px-4 py-3 font-mono-matrix text-left text-matrix-primary-green/80">
+      <div className="flex items-center justify-between gap-3 rounded-lg border border-matrix-accent/40 bg-matrix-black/80 px-4 py-3 font-mono-matrix text-left text-matrix-accent/80">
         <span>$ terminal closed</span>
         <button type="button" onClick={reopen} className={titleButton}>
           REOPEN_TERMINAL
@@ -148,7 +148,7 @@ export default function HeroTerminal({
   return (
     <div
       key={shake}
-      className={`rounded-lg border-2 border-matrix-primary-green bg-matrix-black/90 p-4 text-left font-mono-matrix shadow-neon-green sm:p-6 ${
+      className={`rounded-lg border-2 border-matrix-accent bg-matrix-black/90 p-4 text-left font-mono-matrix shadow-phosphor sm:p-6 ${
         shake ? "matrix-shake" : ""
       }`}
     >
@@ -165,9 +165,9 @@ export default function HeroTerminal({
             <span aria-hidden>×</span>
           </button>
           <span className="h-3 w-3 rounded-full bg-yellow-500" aria-hidden />
-          <span className="h-3 w-3 rounded-full bg-matrix-primary-green" aria-hidden />
+          <span className="h-3 w-3 rounded-full bg-matrix-accent" aria-hidden />
         </div>
-        <span className="flex-1 truncate text-center text-sm text-matrix-primary-green/80 sm:text-base">~/client-app</span>
+        <span className="flex-1 truncate text-center text-sm text-matrix-accent/80 sm:text-base">~/client-app</span>
         <button type="button" onClick={() => setSoundOn(!sound)} aria-pressed={sound} className={titleButton}>
           ♪ {sound ? "ON" : "OFF"}
         </button>
@@ -193,16 +193,16 @@ export default function HeroTerminal({
           const text = line.kind === "cmd" ? line.text.slice(0, current ? typed : undefined) : line.text;
           return (
             <div key={i} className={`break-words ${lineColor[line.kind]}`}>
-              {line.kind === "cmd" && <span className="text-matrix-primary-green">$ </span>}
+              {line.kind === "cmd" && <span className="text-matrix-accent">$ </span>}
               {text}
-              {current && line.kind === "cmd" && !done && <span className="cursor-blink text-matrix-primary-green">█</span>}
+              {current && line.kind === "cmd" && !done && <span className="cursor-blink text-matrix-accent">█</span>}
             </div>
           );
         })}
         {done && (
           <div className="text-matrix-light-gray">
-            <span className="text-matrix-primary-green">$ </span>
-            <span className="cursor-blink text-matrix-primary-green">█</span>
+            <span className="text-matrix-accent">$ </span>
+            <span className="cursor-blink text-matrix-accent">█</span>
           </div>
         )}
       </div>

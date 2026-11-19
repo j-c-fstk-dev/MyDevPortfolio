@@ -35,9 +35,9 @@ export default function ContactSection() {
     >
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-mono-matrix text-glow-green mb-4">CONTACT_INTERFACE</h2>
-          <div className="text-xl font-mono-matrix text-matrix-electric-blue">&gt; ESTABLISHING_CONNECTION...</div>
-          <div className="w-32 h-1 bg-gradient-to-r from-matrix-primary-green to-matrix-electric-blue mx-auto mt-4" />
+          <h2 className="text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">CONTACT_INTERFACE</h2>
+          <div className="text-xl font-mono-matrix text-matrix-highlight">&gt; ESTABLISHING_CONNECTION...</div>
+          <div className="w-32 h-1 bg-gradient-to-r from-matrix-accent to-matrix-highlight mx-auto mt-4" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -46,7 +46,7 @@ export default function ContactSection() {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
             }`}
           >
-            <h3 className="font-mono-matrix text-2xl text-matrix-primary-green mb-6 text-glow-green">
+            <h3 className="font-mono-matrix text-2xl text-matrix-accent mb-6 text-phosphor-glow">
               COMMUNICATION_PROTOCOLS
             </h3>
             {contactMethods.map((method) => (
@@ -55,28 +55,28 @@ export default function ContactSection() {
                 href={method.href}
                 target={method.href.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-matrix-black/50 border border-matrix-primary-green/30 rounded-lg p-5 hover:border-matrix-primary-green hover:shadow-neon-green transition-all duration-500 group"
+                className="flex items-center gap-4 bg-matrix-black/50 border border-matrix-accent/30 rounded-lg p-5 hover:border-matrix-accent hover:shadow-phosphor transition-all duration-500 group"
               >
                 <span className="text-2xl group-hover:scale-110 transition-transform" aria-hidden>
                   {method.icon}
                 </span>
                 <span className="flex-1 min-w-0">
-                  <span className="block font-mono-matrix text-matrix-electric-blue text-sm mb-1">{method.label}</span>
-                  <span className="block font-mono-matrix text-matrix-light-gray group-hover:text-matrix-primary-green transition-colors break-all">
+                  <span className="block font-mono-matrix text-matrix-highlight text-sm mb-1">{method.label}</span>
+                  <span className="block font-mono-matrix text-matrix-light-gray group-hover:text-matrix-accent transition-colors break-all">
                     {method.value}
                   </span>
                 </span>
-                <span className="text-matrix-primary-green opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden>
+                <span className="text-matrix-accent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden>
                   →
                 </span>
               </a>
             ))}
 
-            <div className="bg-matrix-black/70 border border-matrix-primary-green/30 rounded-lg p-4 mt-6 font-mono-matrix text-sm space-y-1">
-              <div className="text-matrix-electric-blue">$ status --availability</div>
-              <div className="text-matrix-primary-green">● ONLINE — {profile.availability}</div>
+            <div className="bg-matrix-black/70 border border-matrix-accent/30 rounded-lg p-4 mt-6 font-mono-matrix text-sm space-y-1">
+              <div className="text-matrix-highlight">$ status --availability</div>
+              <div className="text-matrix-accent">● ONLINE — {profile.availability}</div>
               <div className="text-matrix-light-gray">{profile.location}</div>
-              <div className="text-matrix-primary-green animate-pulse">_</div>
+              <div className="text-matrix-accent animate-pulse">_</div>
             </div>
           </div>
 
@@ -85,7 +85,7 @@ export default function ContactSection() {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
             }`}
           >
-            <h3 className="font-mono-matrix text-2xl text-matrix-primary-green mb-6 text-glow-green">
+            <h3 className="font-mono-matrix text-2xl text-matrix-accent mb-6 text-phosphor-glow">
               DIRECT_MESSAGE_SYSTEM
             </h3>
             <ContactForm variant="matrix" labels={getDictionary("en").contact.form} email={contact.email} />
@@ -93,8 +93,8 @@ export default function ContactSection() {
         </div>
 
         <div className="text-center mt-20">
-          <div className="bg-matrix-black/70 border border-matrix-primary-green/30 rounded-lg p-8 max-w-2xl mx-auto">
-            <h4 className="font-mono-matrix text-xl text-matrix-primary-green mb-4 text-glow-green">
+          <div className="bg-matrix-black/70 border border-matrix-accent/30 rounded-lg p-8 max-w-2xl mx-auto">
+            <h4 className="font-mono-matrix text-xl text-matrix-accent mb-4 text-phosphor-glow">
               END_OF_TRANSMISSION
             </h4>
             <p className="text-matrix-light-gray mb-6">
@@ -102,19 +102,19 @@ export default function ContactSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                className="px-6 py-3 bg-matrix-primary-green/20 border-2 border-matrix-primary-green rounded font-mono-matrix text-matrix-primary-green hover:bg-matrix-primary-green/30 hover:shadow-neon-green transition-all duration-300"
+                className="px-6 py-3 bg-matrix-accent/20 border-2 border-matrix-accent rounded font-mono-matrix text-matrix-accent hover:bg-matrix-accent/30 hover:shadow-phosphor transition-all duration-300"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
                 &gt; RESTART_SEQUENCE
               </button>
               <a
                 href={`mailto:${contact.email}`}
-                className="px-6 py-3 bg-matrix-electric-blue/20 border-2 border-matrix-electric-blue rounded font-mono-matrix text-matrix-electric-blue hover:bg-matrix-electric-blue/30 hover:shadow-neon-blue transition-all duration-300"
+                className="px-6 py-3 bg-matrix-highlight/20 border-2 border-matrix-highlight rounded font-mono-matrix text-matrix-highlight hover:bg-matrix-highlight/30 hover:shadow-phosphor transition-all duration-300"
               >
                 &gt; HIRE_DEVELOPER
               </a>
             </div>
-            <div className="mt-8 pt-6 border-t border-matrix-primary-green/20 font-mono-matrix text-sm text-matrix-primary-green/50">
+            <div className="mt-8 pt-6 border-t border-matrix-accent/20 font-mono-matrix text-sm text-matrix-accent/50">
               © {new Date().getFullYear()} {profile.name} · Built with Next.js, TypeScript and Tailwind CSS
             </div>
           </div>

@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-/** Extra scroll (in viewport heights) after the ride, while the last card fills the screen. */
+/** Scroll distance in viewport heights for reading the last card and then zooming out. */
+const HOLD_VH = 0.85;
 const EXIT_VH = 0.8;
 
 /**
@@ -14,6 +15,7 @@ const EXIT_VH = 0.8;
  *   track slides left as the runway is scrolled. [data-station] children get
  *   data-passed="true" once they reach the middle of the screen; the stage gets
  *   --p (0 → 1) for the rail line.
+ * - Arriving: the last card sits at the centre for a stretch of scroll.
  * - Leaving: the [data-exit-card] (the last card) rounds into a circle, which
  *   then grows from the card's centre until it fills the screen, covering the
  *   other cards. The card's text dives in (a strong zoom from its centre) and
@@ -37,6 +39,7 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let distance = 0;
+    let hold = 0;
     let exit = 0;
     let frame = 0;
     const stations = Array.from(track.querySelectorAll<HTMLElement>("[data-station]"));
@@ -51,6 +54,7 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
 
     const update = () => {
       frame = 0;
+      if (runway.dataset.hzStatic === "true") return;
       const vw = window.innerWidth;
       const vh = window.innerHeight;
       const top = runway.getBoundingClientRect().top;
@@ -84,7 +88,7 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
       }
 
       // Leave: the card rounds into a circle, then the circle floods the screen.
-      const q = exit > 0 ? clamp((-top - distance) / exit) : 0;
+      const q = exit > 0 ? clamp((-top - distance - hold) / exit) : 0;
       stage.style.setProperty("--exit", q.toFixed(4));
       if (lastCard && bloom) {
         bloom.style.setProperty("--p", q.toFixed(4));
@@ -140,23 +144,33 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
     };
 
     const measure = () => {
-      const vw = window.innerWidth;
-      // Where the ride stops comes from the last card's own layout box, not from the
-      // track's scrollWidth: during the exit the card's colour layer overflows the
-      // track, and counting it pushed the card further left (and off screen on phones).
-      // The card ends against the right margin on wide screens, centred on phones.
-      const end = track.lastElementChild as HTMLElement | null;
-      if (end) {
-        const stop =
-          vw < 640
-            ? end.offsetLeft + end.offsetWidth / 2 - vw / 2
-            : end.offsetLeft + end.offsetWidth - (vw - parseFloat(getComputedStyle(track).paddingRight));
-        distance = Math.max(stop, 0);
-      } else {
-        distance = Math.max(track.scrollWidth - vw, 0);
+      delete runway.dataset.hzStatic;
+      const stageStyle = getComputedStyle(stage);
+      const stageHeight = stage.clientHeight;
+      const stagePadding = parseFloat(stageStyle.paddingTop) + parseFloat(stageStyle.paddingBottom);
+
+      // Short viewports use the same readable stack as reduced motion.
+      if (track.offsetTop + track.offsetHeight > stageHeight - parseFloat(stageStyle.paddingBottom)
+        || track.offsetHeight > stageHeight - stagePadding) {
+        runway.dataset.hzStatic = "true";
+        runway.style.height = "";
+        track.style.transform = "";
+        title?.removeAttribute("style");
+        lastCard?.removeAttribute("style");
+        lastContent?.removeAttribute("style");
+        lastStation?.removeAttribute("style");
+        bloom?.removeAttribute("style");
+        return;
       }
-      exit = lastCard ? window.innerHeight * EXIT_VH : 0;
-      runway.style.height = `${distance + exit + window.innerHeight}px`;
+
+      // Use the card’s layout box so the exit bloom never counts toward travel.
+      const end = track.lastElementChild as HTMLElement | null;
+      distance = end
+        ? Math.max(end.offsetLeft + end.offsetWidth / 2 - stage.clientWidth / 2, 0)
+        : Math.max(track.scrollWidth - window.innerWidth, 0);
+      hold = lastCard ? stageHeight * HOLD_VH : 0;
+      exit = lastCard ? stageHeight * EXIT_VH : 0;
+      runway.style.height = `${distance + hold + exit + stageHeight}px`;
       update();
     };
     const schedule = () => {
@@ -178,9 +192,9 @@ export default function HorizontalTrack({ children, rail }: { children: React.Re
 
   return (
     <div ref={runwayRef} className="pin-runway relative">
-      <div ref={stageRef} className="pin-stage hz-stage sticky top-0 flex h-screen flex-col justify-center overflow-x-clip">
+      <div ref={stageRef} className="pin-stage hz-stage sticky top-0 flex h-dvh flex-col justify-center overflow-x-clip pb-6 pt-20">
         {rail}
-        <div ref={trackRef} className="hz-track relative flex w-max items-stretch gap-6 px-4 will-change-transform sm:gap-8 sm:px-[6vw]">
+        <div ref={trackRef} className="hz-track relative flex w-max shrink-0 items-stretch gap-6 px-4 will-change-transform sm:gap-8 sm:px-[6vw]">
           {children}
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function SiteFooter({ lang }: { lang: Locale }) {
         <p>
           © {new Date().getFullYear()} {profile.name}. {d.builtWith}
         </p>
-        <MatrixButton className="group inline-flex items-center gap-2 self-start rounded-full bg-[#0A0A0A] px-4 py-2 font-mono-matrix text-lg leading-none text-[#00FF00] ring-1 ring-[#00FF00]/30 transition-shadow hover:shadow-neon-green">
+        <MatrixButton className="group inline-flex items-center gap-2 self-start rounded-full bg-[#080E0B] px-4 py-2 font-mono-matrix text-lg leading-none text-[#69D993] ring-1 ring-[#69D993]/30 transition-shadow hover:ring-[#69D993]/70">
           <span aria-hidden>💊</span>
           {d.matrix}
         </MatrixButton>
