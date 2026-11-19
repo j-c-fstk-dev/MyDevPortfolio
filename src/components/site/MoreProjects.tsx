@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { Project, ProjectCategory, ProjectStatus } from "@/data/portfolio";
 
+import { projectScreenshot } from "@/lib/project-previews";
+
 type Filter = "all" | ProjectCategory;
 
 export default function MoreProjects({
@@ -70,6 +72,7 @@ export default function MoreProjects({
           return (
             <li
               key={project.slug}
+              data-project-preview={projectScreenshot(project.slug)}
               data-reveal="attract"
               className="flex flex-col rounded-[1.5rem] bg-surface p-6 ring-1 ring-line/70 transition-shadow hover:shadow-[0_18px_40px_-24px_rgb(0_0_0/0.5)] sm:p-7"
               style={{ "--from": i % 2 === 0 ? -1 : 1, transitionDelay: `${(i % 2) * 90}ms` } as React.CSSProperties}
@@ -93,16 +96,31 @@ export default function MoreProjects({
                 )}
               </h4>
               <p className="mt-2 flex-1 leading-relaxed text-lichen">{project.description}</p>
-              {project.live && project.repo && (
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 self-start text-sm font-medium text-pine underline decoration-pine/30 underline-offset-4 hover:decoration-signal"
-                >
-                  {labels.sourceCode}
-                </a>
-              )}
+              {(project.live && project.repo || project.links?.length) ? (
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+                  {project.live && project.repo && (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-pine underline decoration-pine/30 underline-offset-4 hover:decoration-signal"
+                    >
+                      {labels.sourceCode}
+                    </a>
+                  )}
+                  {project.links?.map(({ href, label }) => (
+                    <a
+                      key={href}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-pine underline decoration-pine/30 underline-offset-4 hover:decoration-signal"
+                    >
+                      {label}
+                    </a>
+                  ))}
+                </div>
+              ) : null}
             </li>
           );
         })}
