@@ -17,7 +17,8 @@ export default function About({ lang }: { lang: Locale }) {
             alt={d.photoAlt(profile.name)}
             width={480}
             height={480}
-            className="aspect-square w-full max-w-sm rounded-[1.75rem] bg-surface object-cover ring-1 ring-line lg:max-w-[15rem]"
+            sizes="(min-width: 1024px) 240px, (min-width: 416px) 384px, calc(100vw - 32px)"
+            className="aspect-square w-full max-w-sm rounded-full bg-surface object-cover object-[center_24%] ring-2 ring-line lg:max-w-[15rem]"
           />
           <div className="mt-8 max-w-prose space-y-4 text-lg leading-relaxed">
             <p data-reveal="lines">

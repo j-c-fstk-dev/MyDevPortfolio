@@ -65,7 +65,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     alternateName: profile.legalName,
     jobTitle: profile.role,
     url: SITE_URL,
-    image: profile.photo,
+    image: new URL(profile.photo, SITE_URL).href,
     email: `mailto:${contact.email}`,
     address: { "@type": "PostalAddress", addressCountry: "BR" },
     knowsLanguage: ["pt-BR", "en"],
