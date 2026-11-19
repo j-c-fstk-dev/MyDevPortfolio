@@ -26,7 +26,7 @@ const t = (en: string, pt: string): Text => ({ en, pt });
 const GITHUB_USER = "j-c-fstk-dev";
 const gh = (repo: string, owner = GITHUB_USER) => `https://github.com/${owner}/${repo}`;
 
-export type ProjectCategory = "web3" | "ai" | "web" | "desktop" | "automation";
+export type ProjectCategory = "web3" | "ai" | "web" | "mobile" | "desktop" | "automation";
 export type ProjectStatus = "live" | "released" | "beta" | "in-development" | "prototype";
 
 const contexts = {
@@ -220,6 +220,21 @@ const raw = {
       context: contexts.own,
       links: [{ label: t("Download for Linux", "Baixar para Linux"), href: gh("clipvault/releases/latest") }],
       repo: gh("clipvault"),
+      featured: true,
+    },
+    {
+      slug: "ritmo",
+      title: "Ritmo",
+      description: t(
+        "An Android task manager in Brazilian Portuguese. Organize tasks in nested lists or cards, with tags, attachments and reminders. Dictate tasks offline after downloading the voice model. Tasks are stored locally and can be exported as backups.",
+        "App Android de tarefas em português do Brasil. Organize tarefas em listas, sublistas ou cards, com etiquetas, anexos e lembretes. Use o ditado offline após baixar o modelo de voz. As tarefas ficam salvas no aparelho e podem ser exportadas em backups."
+      ),
+      tech: ["Kotlin", "Jetpack Compose", "Room", "Vosk"],
+      category: "mobile",
+      status: "beta",
+      context: contexts.own,
+      repo: gh("ritmo"),
+      links: [{ label: t("Download test APK", "Baixar APK de teste"), href: gh("ritmo/releases/tag/v1.7") }],
       featured: true,
     },
     {
@@ -524,6 +539,7 @@ const raw = {
     web3: t("Web3", "Web3"),
     ai: t("AI", "IA"),
     web: t("Web apps", "Apps web"),
+    mobile: t("Mobile apps", "Apps para celular"),
     desktop: t("Desktop & Linux", "Desktop e Linux"),
     automation: t("Automation", "Automação"),
   },
