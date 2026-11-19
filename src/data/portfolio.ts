@@ -248,6 +248,10 @@ const raw = {
         "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
         "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
       ),
+      previewAlt: t(
+        "Diagram of the live link redirect on Cloudflare Workers and the Nuvemshop sales workflow through n8n to Google Sheets.",
+        "Diagrama do redirecionador de links no Cloudflare Workers e do fluxo de vendas da Nuvemshop via n8n para o Google Sheets."
+      ),
       tech: ["Python", "n8n", "Cloudflare Workers", "Meta Graph API"],
       category: "automation",
       status: "prototype",
@@ -336,6 +340,10 @@ const raw = {
       description: t(
         "Turns Linux into a Matrix-style hacker workstation: an ultra-light i3wm setup for old hardware (Core 2 Duo and up) with Matrix rain, a system dashboard, multi-panel terminals and a green neon theme. Works on Kali, Debian, Ubuntu, Arch and Fedora.",
         "Transforma o Linux numa estação de trabalho hacker no estilo Matrix: um setup ultraleve de i3wm para hardware antigo (Core 2 Duo em diante), com chuva Matrix, painel do sistema, terminais em vários painéis e tema verde neon. Funciona no Kali, Debian, Ubuntu, Arch e Fedora."
+      ),
+      previewAlt: t(
+        "Illustration of the Matrix Hacker Desktop tiling layout with a status bar and three terminal panels.",
+        "Ilustração do layout do Matrix Hacker Desktop com barra de status e três painéis de terminal."
       ),
       tech: ["Shell", "i3wm", "Linux"],
       category: "desktop",
