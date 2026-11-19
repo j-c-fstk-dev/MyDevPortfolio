@@ -17,6 +17,7 @@ import { Section, TextLink } from "./ui";
 function FlyCard({ project, index, lang, d }: { project: Project; index: number; lang: Locale; d: Dictionary["work"] }) {
   const { statusLabels } = getContent(lang);
   const shot = projectScreenshot(project.slug);
+  const showInlineOnDesktop = index === 0;
   const from = index % 2 === 0 ? -1 : 1;
   // 0 → 1 as the card travels in during the first third of its pass through the screen.
   const k = "clamp(0, var(--p, 1) * 3.2, 1)";
@@ -28,7 +29,7 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
       className={`flex ${from < 0 ? "justify-start" : "justify-end"}`}
     >
       <article
-        data-project-preview={shot}
+        data-project-preview={showInlineOnDesktop ? undefined : shot}
         data-panel={PANEL_COLOURS[(index + DECK_SIZE) % PANEL_COLOURS.length]}
         className="w-full rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_18px_40px_-24px_rgb(0_0_0/0.5)] will-change-transform sm:w-[78%] sm:p-9"
         style={{
@@ -51,11 +52,11 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
         {shot && (
           <Image
             src={shot}
-            alt={d.screenshotAlt(project.title)}
+            alt={project.previewAlt ?? d.screenshotAlt(project.title)}
             width={1280}
             height={800}
             sizes="(min-width: 640px) 60vw, 100vw"
-            className="project-inline-preview mt-5 aspect-[16/10] w-full rounded-xl object-cover object-top"
+            className={`mt-5 aspect-[16/10] w-full rounded-xl object-cover object-top ${showInlineOnDesktop ? "" : "project-inline-preview"}`}
           />
         )}
         <p className="mt-4 max-w-prose text-lg leading-relaxed text-mist/90">{project.description}</p>
@@ -111,17 +112,15 @@ function DeckPanel({
 }) {
   const { statusLabels } = getContent(lang);
   const shot = projectScreenshot(project.slug);
-  const showInlineOnDesktop = index === 0;
 
   return (
     <li
-      className="sticky mb-[10vh] last:mb-0"
+      className="mb-[10vh] last:mb-0 lg:mb-0 lg:[@media(min-height:720px)]:sticky"
       style={{ top: `calc(5rem + ${index * 14}px)` }}
     >
       <article
-        data-project-preview={showInlineOnDesktop ? undefined : shot}
         data-panel={PANEL_COLOURS[index % PANEL_COLOURS.length]}
-        className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_-18px_40px_-20px_rgb(0_0_0/0.45)] sm:p-10"
+        className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_-18px_40px_-20px_rgb(0_0_0/0.45)] sm:p-10 lg:h-full"
       >
         <div className="flex items-start justify-between gap-6">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
@@ -136,24 +135,22 @@ function DeckPanel({
           </div>
         </div>
 
-        <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] md:gap-12">
-          <div>
-            <h3 className="text-[clamp(2.4rem,6vw,4.75rem)] font-extrabold leading-[0.95] tracking-[-0.02em] [font-stretch:76%]">
-              {project.title}
-            </h3>
-            {shot && (
-              <Image
-                src={shot}
-                alt={d.screenshotAlt(project.title)}
-                width={1280}
-                height={800}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                data-project-preview={showInlineOnDesktop ? shot : undefined}
-                data-project-preview-large={showInlineOnDesktop || undefined}
-                className={`mt-6 aspect-[16/10] w-full rounded-xl object-cover object-top ${showInlineOnDesktop ? "" : "project-inline-preview"}`}
-              />
-            )}
-          </div>
+        <h3 className="mt-6 text-[clamp(2.4rem,5vw,4.75rem)] font-extrabold leading-[0.95] tracking-[-0.02em] [font-stretch:76%]">
+          {project.title}
+        </h3>
+        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-12">
+          {shot && (
+            <Image
+              src={shot}
+              alt={project.previewAlt ?? d.screenshotAlt(project.title)}
+              width={1280}
+              height={800}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              data-project-preview={shot}
+              data-project-preview-large
+              className="aspect-[16/10] w-full rounded-xl object-cover object-top"
+            />
+          )}
           <div className="self-end">
             <p className="text-lg leading-relaxed text-mist/90">{project.description}</p>
             {project.chains && (
@@ -184,7 +181,7 @@ export default async function Work({ lang }: { lang: Locale }) {
 
   return (
     <Section id="work" title={d.title} intro={d.intro} tone="dark">
-      <ol>
+      <ol className="lg:grid lg:auto-rows-fr lg:gap-[10vh]">
         {featured.slice(0, DECK_SIZE).map((project, i) => (
           <DeckPanel key={project.slug} project={project} index={i} lang={lang} d={d} />
         ))}
