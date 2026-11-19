@@ -92,7 +92,7 @@ export default function ModeSwitcher({ children }: { children: React.ReactNode }
     <MatrixContext.Provider value={enter}>
       {showSite && children}
       {matrix && <MatrixExperience origin={origin} onCovered={handleCovered} onExit={exit} />}
-      {!matrix && <ProjectHoverPreview mode="site" />}
+      {!matrix && <ProjectHoverPreview />}
     </MatrixContext.Provider>
   );
 }
