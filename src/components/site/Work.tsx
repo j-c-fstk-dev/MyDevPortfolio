@@ -125,8 +125,9 @@ function DeckPanel({
 
   return (
     <li
-      className="mb-[10vh] last:mb-0 lg:mb-0 lg:[@media(min-height:720px)]:sticky"
-      style={{ top: `calc(5rem + ${index * 14}px)` }}
+      data-deck-panel
+      className="sticky mb-[10vh] last:mb-0 lg:mb-0"
+      style={{ top: `min(calc(5rem + ${index * 14}px), calc(100dvh - var(--deck-panel-height, 0px) - 1rem))` }}
     >
       <article
         data-panel={PANEL_COLOURS[index % PANEL_COLOURS.length]}
