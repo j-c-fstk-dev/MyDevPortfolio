@@ -25,40 +25,27 @@ const statusStyle: Record<ProjectStatus, { color: string; icon: string }> = {
 
 const filters: ("ALL" | ProjectCategory)[] = ["ALL", ...(Object.keys(categoryLabels) as ProjectCategory[])];
 
-function ProjectLinks({ project }: { project: Project }) {
+function ProjectLinks({ project, onPreview }: { project: Project; onPreview?: () => void }) {
+  const links = [
+    ...(project.repo ? [{ href: project.repo, label: "VIEW_CODE" }] : []),
+    ...(project.live ? [{ href: project.live, label: project.liveLabel ? toCommand(project.liveLabel) : "LIVE_SITE" }] : []),
+    ...(project.links ?? []).map(({ href, label }) => ({ href, label: toCommand(label) })),
+  ];
+  const actionClass = "rounded border border-matrix-highlight/50 px-2.5 py-1.5 font-mono-matrix text-sm text-matrix-highlight transition-colors hover:border-matrix-highlight hover:bg-matrix-highlight/15";
+
+  if (!links.length && !onPreview) return null;
   return (
-    <div className="flex flex-wrap gap-3">
-      {project.repo && (
-        <a
-          href={project.repo}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-4 py-2 bg-matrix-accent/20 border border-matrix-accent rounded font-mono-matrix text-matrix-accent hover:bg-matrix-accent/30 transition-all"
-        >
-          VIEW_CODE ↗
-        </a>
-      )}
-      {project.live && (
-        <a
-          href={project.live}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-4 py-2 bg-matrix-highlight/20 border border-matrix-highlight rounded font-mono-matrix text-matrix-highlight hover:bg-matrix-highlight/30 transition-all"
-        >
-          {project.liveLabel ? toCommand(project.liveLabel) : "LIVE_SITE"} ↗
-        </a>
-      )}
-      {project.links?.map(({ href, label }) => (
-        <a
-          key={href}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-4 py-2 bg-matrix-highlight/20 border border-matrix-highlight rounded font-mono-matrix text-matrix-highlight hover:bg-matrix-highlight/30 transition-all"
-        >
-          {toCommand(label)} ↗
+    <div className="mt-auto flex flex-wrap gap-2 pt-4">
+      {links.map(({ href, label }) => (
+        <a key={href} href={href} target="_blank" rel="noopener noreferrer" className={actionClass}>
+          {label} ↗
         </a>
       ))}
+      {onPreview && (
+        <button type="button" aria-haspopup="dialog" onClick={onPreview} className={actionClass}>
+          PREVIEW
+        </button>
+      )}
     </div>
   );
 }
@@ -68,6 +55,7 @@ export default function ProjectsSection() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [filter, setFilter] = useState<(typeof filters)[number]>("ALL");
   const sectionRef = useRef<HTMLElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const screenshot = selected && projectScreenshot(selected.slug);
 
   const visible = filter === "ALL" ? projects : projects.filter((p) => p.category === filter);
@@ -84,16 +72,16 @@ export default function ProjectsSection() {
   }, []);
 
   useEffect(() => {
-    if (!selected) return;
-    // preventDefault tells the Matrix page this Escape was used to close the dialog.
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      e.preventDefault();
-      setSelected(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const dialog = dialogRef.current;
+    if (!dialog || !selected) return;
+    dialog.showModal();
+    return () => dialog.close();
   }, [selected]);
+
+  const closeProject = () => {
+    dialogRef.current?.close();
+    setSelected(null);
+  };
 
   return (
     <section
@@ -129,11 +117,8 @@ export default function ProjectsSection() {
           {visible.map((project, index) => {
             const status = statusStyle[project.status];
             return (
-              <button
+              <article
                 key={project.slug}
-                data-project-preview={projectScreenshot(project.slug)}
-                type="button"
-                onClick={() => setSelected(project)}
                 className={`flex flex-col text-left bg-matrix-black/50 border border-matrix-accent/30 rounded-lg p-6 hover:border-matrix-accent hover:bg-matrix-dark-gray transition-all duration-500 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
@@ -146,7 +131,14 @@ export default function ProjectsSection() {
                   <span className="text-matrix-light-gray">{toCommand(project.context)}</span>
                 </div>
                 <h3 className="font-mono-matrix text-xl text-matrix-accent mb-3">
-                  {toCommand(project.title)}
+                  <button
+                    type="button"
+                    aria-haspopup="dialog"
+                    onClick={() => setSelected(project)}
+                    className="break-all text-left underline-offset-4 hover:underline"
+                  >
+                    {toCommand(project.title)}
+                  </button>
                 </h3>
                 <p className="text-matrix-light-gray text-sm mb-4 line-clamp-3">{project.description}</p>
                 {project.chains && (
@@ -169,29 +161,36 @@ export default function ProjectsSection() {
                     </span>
                   )}
                 </div>
-              </button>
+                <ProjectLinks
+                  project={project}
+                  onPreview={projectScreenshot(project.slug) ? () => setSelected(project) : undefined}
+                />
+              </article>
             );
           })}
         </div>
 
         {selected && (
-          <div
-            className="fixed inset-0 bg-matrix-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6"
-            onClick={() => setSelected(null)}
+          <dialog
+            ref={dialogRef}
+            role="dialog"
+            aria-labelledby="project-dialog-title"
+            className="m-auto max-h-[85dvh] w-[calc(100%_-_2rem)] max-w-2xl overflow-y-auto rounded-lg border-2 border-matrix-accent bg-matrix-black p-0 backdrop:bg-matrix-black/80 backdrop:backdrop-blur-sm"
+            onClick={(event) => {
+              if (event.target === event.currentTarget) closeProject();
+            }}
+            onCancel={(event) => {
+              event.preventDefault();
+              closeProject();
+            }}
           >
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="project-dialog-title"
-              className="bg-matrix-black border-2 border-matrix-accent rounded-lg p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="p-4 sm:p-8">
               <div className="flex items-start justify-between gap-4 mb-6">
                 <h3 id="project-dialog-title" className="font-mono-matrix text-2xl text-matrix-accent">
                   {toCommand(selected.title)}
                 </h3>
                 <button
-                  onClick={() => setSelected(null)}
+                  onClick={closeProject}
                   className="text-matrix-light-gray hover:text-matrix-accent transition-colors"
                   aria-label="Close"
                 >
@@ -250,7 +249,7 @@ export default function ProjectsSection() {
                 <ProjectLinks project={selected} />
               </div>
             </div>
-          </div>
+          </dialog>
         )}
 
         <div className="bg-matrix-black/70 border-2 border-matrix-accent rounded-lg p-6 max-w-4xl mx-auto font-mono-matrix text-sm space-y-2">

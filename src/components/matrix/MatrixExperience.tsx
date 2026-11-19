@@ -1,6 +1,5 @@
 "use client";
 
-import ProjectHoverPreview from "@/components/site/ProjectHoverPreview";
 import { useEffect, useRef, useState } from "react";
 import ContactSection from "./ContactSection";
 import ExperienceSection from "./ExperienceSection";
@@ -162,7 +161,6 @@ export default function MatrixExperience({
             <ExperienceSection />
             <ContactSection />
           </main>
-          <ProjectHoverPreview mode="matrix" />
         </>
       )}
     </div>

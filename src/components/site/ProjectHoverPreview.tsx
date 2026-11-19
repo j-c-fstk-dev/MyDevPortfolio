@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" }) {
+export default function ProjectHoverPreview() {
   const frameRef = useRef<HTMLDivElement>(null);
   const [screenshot, setScreenshot] = useState<string>();
   const [loadedScreenshot, setLoadedScreenshot] = useState<string>();
@@ -99,7 +99,7 @@ export default function ProjectHoverPreview({ mode }: { mode: "site" | "matrix" 
       ref={frameRef}
       aria-hidden="true"
       data-hover-preview
-      className={`pointer-events-none fixed left-0 top-0 z-[70] aspect-[16/10] w-[clamp(288px,28vw,420px)] data-[large=true]:w-[min(52vw,740px)] overflow-hidden rounded-xl shadow-2xl motion-safe:transition-opacity ${mode === "matrix" ? "border-2 border-matrix-accent bg-matrix-black" : "border border-white/20 bg-ink"} ${screenshot && loadedScreenshot === screenshot ? "opacity-100" : "opacity-0"}`}
+      className={`pointer-events-none fixed left-0 top-0 z-[70] aspect-[16/10] w-[clamp(288px,28vw,420px)] data-[large=true]:w-[min(52vw,740px)] overflow-hidden rounded-xl shadow-2xl motion-safe:transition-opacity border border-white/20 bg-ink ${screenshot && loadedScreenshot === screenshot ? "opacity-100" : "opacity-0"}`}
     >
       {screenshot && (
         <Image
