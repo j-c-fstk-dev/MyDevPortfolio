@@ -203,7 +203,7 @@ export default function ProjectsSection() {
                 {screenshot && (
                   <Image
                     src={screenshot}
-                    alt={`Screenshot of ${selected.title}`}
+                    alt={selected.previewAlt ?? `Screenshot of ${selected.title}`}
                     width={1280}
                     height={800}
                     sizes="(min-width: 640px) 576px, 100vw"

@@ -178,18 +178,18 @@ const raw = {
       featured: true,
     },
     {
-      slug: "textbook-upgrade-skill",
-      title: "TextbookUpgradeSkill",
+      slug: "ritmo",
+      title: "Ritmo",
       description: t(
-        "An open-source AI skill for turning existing teaching materials into workbooks, hands-on activities and recording scripts for video lessons.",
-        "Skill de IA de código aberto para transformar material didático existente em apostilas, atividades práticas e roteiros para gravar videoaulas."
+        "An Android task manager in Brazilian Portuguese. Organize tasks in nested lists or cards, with tags, attachments and reminders. Dictate tasks offline after downloading the voice model. Tasks are stored locally and can be exported as backups.",
+        "App Android de tarefas em português do Brasil. Organize tarefas em listas, sublistas ou cards, com etiquetas, anexos e lembretes. Use o ditado offline após baixar o modelo de voz. As tarefas ficam salvas no aparelho e podem ser exportadas em backups."
       ),
-      tech: ["Agent Skills", "Markdown", "AGPL-3.0"],
-      category: "ai",
-      status: "released",
-      context: contexts.openSource,
-      repo: gh("TextbookUpgradeSkill"),
-      links: [{ label: t("Installation guide", "Guia de instalação"), href: gh("TextbookUpgradeSkill#instalar-no-codex-cli-linux-ou-macos") }],
+      tech: ["Kotlin", "Jetpack Compose", "Room", "Vosk"],
+      category: "mobile",
+      status: "beta",
+      context: contexts.own,
+      repo: gh("ritmo"),
+      links: [{ label: t("Download test APK", "Baixar APK de teste"), href: gh("ritmo/releases/tag/v1.7") }],
       featured: true,
     },
     {
@@ -223,18 +223,22 @@ const raw = {
       featured: true,
     },
     {
-      slug: "ritmo",
-      title: "Ritmo",
+      slug: "textbook-upgrade-skill",
+      title: "TextbookUpgradeSkill",
       description: t(
-        "An Android task manager in Brazilian Portuguese. Organize tasks in nested lists or cards, with tags, attachments and reminders. Dictate tasks offline after downloading the voice model. Tasks are stored locally and can be exported as backups.",
-        "App Android de tarefas em português do Brasil. Organize tarefas em listas, sublistas ou cards, com etiquetas, anexos e lembretes. Use o ditado offline após baixar o modelo de voz. As tarefas ficam salvas no aparelho e podem ser exportadas em backups."
+        "An open-source AI skill for turning existing teaching materials into workbooks, hands-on activities and recording scripts for video lessons.",
+        "Skill de IA de código aberto para transformar material didático existente em apostilas, atividades práticas e roteiros para gravar videoaulas."
       ),
-      tech: ["Kotlin", "Jetpack Compose", "Room", "Vosk"],
-      category: "mobile",
-      status: "beta",
-      context: contexts.own,
-      repo: gh("ritmo"),
-      links: [{ label: t("Download test APK", "Baixar APK de teste"), href: gh("ritmo/releases/tag/v1.7") }],
+      previewAlt: t(
+        "Before-and-after example of a Portuguese workbook page on map scales, with a worked example and a practice question.",
+        "Antes e depois de uma página didática sobre escala de mapas, com exemplo resolvido e atividade."
+      ),
+      tech: ["Agent Skills", "Markdown", "AGPL-3.0"],
+      category: "ai",
+      status: "released",
+      context: contexts.openSource,
+      repo: gh("TextbookUpgradeSkill"),
+      links: [{ label: t("Installation guide", "Guia de instalação"), href: gh("TextbookUpgradeSkill#instalar-no-codex-cli-linux-ou-macos") }],
       featured: true,
     },
     {
@@ -731,6 +735,7 @@ const raw = {
 };
 
 interface RawProject {
+  previewAlt?: Text;
   /** Used for the screenshot file name in public/projects/. */
   slug: string;
   title: string;
