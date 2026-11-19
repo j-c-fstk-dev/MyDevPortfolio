@@ -48,7 +48,7 @@ const raw = {
       "Correção de bugs e resgate de apps · Web3 / Solidity · integrações de IA"
     ),
     location: t("Brazil, remote, UTC-3", "Brasil, remoto, UTC-3"),
-    photo: "https://res.cloudinary.com/dr0weongo/image/upload/v1754567145/1kjsy9_mqwlus.jpg",
+    photo: "/jorge-cristo.jpg",
     summary: t(
       "Freelance full-stack developer with 3 years of client work and around 20 projects delivered, many of them production apps for Web3, climate and community projects. I take existing codebases and make them work: debugging, broken builds and deploys, database and auth issues, and new features on top. In Web3 I build dApps and Farcaster mini apps and review Solidity contracts.",
       "Desenvolvedor full-stack freelancer com 3 anos de trabalho com clientes e cerca de 20 projetos entregues, muitos deles apps em produção para projetos de Web3, meio ambiente e comunidades. Assumo bases de código existentes e faço funcionar: depuração, build e deploy quebrados, problemas de banco de dados e autenticação, e novas funcionalidades em cima disso. Em Web3, desenvolvo dApps e mini apps para Farcaster e reviso contratos em Solidity."
