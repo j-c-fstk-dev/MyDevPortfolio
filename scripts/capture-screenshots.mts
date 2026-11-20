@@ -4,7 +4,7 @@
  * src/data/screenshots.json so the site shows them.
  *
  *   npm run screenshots              # all projects with a live URL
- *   npm run screenshots -- bass-forest beregen   # only these slugs
+ *   npm run screenshots -- chronoflare beregen   # only these slugs
  *
  * Needs Playwright's Chromium once: npx playwright install chromium
  */
