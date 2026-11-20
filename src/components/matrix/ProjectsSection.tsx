@@ -58,7 +58,9 @@ export default function ProjectsSection() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const screenshot = selected && projectScreenshot(selected.slug);
 
-  const visible = filter === "ALL" ? projects : projects.filter((p) => p.category === filter);
+  const featured = projects.filter((project) => project.placement === "featured");
+  const secondary = projects.filter((project) => project.placement === "secondary");
+  const archive = projects.filter((project) => !project.placement);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -82,6 +84,70 @@ export default function ProjectsSection() {
     dialogRef.current?.close();
     setSelected(null);
   };
+
+  const renderGrid = (items: Project[]) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {items.map((project, index) => {
+        const status = statusStyle[project.status];
+        return (
+          <article
+            key={project.slug}
+            className={`flex flex-col text-left bg-matrix-black/50 border ${project.placement === "featured" ? "border-matrix-accent/60" : "border-matrix-accent/30"} rounded-lg p-6 hover:border-matrix-accent hover:bg-matrix-dark-gray transition-all duration-500 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
+            style={{ transitionDelay: `${Math.min(index, 8) * 0.05}s` }}
+          >
+            <div className="w-full flex flex-wrap items-center justify-between gap-2 mb-4 font-mono-matrix text-xs">
+              <span className={status.color}>
+                {status.icon} {toCommand(statusLabels[project.status])}
+              </span>
+              <span className="rounded border border-matrix-highlight/50 bg-matrix-highlight/10 px-2 py-1 text-matrix-highlight">
+                {toCommand(project.context)}
+              </span>
+            </div>
+            <h4 className="font-mono-matrix text-xl text-matrix-accent mb-3">
+              <button
+                type="button"
+                aria-haspopup="dialog"
+                onClick={() => setSelected(project)}
+                className="break-all text-left underline-offset-4 hover:underline"
+              >
+                {toCommand(project.title)}
+              </button>
+            </h4>
+            <p className="text-matrix-light-gray text-sm mb-4">{project.description}</p>
+            {project.chains && (
+              <p className="mb-4 font-mono-matrix text-matrix-light-gray text-sm">
+                {project.chains.join(" · ")}
+              </p>
+            )}
+            {project.openSource && (
+              <p className="mb-3 font-mono-matrix text-xs text-matrix-light-gray">OPEN_SOURCE</p>
+            )}
+            <div className="flex flex-wrap gap-1">
+              {project.tech.slice(0, 3).map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2 py-1 bg-matrix-accent/20 border border-matrix-accent/50 rounded text-xs font-mono-matrix text-matrix-accent"
+                >
+                  {tech}
+                </span>
+              ))}
+              {project.tech.length > 3 && (
+                <span className="px-2 py-1 text-xs font-mono-matrix text-matrix-light-gray">
+                  +{project.tech.length - 3}
+                </span>
+              )}
+            </div>
+            <ProjectLinks
+              project={project}
+              onPreview={projectScreenshot(project.slug) ? () => setSelected(project) : undefined}
+            />
+          </article>
+        );
+      })}
+    </div>
+  );
 
   return (
     <section
@@ -113,62 +179,29 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {visible.map((project, index) => {
-            const status = statusStyle[project.status];
-            return (
-              <article
-                key={project.slug}
-                className={`flex flex-col text-left bg-matrix-black/50 border border-matrix-accent/30 rounded-lg p-6 hover:border-matrix-accent hover:bg-matrix-dark-gray transition-all duration-500 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-                }`}
-                style={{ transitionDelay: `${Math.min(index, 8) * 0.05}s` }}
-              >
-                <div className="w-full flex items-center justify-between mb-4 font-mono-matrix text-xs">
-                  <span className={status.color}>
-                    {status.icon} {toCommand(statusLabels[project.status])}
-                  </span>
-                  <span className="text-matrix-light-gray">{toCommand(project.context)}</span>
-                </div>
-                <h3 className="font-mono-matrix text-xl text-matrix-accent mb-3">
-                  <button
-                    type="button"
-                    aria-haspopup="dialog"
-                    onClick={() => setSelected(project)}
-                    className="break-all text-left underline-offset-4 hover:underline"
-                  >
-                    {toCommand(project.title)}
-                  </button>
-                </h3>
-                <p className="text-matrix-light-gray text-sm mb-4 line-clamp-3">{project.description}</p>
-                {project.chains && (
-                  <p className="mb-4 font-mono-matrix text-matrix-light-gray text-sm">
-                    {project.chains.join(" · ")}
-                  </p>
-                )}
-                <div className="flex flex-wrap gap-1">
-                  {project.tech.slice(0, 3).map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 bg-matrix-accent/20 border border-matrix-accent/50 rounded text-xs font-mono-matrix text-matrix-accent"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.tech.length > 3 && (
-                    <span className="px-2 py-1 text-xs font-mono-matrix text-matrix-light-gray">
-                      +{project.tech.length - 3}
-                    </span>
-                  )}
-                </div>
-                <ProjectLinks
-                  project={project}
-                  onPreview={projectScreenshot(project.slug) ? () => setSelected(project) : undefined}
-                />
-              </article>
-            );
-          })}
-        </div>
+        {filter === "ALL" ? (
+          <div className="mb-12 space-y-10">
+            <div>
+              <h3 className="mb-4 font-mono-matrix text-xl text-matrix-accent">FEATURED_PROJECTS</h3>
+              {renderGrid(featured)}
+            </div>
+            <div>
+              <h3 className="mb-4 font-mono-matrix text-xl text-matrix-accent">MORE_SELECTED_WORK</h3>
+              {renderGrid(secondary)}
+            </div>
+            <details className="rounded-lg border border-matrix-accent/30 bg-matrix-black/50 p-4 sm:p-6">
+              <summary className="cursor-pointer font-mono-matrix text-matrix-highlight">
+                <h3 className="inline">MORE_PROJECTS ({archive.length})</h3>
+              </summary>
+              <div className="mt-6">{renderGrid(archive)}</div>
+            </details>
+          </div>
+        ) : (
+          <div className="mb-12">
+            <h3 className="sr-only">{categoryLabels[filter]}</h3>
+            {renderGrid(projects.filter((project) => project.category === filter))}
+          </div>
+        )}
 
         {selected && (
           <dialog
