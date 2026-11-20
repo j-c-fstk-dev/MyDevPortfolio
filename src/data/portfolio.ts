@@ -135,8 +135,8 @@ const raw = {
       slug: "chronoflare",
       title: "ChronoFlare",
       description: t(
-        "Explore satellite-detected fire activity in the Pantanal. Compare years of MODIS and VIIRS observations in an interactive calendar that shows sensor sources, gaps and uncertainty. An independent NASA Space Apps project.",
-        "Explore focos de calor detectados por satélite no Pantanal. Compare anos de observações MODIS e VIIRS em um calendário interativo que mostra as fontes, as lacunas e a incerteza dos dados. Projeto independente do NASA Space Apps."
+        "I built an interactive calendar for NASA Space Apps to compare satellite-detected fire activity in the Pantanal. It shows the sources, gaps and uncertainty in MODIS and VIIRS observations.",
+        "Criei um calendário interativo para o NASA Space Apps que permite comparar focos de calor detectados por satélite no Pantanal. Ele mostra a origem das observações MODIS e VIIRS, além de lacunas e incertezas nos dados."
       ),
       tech: ["TypeScript", "Vite", "Python", "NASA FIRMS"],
       category: "web",
@@ -144,7 +144,7 @@ const raw = {
       context: contexts.hackathon,
       live: "https://chronoflare.vercel.app/",
       repo: gh("chronoflare"),
-      featured: true,
+      placement: "featured",
     },
     {
       slug: "decleanup-dapp",
@@ -158,16 +158,21 @@ const raw = {
       category: "web3",
       status: "live",
       context: contexts.client,
+      openSource: true,
       live: "https://dapp.decleanup.net",
       repo: gh("decleanup-main-celo"),
-      featured: true,
+      links: [{
+        label: t("Merged PR · Hypercerts build fix", "PR integrado · Correção de build do Hypercerts"),
+        href: "https://github.com/DeCleanup-Network/decleanup-main-celo/pull/38",
+      }],
+      placement: "featured",
     },
     {
       slug: "operator",
       title: "Operator",
       description: t(
-        "Keyboard-first project workspace with a retro terminal look. Local-first, with optional cloud sync and file storage.",
-        "Espaço de trabalho para projetos, guiado pelo teclado, com visual de terminal retrô. Local-first, com sincronização e armazenamento de arquivos opcionais na nuvem."
+        "I built a project workspace you can navigate by keyboard, with a retro terminal interface. It stores your work locally and offers optional cloud sync and file storage.",
+        "Criei um ambiente de trabalho para projetos, com visual de terminal retrô e navegação pelo teclado. Os dados ficam no dispositivo, com opção de sincronizar e guardar arquivos na nuvem."
       ),
       tech: ["React", "TypeScript", "Supabase", "Web Audio"],
       category: "web",
@@ -175,44 +180,29 @@ const raw = {
       context: contexts.own,
       live: "https://matrix-operator.netlify.app/",
       repo: gh("Operator-Matrix-Retro-Terminal-Workspace"),
-      featured: true,
+      placement: "featured",
     },
     {
-      slug: "ritmo",
-      title: "Ritmo",
+      slug: "beregen",
+      title: "BeRegen Ecosystem",
       description: t(
-        "An Android task manager in Brazilian Portuguese. Organize tasks in nested lists or cards, with tags, attachments and reminders. Dictate tasks offline after downloading the voice model. Tasks are stored locally and can be exported as backups.",
-        "App Android de tarefas em português do Brasil. Organize tarefas em listas, sublistas ou cards, com etiquetas, anexos e lembretes. Use o ditado offline após baixar o modelo de voz. As tarefas ficam salvas no aparelho e podem ser exportadas em backups."
+        "I founded BeRegen and built the ecosystem site and products, including RegenFlix, a learning platform with Stripe payments, and RegenImpactHub, a beta for verifying identity and impact.",
+        "Fundei o BeRegen e desenvolvi o site e os produtos do ecossistema, incluindo a RegenFlix, uma plataforma de ensino com pagamentos via Stripe, e o RegenImpactHub, em beta para verificação de identidade e impacto."
       ),
-      tech: ["Kotlin", "Jetpack Compose", "Room", "Vosk"],
-      category: "mobile",
-      status: "beta",
+      tech: ["TypeScript", "React", "Node.js", "Stripe", "Web3"],
+      category: "web3",
+      status: "live",
       context: contexts.own,
-      repo: gh("ritmo"),
-      links: [{ label: t("Download test APK", "Baixar APK de teste"), href: gh("ritmo/releases/tag/v1.7") }],
-      featured: true,
-    },
-    {
-      slug: "mural-dos-sonhos",
-      title: "Mural dos Sonhos",
-      description: t(
-        "An offline vision board with photo layouts, guided prompts and optional goal tracking. Install it as a PWA and export the finished board as a PNG.",
-        "Mural visual offline com layouts para fotos, perguntas guiadas e acompanhamento opcional de metas. Dá para instalar como PWA e exportar o mural pronto em PNG."
-      ),
-      tech: ["PWA", "TypeScript", "IndexedDB"],
-      category: "web",
-      status: "beta",
-      context: contexts.own,
-      live: "https://muraldossonhos.netlify.app/",
-      repo: gh("Mural-do-Sonhos"),
-      featured: true,
+      live: "https://beregen.xyz",
+      repo: gh("beregen_site"),
+      placement: "featured",
     },
     {
       slug: "clipvault",
       title: "ClipVault",
       description: t(
-        "Desktop clipboard manager that sorts everything you copy into categories automatically.",
-        "Gerenciador de área de transferência para desktop que organiza automaticamente em categorias tudo o que você copia."
+        "I built a Rust clipboard manager that automatically sorts what you copy into categories so you can find it again. The Linux release is available on GitHub.",
+        "Desenvolvi em Rust um gerenciador de área de transferência que organiza automaticamente o que você copia em categorias para facilitar a busca. A versão para Linux está disponível no GitHub."
       ),
       tech: ["Rust"],
       category: "desktop",
@@ -220,7 +210,40 @@ const raw = {
       context: contexts.own,
       links: [{ label: t("Download for Linux", "Baixar para Linux"), href: gh("clipvault/releases/latest") }],
       repo: gh("clipvault"),
-      featured: true,
+      placement: "featured",
+    },
+    {
+      slug: "bass-forest",
+      title: "Bass Forest",
+      description: t(
+        "Site for an annual global electronic music festival tied to World Environment Day and tree planting. Designed and built solo from scratch.",
+        "Site de um festival global anual de música eletrônica ligado ao Dia Mundial do Meio Ambiente e ao plantio de árvores. Projetado e desenvolvido do zero, sozinho."
+      ),
+      tech: ["TypeScript", "React"],
+      category: "web",
+      status: "live",
+      context: contexts.client,
+      live: "https://bassforest.earth",
+      repo: gh("bassforest", "BeRegen"),
+      placement: "secondary",
+    },
+    {
+      slug: "megazord",
+      title: "Megazord MVP",
+      description: t(
+        "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
+        "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
+      ),
+      previewAlt: t(
+        "Diagram of the live link redirect on Cloudflare Workers and the Nuvemshop sales workflow through n8n to Google Sheets.",
+        "Diagrama do redirecionador de links no Cloudflare Workers e do fluxo de vendas da Nuvemshop via n8n para o Google Sheets."
+      ),
+      tech: ["Python", "n8n", "Cloudflare Workers", "Meta Graph API"],
+      category: "automation",
+      status: "prototype",
+      context: contexts.own,
+      repo: gh("megazord-mvp"),
+      placement: "secondary",
     },
     {
       slug: "textbook-upgrade-skill",
@@ -239,25 +262,36 @@ const raw = {
       context: contexts.openSource,
       repo: gh("TextbookUpgradeSkill"),
       links: [{ label: t("Installation guide", "Guia de instalação"), href: gh("TextbookUpgradeSkill#instalar-no-codex-cli-linux-ou-macos") }],
-      featured: true,
+      placement: "secondary",
     },
     {
-      slug: "megazord",
-      title: "Megazord MVP",
+      slug: "ritmo",
+      title: "Ritmo",
       description: t(
-        "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
-        "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
+        "An Android task manager in Brazilian Portuguese. Organize tasks in nested lists or cards, with tags, attachments and reminders. Dictate tasks offline after downloading the voice model. Tasks are stored locally and can be exported as backups.",
+        "App Android de tarefas em português do Brasil. Organize tarefas em listas, sublistas ou cards, com etiquetas, anexos e lembretes. Use o ditado offline após baixar o modelo de voz. As tarefas ficam salvas no aparelho e podem ser exportadas em backups."
       ),
-      previewAlt: t(
-        "Diagram of the live link redirect on Cloudflare Workers and the Nuvemshop sales workflow through n8n to Google Sheets.",
-        "Diagrama do redirecionador de links no Cloudflare Workers e do fluxo de vendas da Nuvemshop via n8n para o Google Sheets."
-      ),
-      tech: ["Python", "n8n", "Cloudflare Workers", "Meta Graph API"],
-      category: "automation",
-      status: "prototype",
+      tech: ["Kotlin", "Jetpack Compose", "Room", "Vosk"],
+      category: "mobile",
+      status: "beta",
       context: contexts.own,
-      repo: gh("megazord-mvp"),
-      featured: true,
+      repo: gh("ritmo"),
+      links: [{ label: t("Download test APK", "Baixar APK de teste"), href: gh("ritmo/releases/tag/v1.7") }],
+      placement: "secondary",
+    },
+    {
+      slug: "mural-dos-sonhos",
+      title: "Mural dos Sonhos",
+      description: t(
+        "An offline vision board with photo layouts, guided prompts and optional goal tracking. Install it as a PWA and export the finished board as a PNG.",
+        "Mural visual offline com layouts para fotos, perguntas guiadas e acompanhamento opcional de metas. Dá para instalar como PWA e exportar o mural pronto em PNG."
+      ),
+      tech: ["PWA", "TypeScript", "IndexedDB"],
+      category: "web",
+      status: "beta",
+      context: contexts.own,
+      live: "https://muraldossonhos.netlify.app/",
+      repo: gh("Mural-do-Sonhos"),
     },
     {
       slug: "wondrix",
@@ -273,7 +307,6 @@ const raw = {
       liveLabel: t("Open demo", "Abrir demo"),
       live: "https://wondrix-phi.vercel.app/",
       repo: gh("Wondrix"),
-      featured: true,
     },
     {
       slug: "prumo",
@@ -288,7 +321,6 @@ const raw = {
       context: contexts.own,
       live: "https://prumo.jardimdofazer.com.br/",
       repo: gh("Prumo"),
-      featured: true,
     },
     {
       slug: "rastro",
@@ -303,7 +335,6 @@ const raw = {
       context: contexts.own,
       live: "https://j-c-fstk-dev.github.io/rastro/",
       repo: gh("rastro"),
-      featured: true,
     },
     {
       slug: "maestro",
@@ -317,7 +348,6 @@ const raw = {
       status: "released",
       context: contexts.own,
       repo: gh("maiestro"),
-      featured: true,
     },
     {
       slug: "finecoding",
@@ -332,7 +362,6 @@ const raw = {
       context: contexts.own,
       live: "https://finecoding.netlify.app",
       repo: gh("finecoding"),
-      featured: true,
     },
     {
       slug: "matrix-hacker-desktop",
@@ -351,37 +380,6 @@ const raw = {
       context: contexts.openSource,
       links: [{ label: t("Installation guide", "Guia de instalação"), href: gh("matrix-hacker-desktop#-instalação-rápida") }],
       repo: gh("matrix-hacker-desktop"),
-      featured: true,
-    },
-    {
-      slug: "beregen",
-      title: "BeRegen Ecosystem",
-      description: t(
-        "Regenerative infrastructure for communities: identity and impact validation, reputation-based governance, learning, daily practices and impact-aligned funding.",
-        "Infraestrutura regenerativa para comunidades: identidade e validação de impacto, governança baseada em reputação, aprendizado, práticas diárias e financiamento alinhado ao impacto."
-      ),
-      tech: ["TypeScript", "React", "Node.js", "Stripe", "Web3"],
-      category: "web3",
-      status: "live",
-      context: contexts.own,
-      live: "https://beregen.xyz",
-      repo: gh("beregen_site"),
-      featured: true,
-    },
-    {
-      slug: "bass-forest",
-      title: "Bass Forest",
-      description: t(
-        "Site for an annual global electronic music festival tied to World Environment Day and tree planting. Designed and built solo from scratch.",
-        "Site de um festival global anual de música eletrônica ligado ao Dia Mundial do Meio Ambiente e ao plantio de árvores. Projetado e desenvolvido do zero, sozinho."
-      ),
-      tech: ["TypeScript", "React"],
-      category: "web",
-      status: "live",
-      context: contexts.client,
-      live: "https://bassforest.earth",
-      repo: gh("bassforest", "BeRegen"),
-      featured: true,
     },
     {
       slug: "partomagnus",
@@ -744,7 +742,8 @@ interface RawProject {
   liveLabel?: Text;
   links?: { label: Text; href: string }[];
   repo?: string;
-  featured?: boolean;
+  openSource?: boolean;
+  placement?: "featured" | "secondary";
 }
 
 interface RawJob {
