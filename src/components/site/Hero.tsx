@@ -24,7 +24,7 @@ function Headline({ lines, copy = false }: { lines: string[]; copy?: boolean }) 
  * it closes the page has already become the dark section that follows.
  */
 export default function Hero({ lang }: { lang: Locale }) {
-  const { profile, contact } = getContent(lang);
+  const { profile } = getContent(lang);
   const d = getDictionary(lang).hero;
 
   // The disc grows slowly at first, then sweeps over everything (radius eases with --p²).
@@ -40,8 +40,8 @@ export default function Hero({ lang }: { lang: Locale }) {
           <div className="mt-10 max-w-prose sm:mt-14">
             <p className="text-lg leading-relaxed text-ink/90 sm:text-xl">{profile.intro}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href={`mailto:${contact.email}`} className={buttonPrimary}>
-                {d.emailMe}
+              <a href="#contact-form" className={buttonPrimary}>
+                {d.startProject}
               </a>
               <a href="#work" className={buttonSecondary}>
                 {d.seeWork}
