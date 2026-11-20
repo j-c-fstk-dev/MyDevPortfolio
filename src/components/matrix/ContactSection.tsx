@@ -13,6 +13,7 @@ const contactMethods = [
 ];
 
 export default function ContactSection() {
+  const d = getDictionary("en").contact;
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -42,12 +43,24 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <div
+            className={`transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+            }`}
+          >
+            <h3 className="font-mono-matrix text-2xl text-matrix-accent mb-6 text-phosphor-glow">
+              DIRECT_MESSAGE_SYSTEM
+            </h3>
+            <p className="mb-6 text-matrix-light-gray">{d.intro}</p>
+            <ContactForm variant="matrix" labels={d.form} email={contact.email} />
+          </div>
+
+          <div
             className={`space-y-4 transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
             }`}
           >
             <h3 className="font-mono-matrix text-2xl text-matrix-accent mb-6 text-phosphor-glow">
-              COMMUNICATION_PROTOCOLS
+              OTHER_CONTACT_CHANNELS
             </h3>
             {contactMethods.map((method) => (
               <a
@@ -79,17 +92,6 @@ export default function ContactSection() {
               <div className="text-matrix-accent animate-pulse">_</div>
             </div>
           </div>
-
-          <div
-            className={`transition-all duration-1000 delay-300 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-            }`}
-          >
-            <h3 className="font-mono-matrix text-2xl text-matrix-accent mb-6 text-phosphor-glow">
-              DIRECT_MESSAGE_SYSTEM
-            </h3>
-            <ContactForm variant="matrix" labels={getDictionary("en").contact.form} email={contact.email} />
-          </div>
         </div>
 
         <div className="text-center mt-20">
@@ -107,12 +109,13 @@ export default function ContactSection() {
               >
                 &gt; RESTART_SEQUENCE
               </button>
-              <a
-                href={`mailto:${contact.email}`}
+              <button
+                type="button"
+                onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-6 py-3 bg-matrix-highlight/20 border-2 border-matrix-highlight rounded font-mono-matrix text-matrix-highlight hover:bg-matrix-highlight/30 hover:shadow-phosphor transition-all duration-300"
               >
-                &gt; HIRE_DEVELOPER
-              </a>
+                &gt; SEND_A_PROJECT_BRIEF
+              </button>
             </div>
             <div className="mt-8 pt-6 border-t border-matrix-accent/20 font-mono-matrix text-sm text-matrix-accent/50">
               © {new Date().getFullYear()} {profile.name} · Built with Next.js, TypeScript and Tailwind CSS
