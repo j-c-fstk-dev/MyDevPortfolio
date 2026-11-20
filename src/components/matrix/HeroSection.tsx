@@ -1,5 +1,7 @@
 "use client";
 
+import type { Locale } from "@/data/portfolio";
+import { matrixCopy } from "./copy";
 import { useCallback, useEffect, useState } from "react";
 import HeroTerminal from "./HeroTerminal";
 
@@ -42,9 +44,10 @@ function ScrambledName({ resolved, reducedMotion }: { resolved: boolean; reduced
   );
 }
 
-const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
 
-export default function HeroSection() {
+export default function HeroSection({ lang }: { lang: Locale }) {
+  const d = matrixCopy[lang];
   const [reducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [compiled, setCompiled] = useState(false);
   const handleCompiled = useCallback(() => setCompiled(true), []);
@@ -54,27 +57,27 @@ export default function HeroSection() {
       <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
         <ScrambledName resolved={compiled} reducedMotion={reducedMotion} />
         <div
-          className={`mt-3 mb-8 text-lg font-mono-matrix text-matrix-highlight transition-opacity duration-700 sm:text-2xl ${
+          className={`mt-3 mb-8 break-words text-base font-mono-matrix text-matrix-highlight transition-opacity duration-700 sm:text-2xl ${
             compiled ? "opacity-100" : "opacity-40"
           }`}
         >
-          &gt; FULL_STACK_DEVELOPER // WEB3 // AI
+          &gt; {d.heroRole}
         </div>
 
-        <HeroTerminal onCompiled={handleCompiled} reducedMotion={reducedMotion} />
+        <HeroTerminal lang={lang} onCompiled={handleCompiled} reducedMotion={reducedMotion} />
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
           <button
             className="rounded border-2 border-matrix-accent bg-matrix-accent/20 px-6 py-3 font-mono-matrix text-sm text-matrix-accent transition-all duration-300 hover:bg-matrix-accent/30 hover:shadow-phosphor sm:px-8 sm:text-base"
             onClick={() => scrollTo("section-3")}
           >
-            &gt; VIEW_PROJECTS
+            &gt; {d.viewProjects}
           </button>
           <button
             className="rounded border-2 border-matrix-highlight bg-matrix-highlight/20 px-6 py-3 font-mono-matrix text-sm text-matrix-highlight transition-all duration-300 hover:bg-matrix-highlight/30 hover:shadow-phosphor sm:px-8 sm:text-base"
-            onClick={() => scrollTo("section-5")}
+            onClick={() => scrollTo("contact-form")}
           >
-            &gt; CONTACT_ME
+            &gt; {d.contactMe}
           </button>
         </div>
       </div>

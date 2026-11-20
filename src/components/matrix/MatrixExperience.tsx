@@ -1,5 +1,7 @@
 "use client";
 
+import type { Locale } from "@/data/portfolio";
+import { matrixCopy } from "./copy";
 import { useEffect, useRef, useState } from "react";
 import ContactSection from "./ContactSection";
 import ExperienceSection from "./ExperienceSection";
@@ -33,15 +35,18 @@ function initialPhase(origin: Origin | null): Phase {
  */
 export default function MatrixExperience({
   origin,
+  lang,
   onCovered,
   onExit,
 }: {
   /** Where the visitor clicked, for the opening transition. Null for a direct link. */
   origin: Origin | null;
+  lang: Locale;
   /** Called once the standard site is fully hidden. */
   onCovered: () => void;
   onExit: () => void;
 }) {
+  const d = matrixCopy[lang];
   const [phase, setPhase] = useState<Phase>(() => initialPhase(origin));
   const [phosphor, setPhosphor] = useState<PhosphorColor>(() => {
     try {
@@ -81,11 +86,13 @@ export default function MatrixExperience({
     window.scrollTo({ top: 0, behavior: "instant" });
     mainRef.current?.focus({ preventScroll: true });
 
+    const sections = Array.from(mainRef.current?.querySelectorAll("section[id^=section-]") ?? []);
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0);
-      setCurrentSection(Math.floor(scrollTop / window.innerHeight));
+      const active = sections.findLastIndex((section) => section.getBoundingClientRect().top < window.innerHeight / 3);
+      setCurrentSection(docHeight > 0 && scrollTop >= docHeight - 2 ? sections.length - 1 : Math.max(active, 0));
     };
     // Escape closes an open dialog first (e.g. a project); only then does it leave.
     const handleKey = (e: KeyboardEvent) => {
@@ -93,10 +100,12 @@ export default function MatrixExperience({
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
     window.addEventListener("keydown", handleKey);
     handleScroll();
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
       window.removeEventListener("keydown", handleKey);
     };
   }, [phase, onExit]);
@@ -137,14 +146,15 @@ export default function MatrixExperience({
             <button
               onClick={onExit}
               className="h-12 px-4 bg-matrix-black/80 border border-matrix-accent/40 rounded-full flex items-center gap-2 font-mono-matrix text-matrix-highlight hover:border-matrix-accent hover:shadow-phosphor transition-all duration-300"
-              aria-label="Leave the Matrix and go back to the standard portfolio (Escape)"
+              aria-label={d.exitHint}
             >
               <span aria-hidden>💊</span>
-              <span className="hidden sm:inline">EXIT_MATRIX [ESC]</span>
+              <span className="sm:hidden">{d.exit}</span>
+              <span className="hidden sm:inline">{d.exitMatrix} [ESC]</span>
             </button>
           </div>
 
-          <Navigation currentSection={currentSection} phosphor={phosphor} onPhosphorChange={changePhosphor} />
+          <Navigation lang={lang} currentSection={currentSection} phosphor={phosphor} onPhosphorChange={changePhosphor} />
 
           <div className="fixed top-0 left-0 w-full h-1 bg-matrix-dark-gray z-50">
             <div
@@ -153,13 +163,13 @@ export default function MatrixExperience({
             />
           </div>
 
-          <main ref={mainRef} tabIndex={-1} className="relative z-10 outline-none" aria-label="Jorge Cristo, Matrix version">
-            <HeroSection />
-            <StatsSection />
-            <SkillsSection />
-            <ProjectsSection />
-            <ExperienceSection />
-            <ContactSection />
+          <main ref={mainRef} tabIndex={-1} className="relative z-10 pb-16 outline-none [&>section]:scroll-mt-16" aria-label={d.main}>
+            <HeroSection lang={lang} />
+            <StatsSection lang={lang} />
+            <SkillsSection lang={lang} />
+            <ProjectsSection lang={lang} />
+            <ExperienceSection lang={lang} />
+            <ContactSection lang={lang} />
           </main>
         </>
       )}

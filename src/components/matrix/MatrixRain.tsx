@@ -100,8 +100,8 @@ export default function MatrixRain({ phosphor, intensity }: { phosphor: Phosphor
     };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const width = canvas.clientWidth;
+      const dpr = Math.min(window.devicePixelRatio || 1, width < 640 ? 1 : 2);
       const height = canvas.clientHeight;
       cell = Math.round((width < 640 ? 14 : 16) * dpr);
       canvas.width = Math.ceil(width * dpr);
@@ -186,8 +186,8 @@ export default function MatrixRain({ phosphor, intensity }: { phosphor: Phosphor
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="fixed inset-0 h-full w-full pointer-events-none z-0 motion-safe:transition-opacity duration-1000"
-      style={{ opacity: intensity }}
+      className="fixed inset-0 h-full w-full pointer-events-none z-0 opacity-[calc(var(--rain-opacity)*0.62)] sm:opacity-[var(--rain-opacity)] motion-safe:transition-opacity duration-1000"
+      style={{ "--rain-opacity": intensity } as React.CSSProperties}
     />
   );
 }

@@ -1,139 +1,69 @@
 "use client";
 
+import { localePath, type Locale } from "@/data/portfolio";
+import { matrixCopy } from "./copy";
 import { getPhosphorColor, phosphorColors, type PhosphorColor } from "./phosphor";
 
-
 interface NavigationProps {
+  lang: Locale;
   currentSection: number;
   phosphor: PhosphorColor;
   onPhosphorChange: (color: PhosphorColor) => void;
 }
 
-export default function Navigation({ currentSection, phosphor, onPhosphorChange }: NavigationProps) {
+export default function Navigation({ lang, currentSection, phosphor, onPhosphorChange }: NavigationProps) {
+  const d = matrixCopy[lang];
+  const alternate = lang === "en" ? "pt" : "en";
 
-
-  const sections = [
-  { id: 0, name: "INIT", label: "Home" },
-  { id: 1, name: "STATS", label: "Stats" },
-  { id: 2, name: "SKILLS", label: "Skills" },
-  { id: 3, name: "PROJECTS", label: "Projects" },
-  { id: 4, name: "EXPERIENCE", label: "Experience" },
-  { id: 5, name: "CONTACT", label: "Contact" }];
-
-
-  const scrollToSection = (sectionId: number) => {
-    const element = document.getElementById(`section-${sectionId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const scrollToSection = (id: number) => {
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+    document.getElementById(`section-${id}`)?.scrollIntoView({ behavior });
   };
 
-
   return (
-    <>
-      {/* Side Navigation - Hidden on mobile */}
-      <nav
-        className="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 space-y-3 hidden md:block"
-       >
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-matrix-accent/20 bg-matrix-black/90 backdrop-blur-sm">
+      <div className="container mx-auto flex flex-wrap items-center justify-between gap-x-3 px-3 pt-2 lg:flex-nowrap lg:px-6 lg:py-3">
+        <div className="shrink-0 font-mono-matrix text-sm text-matrix-accent sm:text-base">&gt; JORGE_CRISTO.EXE</div>
 
-        {sections.map((section) =>
-        <div
-          key={section.id}
-          className="group relative cursor-pointer"
-          onClick={() => scrollToSection(section.id)}
-         >
-
-            <div
-            className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
-            currentSection === section.id ?
-            "bg-matrix-accent border-matrix-accent shadow-phosphor scale-125" :
-            "bg-transparent border-matrix-accent/50 hover:border-matrix-accent hover:shadow-phosphor"}`
-            }
-            />
-
-
-            <div
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-           >
-
-              <div
-              className="bg-matrix-black/90 border border-matrix-accent/50 px-3 py-1 rounded font-mono-matrix text-sm text-matrix-accent whitespace-nowrap"
-             >
-
-                {section.name}
-              </div>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Top Navigation */}
-      <header
-        className="fixed top-0 left-0 right-0 z-40 bg-matrix-black/80 backdrop-blur-sm border-b border-matrix-accent/20"
-       >
-
-        <div
-          className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center gap-2"
-         >
-
-          <div
-            className="shrink-0 font-mono-matrix text-base sm:text-xl text-matrix-accent"
-           >
-
-            &gt; JORGE_CRISTO.EXE
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav
-            className="hidden lg:flex gap-2 xl:gap-5"
-           >
-
-            {sections.map((section) =>
+        <nav aria-label={d.navLabel} className="order-last flex w-full justify-center gap-1 lg:order-none lg:w-auto">
+          {d.nav.map((label, id) => (
             <button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              className={`font-mono-matrix text-xs xl:text-sm transition-all duration-300 hover:text-matrix-accent px-2 py-1 ${
-              currentSection === section.id ?
-              "text-matrix-accent" :
-              "text-matrix-light-gray/70"}`
-              }
-             >
-
-                {section.label.toUpperCase()}
-              </button>
-            )}
-          </nav>
-
-          {/* Mobile Navigation Dots */}
-          <div className="flex lg:hidden gap-1.5 sm:gap-2">
-            {sections.map((section) =>
-            <button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              currentSection === section.id ?
-              "bg-matrix-accent shadow-phosphor scale-125" :
-              "bg-matrix-accent/30 hover:bg-matrix-accent/60"}`
-              }
-              title={section.label}
-              />
-
-            )}
-          </div>
-          <label className="flex items-center gap-2 font-mono-matrix text-sm text-matrix-highlight">
-            <span className="sr-only xl:not-sr-only">Phosphor color</span>
-            <select
-              value={phosphor}
-              onChange={(event) => onPhosphorChange(getPhosphorColor(event.target.value))}
-              className="rounded border border-matrix-accent/40 bg-matrix-dark-gray px-2 py-1 text-matrix-highlight"
+              key={label}
+              type="button"
+              aria-label={label}
+              aria-current={currentSection === id ? "location" : undefined}
+              title={label}
+              onClick={() => scrollToSection(id)}
+              className={`grid min-h-8 min-w-8 place-items-center rounded px-1.5 font-mono-matrix text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-matrix-highlight lg:min-h-10 ${currentSection === id ? "text-matrix-accent" : "text-matrix-light-gray hover:text-matrix-accent"}`}
             >
-              {Object.entries(phosphorColors).map(([color, label]) => (
-                <option key={color} value={color}>{label}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </header>
-    </>);
+              <span aria-hidden className={`h-2 w-2 rounded-full lg:hidden ${currentSection === id ? "bg-matrix-accent" : "bg-current opacity-60"}`} />
+              <span aria-hidden className="hidden uppercase lg:inline">{label}</span>
+            </button>
+          ))}
+        </nav>
 
+        <div className="flex items-center gap-2 font-mono-matrix text-xs text-matrix-highlight sm:text-sm">
+          <select
+            aria-label={d.phosphor}
+            value={phosphor}
+            onChange={(event) => onPhosphorChange(getPhosphorColor(event.target.value))}
+            className="min-h-8 rounded border border-matrix-accent/40 bg-matrix-dark-gray px-1"
+          >
+            {Object.keys(phosphorColors).map((color, index) => (
+              <option key={color} value={color}>{d.colors[index]}</option>
+            ))}
+          </select>
+          <a
+            href={`${localePath(alternate)}#matrix`}
+            hrefLang={alternate === "pt" ? "pt-BR" : "en"}
+            lang={alternate === "pt" ? "pt-BR" : "en"}
+            aria-label={alternate === "pt" ? "Ver Matrix em português" : "View Matrix in English"}
+            className="inline-flex min-h-8 items-center rounded border border-matrix-accent/40 px-1.5 hover:border-matrix-highlight"
+          >
+            {alternate.toUpperCase()}
+          </a>
+        </div>
+      </div>
+    </header>
+  );
 }

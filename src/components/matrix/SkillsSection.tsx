@@ -1,18 +1,19 @@
 "use client";
 
+import { getContent, type Locale } from "@/data/portfolio";
+import { matrixCopy, toCommand } from "./copy";
 import { useEffect, useRef, useState } from "react";
 import { useScatter } from "./scatter";
-import { skills } from "@/data/portfolio";
 
-const toCommand = (category: string) => category.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+export default function SkillsSection({ lang }: { lang: Locale }) {
+  const d = matrixCopy[lang];
+  const { skills } = getContent(lang);
 
-export default function SkillsSection() {
-  const categories = Object.keys(skills);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [activeCategory, setActiveCategory] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const activeSkills = skills[activeCategory];
+  const { category: activeLabel, items: activeSkills } = skills[activeCategory];
 
   const background = useScatter(60);
 
@@ -47,20 +48,19 @@ export default function SkillsSection() {
 
       <div className="container mx-auto px-6 relative z-10 max-w-5xl">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">SKILL_MATRIX</h2>
-          <div className="text-xl font-mono-matrix text-matrix-highlight">&gt; LOADING_CAPABILITIES...</div>
+          <h2 className="break-words text-3xl sm:text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">{d.skillsTitle}</h2>
+          <div className="break-words text-base sm:text-xl font-mono-matrix text-matrix-highlight">&gt; {d.skillsIntro}</div>
           <div className="w-32 h-1 bg-gradient-to-r from-matrix-accent to-matrix-highlight mx-auto mt-4" />
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-10" role="tablist">
-          {categories.map((category) => (
+        <div className="flex flex-wrap justify-center gap-3 mb-10" role="group" aria-label={d.skillsTitle}>
+          {skills.map(({ category }, index) => (
             <button
               key={category}
-              role="tab"
-              aria-selected={activeCategory === category}
-              onClick={() => setActiveCategory(category)}
+              aria-pressed={activeCategory === index}
+              onClick={() => setActiveCategory(index)}
               className={`px-4 py-2 font-mono-matrix border-2 rounded transition-all duration-300 ${
-                activeCategory === category
+                activeCategory === index
                   ? "bg-matrix-accent/20 border-matrix-accent text-matrix-accent shadow-phosphor"
                   : "bg-matrix-black/50 border-matrix-accent/30 text-matrix-light-gray hover:border-matrix-accent hover:text-matrix-accent"
               }`}
@@ -77,11 +77,11 @@ export default function SkillsSection() {
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
               <div className="w-3 h-3 rounded-full bg-matrix-accent" />
             </div>
-            <div className="flex-1 text-center font-mono-matrix text-matrix-accent">SKILL_ANALYZER</div>
+            <div className="flex-1 text-center font-mono-matrix text-matrix-accent">{d.skillsPanel}</div>
           </div>
 
           <div className="font-mono-matrix text-matrix-highlight mb-4">
-            $ ls ./stack/{toCommand(activeCategory).toLowerCase()}
+            $ ls ./stack/{toCommand(activeLabel).toLowerCase()}
           </div>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {activeSkills.map((skill, index) => (
@@ -97,7 +97,7 @@ export default function SkillsSection() {
             ))}
           </ul>
           <div className="font-mono-matrix text-sm text-matrix-light-gray mt-4">
-            {activeSkills.length} entries found
+            {d.skillCount(activeSkills.length)}
             <span className="text-matrix-accent animate-pulse"> _</span>
           </div>
         </div>

@@ -58,10 +58,11 @@ export default function ContactForm({
 
   return (
     <form
+      id="contact-form"
       name={FORM_NAME}
       method="POST"
       onSubmit={handleSubmit}
-      className={matrix ? "space-y-6" : "space-y-5"}
+      className={matrix ? "scroll-mt-24 space-y-6" : "scroll-mt-24 space-y-5"}
     >
       <input type="hidden" name="form-name" value={FORM_NAME} />
       {/* Honeypot: hidden from people, bots tend to fill it in. */}
@@ -73,7 +74,7 @@ export default function ContactForm({
 
       <div>
         <label htmlFor={id("name")} className={label}>
-          {matrix ? "NAME_INPUT:" : labels.name}
+          {labels.name}
         </label>
         <input
           id={id("name")}
@@ -87,7 +88,7 @@ export default function ContactForm({
       </div>
       <div>
         <label htmlFor={id("email")} className={label}>
-          {matrix ? "EMAIL_ADDRESS:" : labels.email}
+          {labels.email}
         </label>
         <input
           id={id("email")}
@@ -101,7 +102,7 @@ export default function ContactForm({
       </div>
       <div>
         <label htmlFor={id("message")} className={label}>
-          {matrix ? "MESSAGE_CONTENT:" : labels.message}
+          {labels.message}
         </label>
         <textarea
           id={id("message")}
@@ -113,8 +114,15 @@ export default function ContactForm({
         />
       </div>
 
+      <div>
+        <label htmlFor={id("repo")} className={label}>
+          {labels.repo}
+        </label>
+        <input id={id("repo")} name="repo" type="url" className={input} placeholder="https://" />
+      </div>
+
       <button type="submit" className={button} disabled={status === "sending"}>
-        {status === "sending" ? labels.sending : matrix ? "> SEND_MESSAGE" : labels.submit}
+        {status === "sending" ? labels.sending : labels.submit}
       </button>
 
       <div aria-live="polite">
