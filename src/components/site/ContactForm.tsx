@@ -74,7 +74,7 @@ export default function ContactForm({
 
       <div>
         <label htmlFor={id("name")} className={label}>
-          {matrix ? "NAME_INPUT:" : labels.name}
+          {labels.name}
         </label>
         <input
           id={id("name")}
@@ -88,7 +88,7 @@ export default function ContactForm({
       </div>
       <div>
         <label htmlFor={id("email")} className={label}>
-          {matrix ? "EMAIL_ADDRESS:" : labels.email}
+          {labels.email}
         </label>
         <input
           id={id("email")}
@@ -102,7 +102,7 @@ export default function ContactForm({
       </div>
       <div>
         <label htmlFor={id("message")} className={label}>
-          {matrix ? "MESSAGE_CONTENT:" : labels.message}
+          {labels.message}
         </label>
         <textarea
           id={id("message")}
@@ -122,7 +122,7 @@ export default function ContactForm({
       </div>
 
       <button type="submit" className={button} disabled={status === "sending"}>
-        {status === "sending" ? labels.sending : matrix ? "> SEND_MESSAGE" : labels.submit}
+        {status === "sending" ? labels.sending : labels.submit}
       </button>
 
       <div aria-live="polite">

@@ -1,5 +1,7 @@
 "use client";
 
+import type { Locale } from "@/data/portfolio";
+import { matrixCopy } from "./copy";
 import { useCallback, useEffect, useState } from "react";
 import { errorBuzz, keyClick, setSoundOn, successChime, useSoundOn } from "./sound";
 
@@ -10,25 +12,25 @@ type LineKind = "cmd" | "info" | "err" | "ok" | "out";
  * fixed (the work Jorge does), then introduces him. The log stays on the page,
  * so scrolling back up shows it from the start.
  */
-const SCRIPT: { kind: LineKind; text: string; pause: number }[] = [
+const SCRIPT: { kind: LineKind; text: string; pt?: string; pause: number }[] = [
   { kind: "cmd", text: "npm run build", pause: 500 },
-  { kind: "info", text: "Creating an optimized production build...", pause: 900 },
-  { kind: "err", text: "✗ Module not found: Can't resolve './auth' in src/lib/session.ts", pause: 250 },
-  { kind: "err", text: "✗ Build failed in 3.2s", pause: 1100 },
+  { kind: "info", text: "Creating an optimized production build...", pt: "Criando um build otimizado para produção...", pause: 900 },
+  { kind: "err", text: "✗ Module not found: Can't resolve './auth' in src/lib/session.ts", pt: "✗ Módulo './auth' não encontrado em src/lib/session.ts", pause: 250 },
+  { kind: "err", text: "✗ Build failed in 3.2s", pt: "✗ Build falhou em 3,2 s", pause: 1100 },
   { kind: "cmd", text: "jorge --diagnose", pause: 500 },
-  { kind: "info", text: "› cause: session.ts imports './auth', the file lives at '../auth'", pause: 500 },
-  { kind: "info", text: "› fix: corrected the import, added a regression test", pause: 500 },
-  { kind: "info", text: "› pushed to branch fix/auth-import", pause: 900 },
+  { kind: "info", text: "› cause: session.ts imports './auth', the file lives at '../auth'", pt: "› causa: session.ts importa './auth', mas o arquivo está em '../auth'", pause: 500 },
+  { kind: "info", text: "› fix: corrected the import, added a regression test", pt: "› correção: import ajustado e teste de regressão adicionado", pause: 500 },
+  { kind: "info", text: "› pushed to branch fix/auth-import", pt: "› alterações enviadas para a branch fix/auth-import", pause: 900 },
   { kind: "cmd", text: "npm run build", pause: 500 },
-  { kind: "ok", text: "✓ Compiled successfully", pause: 1200 },
+  { kind: "ok", text: "✓ Compiled successfully", pt: "✓ Build concluído com sucesso", pause: 1200 },
   { kind: "cmd", text: "whoami", pause: 300 },
-  { kind: "out", text: "jorge_cristo // full-stack developer // Brazil, UTC-3", pause: 900 },
+  { kind: "out", text: "jorge_cristo // full-stack developer // Brazil, UTC-3", pt: "jorge_cristo // desenvolvedor full-stack // Brasil, UTC-3", pause: 900 },
   { kind: "cmd", text: "cat services.txt", pause: 300 },
-  { kind: "out", text: "> bug fixing & app rescue (React, Next.js, Node)", pause: 250 },
-  { kind: "out", text: "> web3: dApps, Solidity review, Farcaster mini apps", pause: 250 },
-  { kind: "out", text: "> features & automation: Stripe, LLMs, n8n", pause: 900 },
+  { kind: "out", text: "> app rescue (React, Next.js, Node, including Lovable, Bolt or Cursor)", pt: "> resgate de apps (React, Next.js, Node, incluindo Lovable, Bolt ou Cursor)", pause: 250 },
+  { kind: "out", text: "> web3: dApps, Solidity review, Farcaster mini apps", pt: "> web3: dApps, revisão de Solidity, mini apps para Farcaster", pause: 250 },
+  { kind: "out", text: "> features & automation: Stripe, LLMs, n8n", pt: "> funcionalidades e automação: Stripe, LLMs, n8n", pause: 900 },
   { kind: "cmd", text: "status", pause: 300 },
-  { kind: "ok", text: "● AVAILABLE FOR FREELANCE WORK", pause: 0 },
+  { kind: "ok", text: "● AVAILABLE FOR FREELANCE WORK", pt: "● DISPONÍVEL PARA PROJETOS FREELANCE", pause: 0 },
 ];
 
 /** The line whose appearance means the build is fixed. */
@@ -65,13 +67,16 @@ function writeFlag(key: string, on: boolean) {
 }
 
 export default function HeroTerminal({
+  lang,
   onCompiled,
   reducedMotion,
 }: {
+  lang: Locale;
   /** Called once the build is fixed (or the log is skipped or closed). */
   onCompiled: () => void;
   reducedMotion: boolean;
 }) {
+  const d = matrixCopy[lang];
   const [skipped] = useState(() => reducedMotion || readFlag(PLAYED_KEY));
   const [shown, setShown] = useState(skipped ? SCRIPT.length - 1 : 0);
   const [typed, setTyped] = useState(skipped ? Infinity : 0);
@@ -137,9 +142,9 @@ export default function HeroTerminal({
   if (!open) {
     return (
       <div className="flex items-center justify-between gap-3 rounded-lg border border-matrix-accent/40 bg-matrix-black/80 px-4 py-3 font-mono-matrix text-left text-matrix-accent/80">
-        <span>$ terminal closed</span>
+        <span>$ {d.terminalClosed}</span>
         <button type="button" onClick={reopen} className={titleButton}>
-          REOPEN_TERMINAL
+          {d.reopenTerminal}
         </button>
       </div>
     );
@@ -152,14 +157,14 @@ export default function HeroTerminal({
         shake ? "matrix-shake" : ""
       }`}
     >
-      <div className="mb-4 flex items-center gap-3">
+      <div className="mb-4 flex flex-wrap items-center gap-2 sm:gap-3">
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={close}
             tabIndex={-1}
             aria-hidden
-            title="Close the terminal"
+            title={d.closeTerminal}
             className="group flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[11px] leading-none text-red-950 hover:bg-red-400"
           >
             <span aria-hidden>×</span>
@@ -167,30 +172,28 @@ export default function HeroTerminal({
           <span className="h-3 w-3 rounded-full bg-yellow-500" aria-hidden />
           <span className="h-3 w-3 rounded-full bg-matrix-accent" aria-hidden />
         </div>
-        <span className="flex-1 truncate text-center text-sm text-matrix-accent/80 sm:text-base">~/client-app</span>
-        <button type="button" onClick={() => setSoundOn(!sound)} aria-pressed={sound} className={titleButton}>
-          ♪ {sound ? "ON" : "OFF"}
+        <span className="min-w-0 flex-1 truncate text-center text-sm text-matrix-accent/80 sm:text-base">~/client-app</span>
+        <button type="button" onClick={() => setSoundOn(!sound)} aria-label={d.terminalSound} aria-pressed={sound} className={titleButton}>
+          ♪ {sound ? d.soundOn : d.soundOff}
         </button>
         {!done && (
           <button type="button" onClick={finish} className={titleButton}>
-            SKIP ⏭
+            {d.skipTerminal} ⏭
           </button>
         )}
-        <button type="button" onClick={close} className={titleButton} aria-label="Close the terminal">
-          <span className="hidden sm:inline">CLOSE </span>✕
+        <button type="button" onClick={close} className={titleButton} aria-label={d.closeTerminal}>
+          <span className="hidden sm:inline">{d.close} </span>✕
         </button>
       </div>
 
       <p className="sr-only">
-        Terminal: a build fails on a missing import; Jorge diagnoses it, fixes it on a branch and the build passes.
-        Then: Jorge Cristo, full-stack developer in Brazil. Services: bug fixing and app rescue, Web3, features and
-        automation. Available for freelance work.
+        {d.terminalSummary}
       </p>
 
       <div className="space-y-1 text-base leading-snug sm:text-lg" aria-hidden>
         {SCRIPT.slice(0, shown + 1).map((line, i) => {
           const current = i === shown;
-          const text = line.kind === "cmd" ? line.text.slice(0, current ? typed : undefined) : line.text;
+          const text = line.kind === "cmd" ? line.text.slice(0, current ? typed : undefined) : lang === "pt" ? line.pt ?? line.text : line.text;
           return (
             <div key={i} className={`break-words ${lineColor[line.kind]}`}>
               {line.kind === "cmd" && <span className="text-matrix-accent">$ </span>}

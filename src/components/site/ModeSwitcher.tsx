@@ -1,5 +1,6 @@
 "use client";
 
+import type { Locale } from "@/data/portfolio";
 import dynamic from "next/dynamic";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import ProjectHoverPreview from "./ProjectHoverPreview";
@@ -39,7 +40,7 @@ const isTyping = (target: EventTarget | null) =>
  * Matrix version on demand. The mode lives in the URL hash, so /#matrix
  * opens the Matrix directly and can be shared.
  */
-export default function ModeSwitcher({ children }: { children: React.ReactNode }) {
+export default function ModeSwitcher({ children, lang }: { children: React.ReactNode; lang: Locale }) {
   const matrix = useSyncExternalStore(
     subscribe,
     () => window.location.hash === MATRIX_HASH,
@@ -91,7 +92,7 @@ export default function ModeSwitcher({ children }: { children: React.ReactNode }
   return (
     <MatrixContext.Provider value={enter}>
       {showSite && children}
-      {matrix && <MatrixExperience origin={origin} onCovered={handleCovered} onExit={exit} />}
+      {matrix && <MatrixExperience lang={lang} origin={origin} onCovered={handleCovered} onExit={exit} />}
       {!matrix && <ProjectHoverPreview />}
     </MatrixContext.Provider>
   );

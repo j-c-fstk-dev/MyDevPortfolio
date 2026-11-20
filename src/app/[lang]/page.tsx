@@ -23,7 +23,7 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
   const d = getDictionary(lang);
 
   return (
-    <ModeSwitcher>
+    <ModeSwitcher lang={lang}>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-pine focus:px-4 focus:py-2 focus:text-on-pine"

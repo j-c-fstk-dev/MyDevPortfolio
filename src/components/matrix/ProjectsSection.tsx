@@ -3,17 +3,9 @@
 import Image from "next/image";
 import { projectScreenshot } from "@/lib/project-previews";
 import { useEffect, useRef, useState } from "react";
-import {
-  categoryLabels,
-  contact,
-  projects,
-  statusLabels,
-  type Project,
-  type ProjectCategory,
-  type ProjectStatus,
-} from "@/data/portfolio";
-
-const toCommand = (text: string) => text.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+import { getContent, type Locale, type Project, type ProjectCategory, type ProjectStatus } from "@/data/portfolio";
+import { getDictionary } from "@/data/ui";
+import { matrixCopy, toCommand } from "./copy";
 
 const statusStyle: Record<ProjectStatus, { color: string; icon: string }> = {
   live: { color: "text-matrix-accent", icon: "●" },
@@ -23,12 +15,11 @@ const statusStyle: Record<ProjectStatus, { color: string; icon: string }> = {
   prototype: { color: "text-matrix-light-gray", icon: "◇" },
 };
 
-const filters: ("ALL" | ProjectCategory)[] = ["ALL", ...(Object.keys(categoryLabels) as ProjectCategory[])];
-
-function ProjectLinks({ project, onPreview }: { project: Project; onPreview?: () => void }) {
+function ProjectLinks({ project, lang, onPreview }: { project: Project; lang: Locale; onPreview?: () => void }) {
+  const d = matrixCopy[lang];
   const links = [
-    ...(project.repo ? [{ href: project.repo, label: "VIEW_CODE" }] : []),
-    ...(project.live ? [{ href: project.live, label: project.liveLabel ? toCommand(project.liveLabel) : "LIVE_SITE" }] : []),
+    ...(project.repo ? [{ href: project.repo, label: d.viewCode }] : []),
+    ...(project.live ? [{ href: project.live, label: project.liveLabel ? toCommand(project.liveLabel) : d.liveSite }] : []),
     ...(project.links ?? []).map(({ href, label }) => ({ href, label: toCommand(label) })),
   ];
   const actionClass = "rounded border border-matrix-highlight/50 px-2.5 py-1.5 font-mono-matrix text-sm text-matrix-highlight transition-colors hover:border-matrix-highlight hover:bg-matrix-highlight/15";
@@ -43,14 +34,18 @@ function ProjectLinks({ project, onPreview }: { project: Project; onPreview?: ()
       ))}
       {onPreview && (
         <button type="button" aria-haspopup="dialog" onClick={onPreview} className={actionClass}>
-          PREVIEW
+          {d.preview}
         </button>
       )}
     </div>
   );
 }
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ lang }: { lang: Locale }) {
+  const { contact, projects, categoryLabels, statusLabels } = getContent(lang);
+  const d = matrixCopy[lang];
+  const work = getDictionary(lang).work;
+  const filters = ["ALL", ...Object.keys(categoryLabels)] as ("ALL" | ProjectCategory)[];
   const [isVisible, setIsVisible] = useState(false);
   const [selected, setSelected] = useState<Project | null>(null);
   const [filter, setFilter] = useState<(typeof filters)[number]>("ALL");
@@ -122,7 +117,7 @@ export default function ProjectsSection() {
               </p>
             )}
             {project.openSource && (
-              <p className="mb-3 font-mono-matrix text-xs text-matrix-light-gray">OPEN_SOURCE</p>
+              <p className="mb-3 font-mono-matrix text-xs text-matrix-light-gray">{toCommand(work.openSource)}</p>
             )}
             <div className="flex flex-wrap gap-1">
               {project.tech.slice(0, 3).map((tech) => (
@@ -141,6 +136,7 @@ export default function ProjectsSection() {
             </div>
             <ProjectLinks
               project={project}
+              lang={lang}
               onPreview={projectScreenshot(project.slug) ? () => setSelected(project) : undefined}
             />
           </article>
@@ -157,8 +153,8 @@ export default function ProjectsSection() {
     >
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">PROJECT_ARCHIVE</h2>
-          <div className="text-xl font-mono-matrix text-matrix-highlight">&gt; SCANNING_REPOSITORIES...</div>
+          <h2 className="break-words text-3xl sm:text-4xl md:text-6xl font-mono-matrix text-phosphor-glow mb-4">{d.projectsTitle}</h2>
+          <div className="break-words text-base sm:text-xl font-mono-matrix text-matrix-highlight">&gt; {d.projectsIntro}</div>
           <div className="w-32 h-1 bg-gradient-to-r from-matrix-accent to-matrix-highlight mx-auto mt-4" />
         </div>
 
@@ -174,7 +170,7 @@ export default function ProjectsSection() {
                   : "bg-matrix-black/50 border-matrix-accent/30 text-matrix-light-gray hover:border-matrix-accent"
               }`}
             >
-              {f === "ALL" ? "ALL" : toCommand(categoryLabels[f])}
+              {f === "ALL" ? d.all : toCommand(categoryLabels[f])}
             </button>
           ))}
         </div>
@@ -182,16 +178,16 @@ export default function ProjectsSection() {
         {filter === "ALL" ? (
           <div className="mb-12 space-y-10">
             <div>
-              <h3 className="mb-4 font-mono-matrix text-xl text-matrix-accent">FEATURED_PROJECTS</h3>
+              <h3 className="mb-4 font-mono-matrix text-xl text-matrix-accent">{d.featured}</h3>
               {renderGrid(featured)}
             </div>
             <div>
-              <h3 className="mb-4 font-mono-matrix text-xl text-matrix-accent">MORE_SELECTED_WORK</h3>
+              <h3 className="mb-4 font-mono-matrix text-xl text-matrix-accent">{d.secondary}</h3>
               {renderGrid(secondary)}
             </div>
             <details className="rounded-lg border border-matrix-accent/30 bg-matrix-black/50 p-4 sm:p-6">
               <summary className="cursor-pointer font-mono-matrix text-matrix-highlight">
-                <h3 className="inline">MORE_PROJECTS ({archive.length})</h3>
+                <h3 className="inline">{d.moreProjects} ({archive.length})</h3>
               </summary>
               <div className="mt-6">{renderGrid(archive)}</div>
             </details>
@@ -219,13 +215,14 @@ export default function ProjectsSection() {
           >
             <div className="p-4 sm:p-8">
               <div className="flex items-start justify-between gap-4 mb-6">
-                <h3 id="project-dialog-title" className="font-mono-matrix text-2xl text-matrix-accent">
+                <h3 id="project-dialog-title" className="min-w-0 break-words font-mono-matrix text-2xl text-matrix-accent">
                   {toCommand(selected.title)}
                 </h3>
                 <button
                   onClick={closeProject}
                   className="text-matrix-light-gray hover:text-matrix-accent transition-colors"
-                  aria-label="Close"
+                  aria-label={d.close}
+                  type="button"
                 >
                   ✕
                 </button>
@@ -235,7 +232,7 @@ export default function ProjectsSection() {
                 {screenshot && (
                   <Image
                     src={screenshot}
-                    alt={selected.previewAlt ?? `Screenshot of ${selected.title}`}
+                    alt={selected.previewAlt ?? work.screenshotAlt(selected.title)}
                     width={1280}
                     height={800}
                     sizes="(min-width: 640px) 576px, 100vw"
@@ -243,7 +240,7 @@ export default function ProjectsSection() {
                   />
                 )}
                 <div>
-                  <h4 className="font-mono-matrix text-matrix-highlight mb-2">DESCRIPTION:</h4>
+                  <h4 className="font-mono-matrix text-matrix-highlight mb-2">{d.description}</h4>
                   <p className="text-matrix-light-gray">{selected.description}</p>
                   {selected.chains && (
                     <p className="mt-3 font-mono-matrix text-matrix-light-gray text-sm">
@@ -252,7 +249,7 @@ export default function ProjectsSection() {
                   )}
                 </div>
                 <div>
-                  <h4 className="font-mono-matrix text-matrix-highlight mb-2">TECH_STACK:</h4>
+                  <h4 className="font-mono-matrix text-matrix-highlight mb-2">{d.stack}</h4>
                   <div className="flex flex-wrap gap-2">
                     {selected.tech.map((tech) => (
                       <span
@@ -266,20 +263,20 @@ export default function ProjectsSection() {
                 </div>
                 <div className="grid grid-cols-2 gap-4 font-mono-matrix">
                   <div>
-                    <h4 className="text-matrix-highlight mb-2">STATUS:</h4>
+                    <h4 className="text-matrix-highlight mb-2">{d.status}</h4>
                     <span className={statusStyle[selected.status].color}>
                       {statusStyle[selected.status].icon} {toCommand(statusLabels[selected.status])}
                     </span>
                   </div>
                   <div>
-                    <h4 className="text-matrix-highlight mb-2">BUILT_FOR:</h4>
+                    <h4 className="text-matrix-highlight mb-2">{d.builtFor}</h4>
                     <span className="text-matrix-light-gray">{toCommand(selected.context)}</span>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8">
-                <ProjectLinks project={selected} />
+                <ProjectLinks project={selected} lang={lang} />
               </div>
             </div>
           </dialog>
@@ -288,7 +285,7 @@ export default function ProjectsSection() {
         <div className="bg-matrix-black/70 border-2 border-matrix-accent rounded-lg p-6 max-w-4xl mx-auto font-mono-matrix text-sm space-y-2">
           <div className="text-matrix-highlight">$ ls projects/ | wc -l</div>
           <div className="text-matrix-accent">
-            {projects.length} projects listed · {projects.filter((p) => p.status === "live").length} live in production
+            {d.projectCount(projects.length, projects.filter((project) => project.live).length)}
           </div>
           <div className="text-matrix-highlight">$ open github</div>
           <a
