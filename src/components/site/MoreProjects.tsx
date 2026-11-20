@@ -77,9 +77,12 @@ export default function MoreProjects({
               className="flex flex-col rounded-[1.5rem] bg-surface p-6 ring-1 ring-line/70 transition-shadow hover:shadow-[0_18px_40px_-24px_rgb(0_0_0/0.5)] sm:p-7"
               style={{ "--from": i % 2 === 0 ? -1 : 1, transitionDelay: `${(i % 2) * 90}ms` } as React.CSSProperties}
             >
-              <div className="flex items-center justify-between gap-4 text-sm text-lichen">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-lichen">
+                <span className="rounded-full border border-line px-2.5 py-1 font-semibold text-pine">
+                  {project.context}
+                </span>
                 <span>{categoryLabels[project.category]}</span>
-                <span className="shrink-0">{statusLabels[project.status]}</span>
+                <span>{statusLabels[project.status]}</span>
               </div>
               <h4 className="mt-3 text-2xl font-bold leading-tight [font-stretch:82%]">
                 {href ? (
