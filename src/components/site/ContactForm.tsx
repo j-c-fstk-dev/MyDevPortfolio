@@ -58,10 +58,11 @@ export default function ContactForm({
 
   return (
     <form
+      id="contact-form"
       name={FORM_NAME}
       method="POST"
       onSubmit={handleSubmit}
-      className={matrix ? "space-y-6" : "space-y-5"}
+      className={matrix ? "scroll-mt-24 space-y-6" : "scroll-mt-24 space-y-5"}
     >
       <input type="hidden" name="form-name" value={FORM_NAME} />
       {/* Honeypot: hidden from people, bots tend to fill it in. */}
@@ -111,6 +112,13 @@ export default function ContactForm({
           className={`${input} resize-none`}
           placeholder={labels.messagePlaceholder}
         />
+      </div>
+
+      <div>
+        <label htmlFor={id("repo")} className={label}>
+          {labels.repo}
+        </label>
+        <input id={id("repo")} name="repo" type="url" className={input} placeholder="https://" />
       </div>
 
       <button type="submit" className={button} disabled={status === "sending"}>
