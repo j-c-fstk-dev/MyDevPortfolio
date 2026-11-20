@@ -29,14 +29,14 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
     >
       <article
         data-project-preview={shot}
-        data-panel={PANEL_COLOURS[(index + DECK_SIZE) % PANEL_COLOURS.length]}
+        data-panel={PANEL_COLOURS[index % PANEL_COLOURS.length]}
         className="w-full rounded-[1.75rem] bg-ink p-6 text-mist shadow-[0_18px_40px_-24px_rgb(0_0_0/0.5)] will-change-transform sm:w-[78%] sm:p-9"
         style={{
           transform: `translateX(calc(${from} * ${left} * ${left} * 110vw)) rotate(calc(${from} * ${left} * 7deg))`,
         }}
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-          <span className="font-medium">{project.context}</span>
+          <ProjectContext project={project} label={d.openSource} />
           <span className="inline-flex items-center gap-2 text-mist/70">
             <span
               className={`h-2 w-2 rounded-full ${(project.status === "live" || project.status === "released") ? "bg-signal" : "border-[1.5px] border-mist/60"}`}
@@ -69,9 +69,6 @@ function FlyCard({ project, index, lang, d }: { project: Project; index: number;
   );
 }
 
-/** How many featured projects get the stacked full-width panel treatment. */
-const DECK_SIZE = 6;
-
 // Repositories for projects deliberately left out of the portfolio.
 const hiddenProjectRepos = [
   "site-monthly-earth-day",
@@ -87,6 +84,17 @@ const PANEL_COLOURS = ["mist", "amber", "mint"] as const;
 
 const deckLink =
   "font-medium text-mist underline decoration-signal/60 decoration-2 underline-offset-4 transition-[text-decoration-color] hover:decoration-signal";
+
+function ProjectContext({ project, label }: { project: Project; label: string }) {
+  return (
+    <>
+      <span className="rounded-full border border-mist/30 bg-mist/10 px-3 py-1 font-semibold text-mist">
+        {project.context}
+      </span>
+      {project.openSource && <span className="text-mist/80">{label}</span>}
+    </>
+  );
+}
 
 function ProjectLinks({ project, labels }: { project: Project; labels: Dictionary["work"] }) {
   const links = [...(project.links ?? [])];
@@ -134,7 +142,7 @@ function DeckPanel({
       >
         <div className="flex items-start justify-between gap-6">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-            <span className="font-medium">{project.context}</span>
+            <ProjectContext project={project} label={d.openSource} />
             <span className="inline-flex items-center gap-2 text-mist/70">
               <span
                 className={`h-2 w-2 rounded-full ${(project.status === "live" || project.status === "released") ? "bg-signal" : "border-[1.5px] border-mist/60"}`}
@@ -179,8 +187,9 @@ export default async function Work({ lang }: { lang: Locale }) {
   const { projects, contact, categoryLabels, statusLabels } = getContent(lang);
   const dict = getDictionary(lang);
   const d = dict.work;
-  const featured = projects.filter((p) => p.featured);
-  const others = projects.filter((p) => !p.featured);
+  const featured = projects.filter((p) => p.placement === "featured");
+  const secondary = projects.filter((p) => p.placement === "secondary");
+  const others = projects.filter((p) => !p.placement);
 
   // Skip repos already shown above, and the profile README repo.
   const listed = projects
@@ -192,14 +201,14 @@ export default async function Work({ lang }: { lang: Locale }) {
   return (
     <Section id="work" title={d.title} intro={d.intro} tone="dark">
       <ol className="lg:grid lg:auto-rows-fr lg:gap-[10vh]">
-        {featured.slice(0, DECK_SIZE).map((project, i) => (
+        {featured.map((project, i) => (
           <DeckPanel key={project.slug} project={project} index={i} lang={lang} d={d} />
         ))}
       </ol>
 
-      {featured.length > DECK_SIZE && (
+      {secondary.length > 0 && (
         <ul className="mt-20 space-y-10 overflow-x-clip sm:space-y-14">
-          {featured.slice(DECK_SIZE).map((project, i) => (
+          {secondary.map((project, i) => (
             <FlyCard key={project.slug} project={project} index={i} lang={lang} d={d} />
           ))}
         </ul>
