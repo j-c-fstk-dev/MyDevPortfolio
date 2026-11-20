@@ -72,7 +72,7 @@ export default function HeroSection() {
           </button>
           <button
             className="rounded border-2 border-matrix-highlight bg-matrix-highlight/20 px-6 py-3 font-mono-matrix text-sm text-matrix-highlight transition-all duration-300 hover:bg-matrix-highlight/30 hover:shadow-phosphor sm:px-8 sm:text-base"
-            onClick={() => scrollTo("section-5")}
+            onClick={() => scrollTo("contact-form")}
           >
             &gt; CONTACT_ME
           </button>
