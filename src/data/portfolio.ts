@@ -213,18 +213,25 @@ const raw = {
       placement: "featured",
     },
     {
-      slug: "bass-forest",
-      title: "Bass Forest",
+      slug: "ns-multimarcas",
+      title: "NS Multimarcas",
       description: t(
-        "Site for an annual global electronic music festival tied to World Environment Day and tree planting. Designed and built solo from scratch.",
-        "Site de um festival global anual de música eletrônica ligado ao Dia Mundial do Meio Ambiente e ao plantio de árvores. Projetado e desenvolvido do zero, sozinho."
+        "I built a vehicle dealership website with a searchable inventory and WhatsApp links on each listing. The admin panel lets the dealer manage vehicles, offers and featured listings, and edit homepage copy and sections without changing code.",
+        "Desenvolvi um site para uma revendedora de veículos, com filtros de estoque e WhatsApp em cada anúncio. Pelo painel administrativo, o lojista gerencia veículos, ofertas e destaques e edita textos e seções da página inicial sem mexer no código."
       ),
-      tech: ["TypeScript", "React"],
+      previewAlt: t(
+        "NS Multimarcas demo homepage with a featured motorcycle and its sample listing price.",
+        "Página inicial da demonstração da NS Multimarcas, com uma moto em destaque e o preço de exemplo do anúncio."
+      ),
+      tech: ["React", "TypeScript", "Vite", "Supabase"],
       category: "web",
-      status: "live",
-      context: contexts.client,
-      live: "https://bassforest.earth",
-      repo: gh("bassforest", "BeRegen"),
+      status: "prototype",
+      context: t("Business demo", "Demonstração comercial"),
+      repo: gh("nsmotospinda"),
+      links: [{
+        label: t("Preview photo by Mariordo (CC BY-SA 3.0)", "Foto da prévia por Mariordo (CC BY-SA 3.0)"),
+        href: "https://commons.wikimedia.org/wiki/File:Moto_Honda_Flex_Titan_CG_150_Mix_Fuel_Injection_06_2009_Itu.jpg",
+      }],
       placement: "secondary",
     },
     {
@@ -567,8 +574,8 @@ const raw = {
           "Corrigi bugs em produção e entreguei novas funcionalidades no front-end, back-end e banco de dados; revisei contratos em Solidity e construí os fluxos ligados a eles."
         ),
         t(
-          "Bass Forest — designed and built the site solo, from scratch.",
-          "Bass Forest — projetei e desenvolvi o site do zero, sozinho."
+          "NS Multimarcas — built a dealership demo with a vehicle catalog and an admin panel for managing inventory and editing the homepage.",
+          "NS Multimarcas — desenvolvi uma demonstração para revenda de veículos, com catálogo e painel para gerenciar o estoque e editar a página inicial."
         ),
       ],
       tech: ["TypeScript", "React", "Node.js", "Solidity", "Celo"],

@@ -40,7 +40,7 @@ npx playwright install chromium
 npm run screenshots
 ```
 
-Pass slugs to capture only some projects, e.g. `npm run screenshots -- bass-forest beregen`. The
+Pass slugs to capture only some projects, e.g. `npm run screenshots -- chronoflare beregen`. The
 script also updates `src/data/screenshots.json`, which tells the site which images exist. Commit
 both.
 
