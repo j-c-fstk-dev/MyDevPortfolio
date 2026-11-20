@@ -121,14 +121,22 @@ export default function ContactForm({
         <input id={id("repo")} name="repo" type="url" className={input} placeholder="https://" />
       </div>
 
+      <div role="status" aria-atomic="true">
+        {status === "sent" && (
+          <div className={`rounded-lg border px-4 py-3 ${matrix ? "border-matrix-accent/50 bg-matrix-black/80 text-matrix-light-gray" : "border-pine/30 bg-surface text-ink"}`}>
+            <p className={matrix ? "font-mono-matrix font-semibold text-matrix-accent" : "font-semibold text-pine"}>
+              {labels.sentTitle}
+            </p>
+            <p className="mt-1">{labels.sent}</p>
+          </div>
+        )}
+      </div>
+
       <button type="submit" className={button} disabled={status === "sending"}>
         {status === "sending" ? labels.sending : labels.submit}
       </button>
 
       <div aria-live="polite">
-        {status === "sent" && (
-          <p className={`${note} ${matrix ? "text-matrix-accent" : "text-pine font-medium"}`}>{labels.sent}</p>
-        )}
         {status === "failed" && (
           <p className={`${note} ${matrix ? "text-red-400" : "text-ink"}`}>
             {labels.failed}{" "}
