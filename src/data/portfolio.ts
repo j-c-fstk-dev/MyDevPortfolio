@@ -50,8 +50,8 @@ const raw = {
     location: t("Brazil, remote, UTC-3", "Brasil, remoto, UTC-3"),
     photo: "/jorge-cristo.jpg",
     summary: t(
-      "Freelance full-stack developer with 3 years of client work and around 20 projects delivered, many of them production apps for Web3, climate and community projects. I take existing codebases and make them work: debugging, broken builds and deploys, database and auth issues, and new features on top. In Web3 I build dApps and Farcaster mini apps and review Solidity contracts.",
-      "Desenvolvedor full-stack freelancer com 3 anos de trabalho com clientes e cerca de 20 projetos entregues, muitos deles apps em produção para projetos de Web3, meio ambiente e comunidades. Assumo bases de código existentes e faço funcionar: depuração, build e deploy quebrados, problemas de banco de dados e autenticação, e novas funcionalidades em cima disso. Em Web3, desenvolvo dApps e mini apps para Farcaster e reviso contratos em Solidity."
+      "I've worked as a freelance full-stack developer since 2023 across about 20 projects, including work under NDA. I design and build sites and systems, fix broken builds and deployments, and ship integrations for payments, automation and Web3.",
+      "Trabalho como desenvolvedor full-stack freelancer desde 2023, com cerca de 20 projetos, incluindo trabalhos sob NDA. Planejo e desenvolvo sites e sistemas, corrijo falhas de build e deploy e entrego integrações de pagamentos, automação e Web3."
     ),
     story: t(
       "Before tech I worked in production engineering, commerce and tourism — including eight years operating trains on a mountain railway. That shaped how I work: diagnose first, agree on a clear scope, deliver on a separate branch with clean documentation.",
@@ -92,8 +92,8 @@ const raw = {
     {
       title: t("Web3 & smart contracts", "Web3 e smart contracts"),
       description: t(
-        "dApps on EVM chains (Celo, Ethereum), Solidity contract review, wallet flows, Farcaster mini apps and account abstraction.",
-        "dApps em redes EVM (Celo, Ethereum), revisão de contratos em Solidity, fluxos de carteira, mini apps para Farcaster e account abstraction."
+        "dApps on EVM chains (Ethereum, Celo, Base), Solidity contract review, wallet flows, Farcaster mini apps and account abstraction.",
+        "dApps em redes EVM (Ethereum, Celo, Base), revisão de contratos em Solidity, fluxos de carteira, mini apps para Farcaster e account abstraction."
       ),
     },
     {
@@ -248,8 +248,8 @@ const raw = {
       slug: "megazord",
       title: "Megazord MVP",
       description: t(
-        "Automation MVP for social and sales workflows, including a Cloudflare Worker for trackable links and an n8n integration that sends sales events to Sheets.",
-        "MVP de automação de canais sociais e vendas, com um Cloudflare Worker para links rastreáveis e integração via n8n que envia eventos de venda ao Sheets."
+        "Automation MVP for social and sales workflows, with trackable links on Cloudflare Workers, a Nuvemshop-to-Google Sheets workflow via n8n and a daily brief that brings together five modules.",
+        "MVP de automação de canais sociais e vendas, com links rastreáveis no Cloudflare Workers, integração da Nuvemshop com o Google Sheets via n8n e um resumo diário que reúne cinco módulos."
       ),
       previewAlt: t(
         "Diagram of the live link redirect on Cloudflare Workers and the Nuvemshop sales workflow through n8n to Google Sheets.",
@@ -300,10 +300,10 @@ const raw = {
       slug: "clipvault",
       title: "ClipVault",
       description: t(
-        "I built a Rust clipboard manager that automatically sorts what you copy into categories so you can find it again. The Linux release is available on GitHub.",
-        "Desenvolvi em Rust um gerenciador de área de transferência que organiza automaticamente o que você copia em categorias para facilitar a busca. A versão para Linux está disponível no GitHub."
+        "I built a clipboard manager with Rust and Tauri that automatically sorts what you copy into categories so you can find it again. The Linux release is available on GitHub.",
+        "Desenvolvi em Rust e Tauri um gerenciador de área de transferência que organiza automaticamente o que você copia em categorias para facilitar a busca. A versão para Linux está disponível no GitHub."
       ),
-      tech: ["Rust"],
+      tech: ["Rust", "Tauri"],
       category: "desktop",
       status: "released",
       context: contexts.own,
@@ -581,36 +581,53 @@ const raw = {
 
   experience: [
     {
+      title: t("Full-Stack Web3 Contributor", "Contribuidor Full-Stack Web3"),
+      company: t("DeCleanup Network · DeCleanup Rewards", "DeCleanup Network · DeCleanup Rewards"),
+      period: t("Dec 2025 – Sep 2026 (tracked contributions)", "Dez 2025 – set 2026 (contribuições registradas)"),
+      summary: t(
+        "Started locally in December 2025. From January to September 2026, upstream records show 9 PRs I authored were incorporated and 72 of my commits reached the main branch.",
+        "Comecei a trabalhar localmente em dezembro de 2025. De janeiro a setembro de 2026, o histórico do upstream registra 9 PRs de minha autoria incorporadas e 72 commits meus na branch main."
+      ),
+      highlights: [
+        t(
+          "Built the Hypercerts request, verifier approval and onchain minting flow and integrated AT Protocol publishing with Supabase. The team credited my Celo/Base integration in PR #57.",
+          "Implementei o fluxo de solicitação, aprovação por verificador e emissão onchain de Hypercerts e integrei a publicação via AT Protocol com Supabase. A equipe creditou meu trabalho na integração Celo/Base na PR #57."
+        ),
+        t(
+          "Contributed to AI verification and airdrop tooling and consolidated the changelog for the team handoff.",
+          "Contribuí com a verificação por IA e as ferramentas de airdrop e consolidei o changelog para o time dar continuidade."
+        ),
+      ],
+      tech: ["TypeScript", "React", "Next.js", "Supabase", "Celo", "Base"],
+      link: gh("decleanup-main-celo", "DeCleanup-Network"),
+    },
+    {
       title: t("Freelance Full-Stack Developer", "Desenvolvedor Full-Stack Freelancer"),
       company: t("Remote", "Remoto"),
       period: t("2023 – present", "2023 – atual"),
       summary: t(
-        "Projects for Web3, climate and community organizations, including work under NDA.",
-        "Projetos para organizações de Web3, meio ambiente e comunidades, incluindo trabalhos sob NDA."
+        "About 20 projects, including websites and systems for local businesses and work under NDA.",
+        "Cerca de 20 projetos, entre eles sites e sistemas para negócios locais e trabalhos sob NDA."
       ),
       highlights: [
         t(
-          "DeCleanup Rewards — recurring full-stack Web3 contributions from January to September 2026. The upstream history records 9 of my PRs incorporated and 72 of my commits in main.",
-          "DeCleanup Rewards — contribuições recorrentes de engenharia full-stack Web3 de janeiro a setembro de 2026. O histórico do upstream registra 9 PRs minhas incorporadas e 72 commits meus na main."
-        ),
-        t(
-          "Built the Hypercerts request, verification and minting flow and added AT Protocol publishing with Supabase. The team credited my Celo/Base integration in PR #57. I also contributed to AI verification, airdrop tooling and handoff documentation.",
-          "Implementei o fluxo de solicitação, verificação e emissão de Hypercerts e integrei a publicação via AT Protocol com Supabase. A equipe creditou meu trabalho na integração Celo/Base na PR #57. Também contribuí com verificação por IA, ferramentas de airdrop e documentação para o time dar continuidade."
+          "Planned and built sites and systems, fixed and recovered existing apps, and implemented Stripe payments and n8n workflows.",
+          "Planejei e desenvolvi sites e sistemas, recuperei apps com falhas e implementei pagamentos via Stripe e fluxos no n8n."
         ),
         t(
           "NS Multimarcas — built a dealership demo with a vehicle catalog and an admin panel for managing inventory and editing the homepage.",
           "NS Multimarcas — desenvolvi uma demonstração para revenda de veículos, com catálogo e painel para gerenciar o estoque e editar a página inicial."
         ),
       ],
-      tech: ["TypeScript", "React", "Next.js", "Supabase", "Celo", "Base"],
+      tech: ["TypeScript", "React", "Next.js", "Supabase", "Stripe", "n8n"],
     },
     {
       title: t("Founder & Lead Developer", "Fundador e Desenvolvedor Líder"),
       company: t("BeRegen", "BeRegen"),
       period: t("2023 – present", "2023 – atual"),
       summary: t(
-        "Regenerative infrastructure for communities, connecting real-world action, learning, identity, governance and funding, with fieldwork in the Mantiqueira range.",
-        "Infraestrutura regenerativa para comunidades, conectando ação no mundo real, aprendizado, identidade, governança e financiamento, com trabalho de campo na Serra da Mantiqueira."
+        "Regenerative infrastructure for communities, connecting real-world action, learning, identity, governance and funding, with fieldwork in the Mantiqueira range. Development is paused pending funding. Part of the work continued in Rastro.",
+        "Infraestrutura regenerativa para comunidades, conectando ação no mundo real, aprendizado, identidade, governança e financiamento, com trabalho de campo na Serra da Mantiqueira. O desenvolvimento está pausado enquanto aguarda financiamento. Parte do trabalho continuou no Rastro."
       ),
       highlights: [
         t(
@@ -653,11 +670,11 @@ const raw = {
   previousCareer: [
     {
       title: t("Owner", "Proprietário"),
-      company: t("Brincando em Família Ateliê", "Brincando em Família Ateliê"),
-      period: t("2019 – 2025", "2019 – 2025"),
+      company: t("Brincando em Família Ateliê (now Jardim do Fazer)", "Brincando em Família Ateliê (hoje Jardim do Fazer)"),
+      period: t("2019 – present", "2019 – atual"),
       summary: t(
-        "Ran the online store, website and digital marketing.",
-        "Gestão da loja virtual, do site e do marketing digital."
+        "Handcrafted wooden toys and furniture. I manage the online store, website and digital marketing.",
+        "Brinquedos e móveis artesanais de madeira. Faço a gestão da loja virtual, do site e do marketing digital."
       ),
       highlights: [],
       tech: [],
@@ -689,7 +706,7 @@ const raw = {
   skills: [
     {
       category: t("Languages", "Linguagens"),
-      items: ["TypeScript", "JavaScript", "Python", "Solidity", "SQL", "Java", "Kotlin"],
+      items: ["TypeScript", "JavaScript", "Python", "Solidity", "Kotlin", "Rust", "SQL", "Java"],
     },
     {
       category: t("Front-end", "Front-end"),
@@ -707,6 +724,7 @@ const raw = {
         "SQLite",
         "MongoDB",
         "Firestore",
+        "IndexedDB",
         t("Browser & local storage", "Armazenamento local e no navegador"),
       ],
     },
@@ -714,8 +732,14 @@ const raw = {
       category: t("Web3", "Web3"),
       items: [
         "Solidity",
-        "EVM (Ethereum, Celo)",
+        "EVM (Ethereum, Celo, Base)",
         "Solana",
+        "Wagmi",
+        "Privy",
+        "Hardhat",
+        "Hypercerts SDK",
+        "AT Protocol",
+        "IPFS",
         "Ethers.js",
         "Web3.js",
         "Account abstraction",
@@ -724,12 +748,16 @@ const raw = {
     },
     {
       category: t("Automation & AI", "Automação e IA"),
-      items: ["n8n", "Zapier", "Kommo CRM", "Streamlit", "LangChain", t("LLM APIs", "APIs de LLM")],
+      items: ["n8n", "Zapier", "Kommo CRM", "Streamlit", "LangChain", "Cloudflare Workers", t("LLM APIs", "APIs de LLM")],
     },
     {
-      category: t("Tools", "Ferramentas"),
+      category: t("Testing & tools", "Testes e ferramentas"),
       items: [
+        "Playwright",
         "Git & GitHub",
+        "Linear",
+        "Notion",
+        "Trello",
         t("Linux (daily driver)", "Linux (uso diário)"),
         "Netlify",
         "Vercel",
@@ -754,7 +782,7 @@ const raw = {
     },
   ],
 
-  languages: [t("Portuguese (native)", "Português (nativo)"), t("English (advanced)", "Inglês (avançado)")],
+  languages: [t("Portuguese (native)", "Português (nativo)"), t("English (advanced, written and spoken)", "Inglês (avançado, escrito e falado)")],
 };
 
 interface RawProject {
@@ -816,7 +844,7 @@ function resolve<X>(value: X, locale: Locale): Localized<X> {
 }
 
 export type Content = Localized<typeof raw> & {
-  stats: { label: string; value: number; suffix: string }[];
+  stats: { label: string; value: string | number }[];
 };
 export type Project = Content["projects"][number];
 export type Job = Content["experience"][number];
@@ -832,14 +860,13 @@ export function getContent(locale: Locale): Content {
   const live = raw.projects.filter((p) => p.status === "live").length;
   const labels =
     locale === "pt"
-      ? ["Projetos entregues", "Anos de trabalho com clientes", "Apps em produção"]
-      : ["Projects delivered", "Years of client work", "Apps live in production"];
-  const values = [20, new Date().getFullYear() - raw.profile.freelanceSince, live];
-  const suffixes = ["+", "+", ""];
+      ? ["Projetos freelance", "Freelancer desde", "Projetos no ar"]
+      : ["Freelance projects", "Freelancing since", "Live projects"];
+  const values = ["≈20", raw.profile.freelanceSince, live];
 
   const result: Content = {
     ...content,
-    stats: labels.map((label, i) => ({ label, value: values[i], suffix: suffixes[i] })),
+    stats: labels.map((label, i) => ({ label, value: values[i] })),
   };
   cache.set(locale, result);
   return result;

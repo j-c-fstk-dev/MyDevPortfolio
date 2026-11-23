@@ -42,7 +42,7 @@ const dictionaries = {
     about: {
       title: "About",
       photoAlt: (name: string) => `Portrait of ${name}`,
-      sideProjects: ["Outside client work I run", "regenerative infrastructure for communities in the Mantiqueira range, and write on"],
+      sideProjects: ["I founded", "an initiative for regenerative communities in the Mantiqueira range, and write on"],
       tools: "Tools I use",
       education: "Education",
       languages: "Languages",
@@ -116,7 +116,7 @@ const dictionaries = {
     about: {
       title: "Sobre",
       photoAlt: (name: string) => `Retrato de ${name}`,
-      sideProjects: ["Fora dos projetos para clientes, toco a", "infraestrutura regenerativa para comunidades na Serra da Mantiqueira, e escrevo no"],
+      sideProjects: ["Fundei a", "uma iniciativa para comunidades regenerativas na Serra da Mantiqueira, e escrevo no"],
       tools: "Ferramentas que uso",
       education: "Formação",
       languages: "Idiomas",

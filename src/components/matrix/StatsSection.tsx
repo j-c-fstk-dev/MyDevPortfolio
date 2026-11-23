@@ -31,14 +31,14 @@ export default function StatsSection({ lang }: { lang: Locale }) {
         </h2>
 
         <dl className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:gap-8">
-          {stats.map(({ label, value, suffix }, index) => (
+          {stats.map(({ label, value }, index) => (
             <div
               key={label}
               className={`flex flex-col-reverse gap-2 rounded-lg border border-matrix-accent/40 bg-matrix-black/[.85] p-5 text-center motion-safe:transition-transform motion-safe:duration-500 ${isVisible ? "translate-y-0" : "motion-safe:translate-y-2"}`}
             >
               <dt className="font-mono-matrix text-sm text-matrix-light-gray">{label}</dt>
               <dd className={`font-mono-matrix text-4xl ${index % 2 === 0 ? "text-matrix-accent" : "text-matrix-highlight"}`}>
-                {value}{suffix}
+                {value}
               </dd>
             </div>
           ))}
