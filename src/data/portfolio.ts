@@ -205,8 +205,8 @@ const raw = {
         "Desenvolvi um gerenciador de arquivos nativo para Linux em Rust e GTK 3, com abas, painéis lado a lado e miniaturas. A leitura de pastas roda em segundo plano para manter a interface responsiva ao abrir diretórios grandes."
       ),
       previewAlt: t(
-        "Alpha File Manager showing pinned folders, file icons and image thumbnails.",
-        "Alpha File Manager com pastas fixadas, ícones de arquivos e miniaturas de imagens."
+        "Alpha File Manager home screen with a mountain and aurora banner, pinned folders, and disk usage.",
+        "Tela inicial do Alpha File Manager com banner de montanhas e aurora, pastas fixadas e espaço em disco."
       ),
       tech: ["Rust", "GTK 3", "Linux"],
       category: "desktop",
