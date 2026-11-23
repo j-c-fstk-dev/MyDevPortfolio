@@ -198,18 +198,26 @@ const raw = {
       placement: "featured",
     },
     {
-      slug: "clipvault",
-      title: "ClipVault",
+      slug: "alpha-file-manager",
+      title: "Alpha File Manager",
       description: t(
-        "I built a Rust clipboard manager that automatically sorts what you copy into categories so you can find it again. The Linux release is available on GitHub.",
-        "Desenvolvi em Rust um gerenciador de área de transferência que organiza automaticamente o que você copia em categorias para facilitar a busca. A versão para Linux está disponível no GitHub."
+        "I built a native Linux file manager in Rust and GTK 3 with tabs, split view and image thumbnails. It reads folders in the background to keep the interface responsive when opening large directories.",
+        "Desenvolvi um gerenciador de arquivos nativo para Linux em Rust e GTK 3, com abas, painéis lado a lado e miniaturas. A leitura de pastas roda em segundo plano para manter a interface responsiva ao abrir diretórios grandes."
       ),
-      tech: ["Rust"],
+      previewAlt: t(
+        "Alpha File Manager showing pinned folders, file icons and image thumbnails.",
+        "Alpha File Manager com pastas fixadas, ícones de arquivos e miniaturas de imagens."
+      ),
+      tech: ["Rust", "GTK 3", "Linux"],
       category: "desktop",
       status: "released",
       context: contexts.own,
-      links: [{ label: t("Download for Linux", "Baixar para Linux"), href: gh("clipvault/releases/latest") }],
-      repo: gh("clipvault"),
+      openSource: true,
+      links: [{
+        label: t("Download for Linux x86-64", "Baixar para Linux x86-64"),
+        href: gh("alpha-file-manager/releases/latest"),
+      }],
+      repo: gh("alpha-file-manager"),
       placement: "featured",
     },
     {
@@ -285,6 +293,20 @@ const raw = {
       repo: gh("ritmo"),
       links: [{ label: t("Download test APK", "Baixar APK de teste"), href: gh("ritmo/releases/tag/v1.7") }],
       placement: "secondary",
+    },
+    {
+      slug: "clipvault",
+      title: "ClipVault",
+      description: t(
+        "I built a Rust clipboard manager that automatically sorts what you copy into categories so you can find it again. The Linux release is available on GitHub.",
+        "Desenvolvi em Rust um gerenciador de área de transferência que organiza automaticamente o que você copia em categorias para facilitar a busca. A versão para Linux está disponível no GitHub."
+      ),
+      tech: ["Rust"],
+      category: "desktop",
+      status: "released",
+      context: contexts.own,
+      links: [{ label: t("Download for Linux", "Baixar para Linux"), href: gh("clipvault/releases/latest") }],
+      repo: gh("clipvault"),
     },
     {
       slug: "mural-dos-sonhos",
