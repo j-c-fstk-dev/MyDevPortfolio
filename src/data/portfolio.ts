@@ -583,7 +583,7 @@ const raw = {
     {
       title: t("Full-Stack Web3 Contributor", "Contribuidor Full-Stack Web3"),
       company: t("DeCleanup Network · DeCleanup Rewards", "DeCleanup Network · DeCleanup Rewards"),
-      period: t("Dec 2025 – Sep 2026 (tracked contributions)", "Dez 2025 – set 2026 (contribuições registradas)"),
+      period: t("Dec 2025 – present", "Dez 2025 – atual"),
       summary: t(
         "Started locally in December 2025. From January to September 2026, upstream records show 9 PRs I authored were incorporated and 72 of my commits reached the main branch.",
         "Comecei a trabalhar localmente em dezembro de 2025. De janeiro a setembro de 2026, o histórico do upstream registra 9 PRs de minha autoria incorporadas e 72 commits meus na branch main."
@@ -594,8 +594,12 @@ const raw = {
           "Implementei o fluxo de solicitação, aprovação por verificador e emissão onchain de Hypercerts e integrei a publicação via AT Protocol com Supabase. A equipe creditou meu trabalho na integração Celo/Base na PR #57."
         ),
         t(
-          "Contributed to AI verification and airdrop tooling and consolidated the changelog for the team handoff.",
-          "Contribuí com a verificação por IA e as ferramentas de airdrop e consolidei o changelog para o time dar continuidade."
+          "Added confidence scoring and a manual review path to AI verification, contributed to airdrop tooling and consolidated the changelog for the team handoff.",
+          "Adicionei pontuação por confiança e uma opção de revisão manual à verificação por IA, contribuí com ferramentas de airdrop e consolidei o changelog para o time dar continuidade."
+        ),
+        t(
+          "Diagnosed build and hydration failures and added defensive network validation for a Wagmi issue.",
+          "Investiguei falhas de build e hidratação e adicionei validação defensiva de rede para um problema no Wagmi."
         ),
       ],
       tech: ["TypeScript", "React", "Next.js", "Supabase", "Celo", "Base"],
@@ -611,12 +615,16 @@ const raw = {
       ),
       highlights: [
         t(
-          "Planned and built sites and systems, fixed and recovered existing apps, and implemented Stripe payments and n8n workflows.",
-          "Planejei e desenvolvi sites e sistemas, recuperei apps com falhas e implementei pagamentos via Stripe e fluxos no n8n."
+          "Diagnosed build, deployment, authentication and integration failures in React, Next.js and Node apps. Documented the root cause and verified fixes on a separate branch.",
+          "Diagnostiquei falhas de build, deploy, autenticação e integração em apps React, Next.js e Node. Documentei a causa raiz e validei as correções em uma branch separada."
         ),
         t(
           "NS Multimarcas — built a dealership demo with a vehicle catalog and an admin panel for managing inventory and editing the homepage.",
           "NS Multimarcas — desenvolvi uma demonstração para revenda de veículos, com catálogo e painel para gerenciar o estoque e editar a página inicial."
+        ),
+        t(
+          "Integrated Stripe payments and automated Nuvemshop sales reporting in Google Sheets with n8n. Also configured an AWS server for a client under NDA.",
+          "Integrei pagamentos via Stripe e automatizei o registro de vendas da Nuvemshop no Google Sheets com n8n. Também configurei um servidor na AWS para um cliente sob NDA."
         ),
       ],
       tech: ["TypeScript", "React", "Next.js", "Supabase", "Stripe", "n8n"],
@@ -659,8 +667,8 @@ const raw = {
           "Construí e mantive blogs e sites de marketing para projetos Web3, com SEO."
         ),
         t(
-          "Wrote technical documentation for blockchain platforms and ran their community channels.",
-          "Escrevi documentação técnica para plataformas blockchain e gerenciei seus canais de comunidade."
+          "Wrote articles and technical documentation for blockchain projects, ran community channels and helped plan and document websites, apps and systems.",
+          "Escrevi artigos e documentação técnica para projetos blockchain, gerenciei canais de comunidade e ajudei a planejar e documentar sites, apps e sistemas."
         ),
       ],
       tech: ["CMS", "SEO", "Technical writing"],
@@ -673,8 +681,8 @@ const raw = {
       company: t("Brincando em Família Ateliê (now Jardim do Fazer)", "Brincando em Família Ateliê (hoje Jardim do Fazer)"),
       period: t("2019 – present", "2019 – atual"),
       summary: t(
-        "Handcrafted wooden toys and furniture. I manage the online store, website and digital marketing.",
-        "Brinquedos e móveis artesanais de madeira. Faço a gestão da loja virtual, do site e do marketing digital."
+        "I make wooden toys and furniture, manage sales and digital marketing, and built the Jardim do Fazer store with a blog and an admin panel.",
+        "Produzo brinquedos e móveis artesanais de madeira, cuido das vendas e do marketing digital e desenvolvi a loja Jardim do Fazer com blog e painel administrativo."
       ),
       highlights: [],
       tech: [],
@@ -684,8 +692,8 @@ const raw = {
       company: t("Estrada de Ferro Campos do Jordão", "Estrada de Ferro Campos do Jordão"),
       period: t("2015 – 2023", "2015 – 2023"),
       summary: t(
-        "Operated and troubleshot electromechanical systems under strict safety protocols.",
-        "Operação e solução de falhas em sistemas eletromecânicos sob protocolos rígidos de segurança."
+        "Operated and troubleshot electromechanical systems under strict safety protocols and assisted passengers in Portuguese and English.",
+        "Operei sistemas eletromecânicos, resolvi falhas sob protocolos rigorosos de segurança e atendi passageiros em português e inglês."
       ),
       highlights: [],
       tech: [],
@@ -695,8 +703,8 @@ const raw = {
       company: t("Zodiac (pharmaceutical)", "Zodiac (farmacêutica)"),
       period: t("2010 – 2014", "2010 – 2014"),
       summary: t(
-        "Built cost-control and maintenance-order systems; documented processes.",
-        "Criação de sistemas de controle de custos e ordens de manutenção; documentação de processos."
+        "Built cost-control and work-order systems and wrote GMP and SOP documentation. In 2011, I identified the need for a preventive air-conditioning maintenance (PMOC) module and helped the team specify it.",
+        "Criei sistemas de controle de custos e ordens de manutenção e redigi documentação de boas práticas de fabricação (BPF) e procedimentos operacionais padrão (POPs). Em 2011, identifiquei a necessidade de um módulo de PMOC para climatização e ajudei o time a especificá-lo."
       ),
       highlights: [],
       tech: [],
@@ -706,7 +714,7 @@ const raw = {
   skills: [
     {
       category: t("Languages", "Linguagens"),
-      items: ["TypeScript", "JavaScript", "Python", "Solidity", "Kotlin", "Rust", "SQL", "Java"],
+      items: ["TypeScript", "JavaScript", "Python", "Solidity", "Kotlin", "Rust", "SQL"],
     },
     {
       category: t("Front-end", "Front-end"),
@@ -714,7 +722,7 @@ const raw = {
     },
     {
       category: t("Back-end", "Back-end"),
-      items: ["Node.js", "Express", "REST APIs", "Supabase (Auth, RLS)", "Firebase", "Stripe API"],
+      items: ["Node.js", "Express", "NestJS", "FastAPI", "REST", "GraphQL", "Webhooks", "Supabase (Auth, RLS)", "Firebase", "Stripe API"],
     },
     {
       category: t("Databases", "Bancos de dados"),
@@ -725,6 +733,8 @@ const raw = {
         "MongoDB",
         "Firestore",
         "IndexedDB",
+        "Prisma",
+        "Redis",
         t("Browser & local storage", "Armazenamento local e no navegador"),
       ],
     },
@@ -751,18 +761,45 @@ const raw = {
       items: ["n8n", "Zapier", "Kommo CRM", "Streamlit", "LangChain", "Cloudflare Workers", t("LLM APIs", "APIs de LLM")],
     },
     {
-      category: t("Testing & tools", "Testes e ferramentas"),
+      category: t("Mobile & offline", "Mobile e recursos offline"),
       items: [
+        "Android (Kotlin, Jetpack Compose, Room)",
+        "Flutter",
+        "PWAs",
+        t("Offline-first sync and persistent queues", "Sincronização offline-first e filas persistentes"),
+      ],
+    },
+    {
+      category: t("QA & testing", "QA e testes"),
+      items: [
+        t("Bug reproduction and root-cause analysis", "Reprodução de bugs e análise de causa raiz"),
+        t("Manual web, PWA and Android testing", "Testes manuais em web, PWA e Android"),
+        t("Test cases and regression checks", "Casos de teste e verificações de regressão"),
+        t("Unit testing", "Testes unitários"),
+        "TDD / BDD",
         "Playwright",
-        "Git & GitHub",
+      ],
+    },
+    {
+      category: t("Infrastructure & delivery", "Infraestrutura e entrega"),
+      items: [
+        t("AWS (client server setup)", "AWS (configuração de servidor para cliente)"),
+        "GCP",
+        "Docker",
+        "CI/CD",
+        "Linux",
+        "Netlify",
+        "Vercel",
+      ],
+    },
+    {
+      category: t("Collaboration & tools", "Colaboração e ferramentas"),
+      items: [
+        t("Git & GitHub (PRs, issues, code review)", "Git e GitHub (PRs, issues e revisão de código)"),
+        "Kanban",
         "Linear",
         "Notion",
         "Trello",
-        t("Linux (daily driver)", "Linux (uso diário)"),
-        "Netlify",
-        "Vercel",
-        "Docker",
-        "GCP",
         t("AI-assisted dev (Claude, Cursor, Copilot)", "Desenvolvimento assistido por IA (Claude, Cursor, Copilot)"),
       ],
     },
@@ -778,6 +815,11 @@ const raw = {
     {
       title: t("CS50", "CS50"),
       school: t("Harvard, plus freeCodeCamp and DIO tracks", "Harvard, além de freeCodeCamp e trilhas da DIO"),
+      year: "",
+    },
+    {
+      title: t("Java with Spring Boot", "Java com Spring Boot"),
+      school: t("DIO course", "Curso da DIO"),
       year: "",
     },
   ],
