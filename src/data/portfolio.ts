@@ -150,21 +150,23 @@ const raw = {
       slug: "decleanup-dapp",
       title: "DeCleanup Network",
       description: t(
-        "DeCleanup Network is an open-source onchain protocol that turns community cleanups into verified, permanent records, rewarding volunteers with tokens and impact credentials that funders can check independently. Fixed production bugs, shipped features across front-end, back-end and database, and reviewed the Solidity contracts.",
-        "DeCleanup Network é um protocolo onchain de código aberto que transforma mutirões comunitários de limpeza em registros verificados e permanentes, recompensando voluntários com tokens e credenciais de impacto que financiadores podem verificar de forma independente. Corrigi bugs em produção, entreguei funcionalidades no front-end, back-end e banco de dados, e revisei os contratos em Solidity."
+        "Full-stack Web3 contributions to DeCleanup Rewards, an open-source app that records and rewards verified community cleanups. I took Hypercerts from testnet eligibility and metadata to a request, verifier approval and user-driven onchain minting flow, then added AT Protocol publishing behind feature flags. I also implemented a persistent Celo/Base network selector and a simpler cleanup flow on Base.",
+        "Contribuições full-stack Web3 ao DeCleanup Rewards, app de código aberto que registra e recompensa mutirões de limpeza verificados. Levei a integração de Hypercerts da elegibilidade e dos metadados em testnet ao fluxo de solicitação, aprovação por verificador e emissão onchain pelo usuário. Depois integrei a publicação via AT Protocol, com ativação por configuração. Também implementei o seletor persistente Celo/Base e a interface simplificada na Base."
       ),
-      chains: ["Base", "Celo", "Robinhood Chain (testnet)"],
-      tech: ["TypeScript", "React", "Node.js", "Solidity"],
+      chains: ["Celo", "Base"],
+      tech: ["TypeScript", "React", "Next.js", "Supabase", "Wagmi"],
       category: "web3",
       status: "live",
       context: contexts.client,
       openSource: true,
       live: "https://dapp.decleanup.net",
-      repo: gh("decleanup-main-celo"),
-      links: [{
-        label: t("Merged PR · Hypercerts build fix", "PR integrado · Correção de build do Hypercerts"),
-        href: "https://github.com/DeCleanup-Network/decleanup-main-celo/pull/38",
-      }],
+      repo: gh("decleanup-main-celo", "DeCleanup-Network"),
+      links: [
+        { label: t("Hypercerts flow · PR #37", "Fluxo Hypercerts · PR #37"), href: gh("decleanup-main-celo/pull/37", "DeCleanup-Network") },
+        { label: t("AT Protocol · PR #50", "AT Protocol · PR #50"), href: gh("decleanup-main-celo/pull/50", "DeCleanup-Network") },
+        { label: t("Celo + Base · PR #57", "Celo + Base · PR #57"), href: gh("decleanup-main-celo/pull/57", "DeCleanup-Network") },
+        { label: t("Hypercerts changelog", "Changelog do Hypercerts"), href: gh("decleanup-main-celo/blob/e397620/docs/CHANGELOG.md", "DeCleanup-Network") },
+      ],
       placement: "featured",
     },
     {
@@ -588,19 +590,19 @@ const raw = {
       ),
       highlights: [
         t(
-          "DeCleanup Network — full-stack development for an open-source onchain protocol for verified community cleanups.",
-          "DeCleanup Network — desenvolvimento full-stack para um protocolo onchain de código aberto que registra mutirões comunitários de limpeza verificados."
+          "DeCleanup Rewards — recurring full-stack Web3 contributions from January to September 2026. The upstream history records 9 of my PRs incorporated and 72 of my commits in main.",
+          "DeCleanup Rewards — contribuições recorrentes de engenharia full-stack Web3 de janeiro a setembro de 2026. O histórico do upstream registra 9 PRs minhas incorporadas e 72 commits meus na main."
         ),
         t(
-          "Fixed production bugs and shipped new features across front-end, back-end and database; reviewed Solidity contracts and built the flows around them.",
-          "Corrigi bugs em produção e entreguei novas funcionalidades no front-end, back-end e banco de dados; revisei contratos em Solidity e construí os fluxos ligados a eles."
+          "Built the Hypercerts request, verification and minting flow and added AT Protocol publishing with Supabase. The team credited my Celo/Base integration in PR #57. I also contributed to AI verification, airdrop tooling and handoff documentation.",
+          "Implementei o fluxo de solicitação, verificação e emissão de Hypercerts e integrei a publicação via AT Protocol com Supabase. A equipe creditou meu trabalho na integração Celo/Base na PR #57. Também contribuí com verificação por IA, ferramentas de airdrop e documentação para o time dar continuidade."
         ),
         t(
           "NS Multimarcas — built a dealership demo with a vehicle catalog and an admin panel for managing inventory and editing the homepage.",
           "NS Multimarcas — desenvolvi uma demonstração para revenda de veículos, com catálogo e painel para gerenciar o estoque e editar a página inicial."
         ),
       ],
-      tech: ["TypeScript", "React", "Node.js", "Solidity", "Celo"],
+      tech: ["TypeScript", "React", "Next.js", "Supabase", "Celo", "Base"],
     },
     {
       title: t("Founder & Lead Developer", "Fundador e Desenvolvedor Líder"),
